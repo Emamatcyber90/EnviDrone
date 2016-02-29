@@ -6,6 +6,7 @@
 
   var binary = require('binary');
 
+  var cmdStart = new Buffer(['K 2\r\n']);
   var cmdReq = new Buffer(['K 2\r\n']);
 
   serialPort.on("open", function () {
@@ -35,6 +36,15 @@
     getPPM();
   });
 
+  function init(){
+    serialPort.write(cmdStart, function(err, results) {
+      if(err){
+        console.log('err ' + err);
+      }
+
+    });
+  }
+
   function getPPM(){
     serialPort.write(cmdReq, function(err, results) {
       if(err){
@@ -44,3 +54,5 @@
       setTimeout(getPPM, 1000);
     });
   }
+
+  init();
