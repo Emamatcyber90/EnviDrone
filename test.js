@@ -1,4 +1,3 @@
-
   var SerialPort = require("serialport").SerialPort;
   var serialPort = new SerialPort("/dev/ttyAMA0", {
     baudrate: 9600
@@ -6,11 +5,8 @@
 
   var Parser = require('binary-parser').Parser;
 
-  //var ipHeader = new Parser().
-
-
   var cmdStart = new Buffer(['K 2\r\n']);
-  var cmdReq = new Buffer(['K 2\r\n']);
+  var cmdReq = new Buffer(['Z\r\n']);
 
   serialPort.on("open", function () {
     serialPort.on('data', function(data) {
