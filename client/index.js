@@ -20,6 +20,7 @@ client.on('message', function (message, rinfo) {
 });
 
 client.bind(PORT, function () {
+    console.log('add addMembership');
     client.addMembership(MULTICAST_ADDR);
 });
 

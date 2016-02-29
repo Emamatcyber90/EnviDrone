@@ -5,7 +5,7 @@ var dgram = require('dgram');
 var server = dgram.createSocket("udp4");
 
 server.bind(SRC_PORT, function () {
-    setInterval(multicastNew, 10000);
+    setInterval(multicastNew, 4000);
 });
 
 function multicastNew() {
