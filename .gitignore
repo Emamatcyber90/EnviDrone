@@ -1,0 +1,18 @@
+node_modules
+.tmp
+npm-debug.log
+tmp
+
+=======
+# Logs
+logs
+*.log
+npm-debug.log*
+
+pids
+*.pid
+*.seed
+.grunt
+.lock-wscript
+.npm
+.node_repl_history
