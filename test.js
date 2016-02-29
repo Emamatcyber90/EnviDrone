@@ -34,6 +34,6 @@ serialPort.on("open", function () {
       setTimeout(getPPM, 1000);
     })
   }
-}
+})
 
 init();
