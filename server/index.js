@@ -5,7 +5,7 @@ var dgram = require('dgram');
 var server = dgram.createSocket("udp4");
 
 server.bind(SRC_PORT, function () {
-    setInterval(multicastNew, 4000);
+    setInterval(multicastNew, 10000);
 });
 
 function multicastNew() {
@@ -14,3 +14,17 @@ function multicastNew() {
         console.log("Sent '" + message + "'");
     });
 }
+
+var io = require('socket.io')(7777);
+
+io.on('connection', function (socket) {
+  io.emit('this', { will: 'be received by everyone'});
+
+  socket.on('private message', function (from, msg) {
+    console.log('I received a private message by ', from, ' saying ', msg);
+  });
+
+  socket.on('disconnect', function () {
+    io.emit('user disconnected');
+  });
+});
