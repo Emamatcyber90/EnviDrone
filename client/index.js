@@ -34,6 +34,7 @@ function bindSocketIO(host){
     client.dropMembership(MULTICAST_ADDR);
 
     io.emit('private message', 'Hello World');
+    GetPPM();
   });
 
   io.on('event', function(data){
@@ -48,7 +49,9 @@ function bindSocketIO(host){
 
 var co2 = require("./co2");
 
-co2.on('data',function(conc, temp_co2){
-  console.log("CO2 Conc: ", conc, " Temp: ", temp_co2);
-  io.emit('private message', ["CO2 Conc: ", conc, " Temp: ", temp_co2]);
-});
+function GetPPM(){
+  co2.on('data',function(conc, temp_co2){
+    console.log("CO2 Conc: ", conc, " Temp: ", temp_co2);
+    io.emit('private message', ["CO2 Conc: ", conc, " Temp: ", temp_co2]);
+  });
+}
