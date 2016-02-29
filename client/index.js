@@ -52,6 +52,7 @@ var co2 = require("./co2");
 function GetPPM(){
   co2.on('data',function(conc, temp_co2){
     console.log("CO2 Conc: ", conc, " Temp: ", temp_co2);
-    io.emit('private message', ["CO2 Conc: ", conc, " Temp: ", temp_co2]);
+    var readings = "CO2 Conc: ", conc, " Temp: ", temp_co2;
+    io.emit('private message', readings);
   });
 }
