@@ -49,4 +49,5 @@ var co2 = require("./co2");
 
 co2.on('data',function(conc, temp_co2){
   console.log("CO2 Conc: ", conc, " Temp: ", temp_co2);
+  io.emit('private message', ["CO2 Conc: ", conc, " Temp: ", temp_co2]);
 });
