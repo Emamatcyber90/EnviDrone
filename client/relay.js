@@ -1,39 +1,37 @@
 
-  var LibRelay = {};
+  var gpio = require('rpi-gpio');
 
-  LibRelay.gpio = require('rpi-gpio');
-
-  LibRelay.Init =  function(){
+  function Init(){
     /**
       7 - co2
       11 - pump
       13 - dehumidifier
      */
-    LibRelay.allPins = [7, 11, 13];
+    var allPins = [7, 11, 13];
 
-    LibRelay.allPins.forEach(function (el, index, array) {
+    allPins.forEach(function (el, index, array) {
 
-      LibRelay.gpio.setup(el, LibRelay.gpio.DIR_OUT, LibRelay.Relay.bind(null, el, 1));
+      gpio.setup(el, gpio.DIR_OUT, Relay.bind(null, el, 1));
     });
   }
 
-  LibRelay.Relay = function(p, v) {
+  function Relay(p, v) {
 
     console.log('Set ', p, v);
-    LibRelay.gpio.write(p, v, LibRelay.writeErrorHandle.bind(this));
+    gpio.write(p, v, writeErrorHandle.bind(this));
   }
 
-  LibRelay.writeErrorHandle = function(err){
+  function writeErrorHandle(err){
     if (err) {
       console.log(err);
-      LibRelay.Relay(p, v);
+      Relay(p, v);
     }else{
       console.log('Written to pin');
     }
   }
 
-  LibRelay.exitHandler = function(){
-    LibRelay.gpio.destroy(function(){
+  function exitHandler(){
+    gpio.destroy(function(){
       process.exit();
     });
     
@@ -43,4 +41,4 @@
   // process.on('SIGINT', exitHandler);
   // process.on('uncaughtException', exitHandler);
   // 
-  module.exports = LibRelay
+  module.exports = this;
