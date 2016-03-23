@@ -27,7 +27,7 @@ function writeErrorHandle(err){
 
   if (err) {
     console.log(err);
-    Relay(p, v);
+    Relay.bind(this, p, v);
   }else{
     console.log('Written to pin');
   }
