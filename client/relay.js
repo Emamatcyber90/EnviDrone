@@ -23,7 +23,7 @@
     gpio.write(p, v, writeErrorHandle.bind(this));
   }
 
-  LibRelay.writeErrorHandle function(err){
+  LibRelay.writeErrorHandle = function(err){
     if (err) {
       console.log(err);
       Relay(p, v);
