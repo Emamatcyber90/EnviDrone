@@ -3,7 +3,7 @@ var module = {};
 
 var gpio = require('rpi-gpio');
 
-module.Init = Init (){
+module.Init = function (){
   /**
     7 - co2
     11 - pump
