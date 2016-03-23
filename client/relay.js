@@ -37,9 +37,9 @@ module.exports = (function(){
     
   }
 
-  process.on('exit', exitHandler);
-  process.on('SIGINT', exitHandler);
-  process.on('uncaughtException', exitHandler);
+  // process.on('exit', exitHandler);
+  // process.on('SIGINT', exitHandler);
+  // process.on('uncaughtException', exitHandler);
 
   return this;
 })();
