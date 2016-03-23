@@ -1,7 +1,7 @@
 
   var LibRelay = {};
 
-  LibRelay.gpio = require('rpi-gpio');
+  var gpio = require('rpi-gpio');
 
   LibRelay.Init =  function(){
     /**
