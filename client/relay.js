@@ -1,7 +1,9 @@
-module.exports = (function(){
-  var gpio = require('rpi-gpio');
 
-  function Init(){
+  var LibRelay = {};
+
+  LibRelay.gpio = require('rpi-gpio');
+
+  LibRelay.Init =  function(){
     /**
       7 - co2
       11 - pump
@@ -15,13 +17,13 @@ module.exports = (function(){
     });
   }
 
-  function Relay(p, v) {
+  LibRelay.Relay = function(p, v) {
 
     console.log('Set ', p, v);
     gpio.write(p, v, writeErrorHandle.bind(this));
   }
 
-  function writeErrorHandle(err){
+  LibRelay.writeErrorHandle function(err){
     if (err) {
       console.log(err);
       Relay(p, v);
@@ -30,7 +32,7 @@ module.exports = (function(){
     }
   }
 
-  function exitHandler(){
+  LibRelay.exitHandler = function(){
     gpio.destroy(function(){
       process.exit();
     });
@@ -40,6 +42,5 @@ module.exports = (function(){
   // process.on('exit', exitHandler);
   // process.on('SIGINT', exitHandler);
   // process.on('uncaughtException', exitHandler);
-
-  return this;
-})();
+  // 
+  module.exports = LibRelay
