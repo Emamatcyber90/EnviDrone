@@ -1,6 +1,5 @@
   var EventEmitter = require('events').EventEmitter;
   var emitter = new EventEmitter();
-  var libRelay = require('./relay');
 
   var SerialPort = require("serialport").SerialPort;
   var serialPort = new SerialPort("/dev/ttyAMA0", {
