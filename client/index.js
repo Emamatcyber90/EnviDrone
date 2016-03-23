@@ -2,7 +2,7 @@ var shell = require('shelljs');
 var uuid = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
 
 // Prepare GPIO ports.
-var libRelay = require('./relay');
+var libRelay = new require('./relay');
 libRelay.Init();
 
 // ZeroConfig
