@@ -1,7 +1,7 @@
 
   var LibRelay = {};
 
-  var gpio = require('rpi-gpio');
+  LibRelay.gpio = require('rpi-gpio');
 
   LibRelay.Init =  function(){
     /**
@@ -9,18 +9,18 @@
       11 - pump
       13 - dehumidifier
      */
-    var allPins = [7, 11, 13];
+    LibRelay.allPins = [7, 11, 13];
 
-    allPins.forEach(function (el, index, array) {
+    LibRelay.allPins.forEach(function (el, index, array) {
 
-      gpio.setup(el, gpio.DIR_OUT, LibRelay.Relay.bind(null, el, 1));
+      LibRelay.gpio.setup(el, LibRelay.gpio.DIR_OUT, LibRelay.Relay.bind(null, el, 1));
     });
   }
 
   LibRelay.Relay = function(p, v) {
 
     console.log('Set ', p, v);
-    gpio.write(p, v, writeErrorHandle.bind(this));
+    LibRelay.gpio.write(p, v, LibRelay.writeErrorHandle.bind(this));
   }
 
   LibRelay.writeErrorHandle = function(err){
@@ -33,7 +33,7 @@
   }
 
   LibRelay.exitHandler = function(){
-    gpio.destroy(function(){
+    LibRelay.gpio.destroy(function(){
       process.exit();
     });
     
