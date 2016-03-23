@@ -3,7 +3,6 @@ var uuid = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true
 
 // Prepare GPIO ports.
 var relayInit = require('./relay').Init;
-console.log(libRelay);
 relayInit();
 
 // ZeroConfig
