@@ -1,5 +1,6 @@
   var EventEmitter = require('events').EventEmitter;
   var emitter = new EventEmitter();
+  var libRelay = require('./relay');
 
   var SerialPort = require("serialport").SerialPort;
   var serialPort = new SerialPort("/dev/ttyAMA0", {
@@ -26,6 +27,7 @@
         
           var conc = (vars.high_level*256) +vars.low_level;
           var temp_co2 = vars.temp_co2 - 40;
+
           if(!conc == 0){
             //console.log("CO2 Conc: ", conc, " Temp: ", temp_co2);
             emitter.emit('data', conc, temp_co2);

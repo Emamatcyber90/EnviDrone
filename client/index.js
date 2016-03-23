@@ -1,6 +1,10 @@
 var shell = require('shelljs');
 var uuid = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
 
+// Prepare GPIO ports.
+var libRelay = require('./relay');
+libRelay.Init();
+
 // ZeroConfig
 var PORT = 6024;
 var MULTICAST_ADDR = '239.255.255.250';
