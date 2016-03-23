@@ -2,9 +2,9 @@ var shell = require('shelljs');
 var uuid = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
 
 // Prepare GPIO ports.
-var libRelay = require('./relay').Init;
+var relayInit = require('./relay').Init;
 console.log(libRelay);
-libRelay.Init();
+relayInit();
 
 // ZeroConfig
 var PORT = 6024;
