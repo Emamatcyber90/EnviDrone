@@ -13,7 +13,7 @@
 
     allPins.forEach(function (el, index, array) {
 
-      gpio.setup(el, gpio.DIR_OUT, Relay.bind(null, el, 1));
+      gpio.setup(el, gpio.DIR_OUT, LibRelay.Relay.bind(null, el, 1));
     });
   }
 
