@@ -1,7 +1,9 @@
 
+  var module = {};
+
   var gpio = require('rpi-gpio');
 
-  function Init(){
+  module.Init = function(){
     /**
       7 - co2
       11 - pump
@@ -15,11 +17,14 @@
     });
   }
 
+
   function Relay(p, v) {
 
     console.log('Set ', p, v);
     gpio.write(p, v, writeErrorHandle.bind(this));
   }
+
+  module.Relay = Relay;
 
   function writeErrorHandle(err){
     if (err) {
@@ -41,4 +46,4 @@
   // process.on('SIGINT', exitHandler);
   // process.on('uncaughtException', exitHandler);
   // 
-  module.exports = this;
+  module.exports = module;
