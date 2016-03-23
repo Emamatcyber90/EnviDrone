@@ -26,7 +26,7 @@
   LibRelay.writeErrorHandle = function(err){
     if (err) {
       console.log(err);
-      Relay(p, v);
+      LibRelay.Relay(p, v);
     }else{
       console.log('Written to pin');
     }
