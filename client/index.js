@@ -1,5 +1,5 @@
 var cozirDriver = require('./cozirDriver');
-var sensor = cozirDriver.cozir({
+var sensor = new cozirDriver({
   "port": "/dev/ttyAMA0",
   "feedId": "Drone"
 });
