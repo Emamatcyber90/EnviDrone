@@ -21,9 +21,9 @@ function sensorHandler(){
         break;
       case "co2":
         if(data["co2"] <= 800){
-          gpio(7, true);
-        }else{
           gpio(7, false);
+        }else{
+          gpio(7, true);
         }
         break;
     }
