@@ -20,9 +20,9 @@ sensor.on('data', function(feedId, objType, data){
       break;
     case "co2":
       if(data["co2"] <=100){
-        Relay.bind(null, 7, true);
+        Relay(7, true);
       }else{
-        Relay.bind(null, 7, false);
+        Relay(7, false);
       }
       break;
   }

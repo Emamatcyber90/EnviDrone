@@ -6,7 +6,7 @@ function Init (){
     11 - pump
     13 - dehumidifier
    */
-  var allPins = [7];
+  var allPins = [7, 11, 13];
 
   allPins.forEach(function (el, index, array) {
 
