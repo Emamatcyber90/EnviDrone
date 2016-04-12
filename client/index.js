@@ -1,6 +1,8 @@
 var gpioInit = require('./relay').Init;
 var gpio = require('./relay').Relay;
 
+gpioInit();
+
 var cozirDriver = require('./cozirDriver');
 var sensor = new cozirDriver({
   "port": "/dev/ttyAMA0",
