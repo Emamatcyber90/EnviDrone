@@ -18,9 +18,9 @@ function Init (){
 }
 
 function Relay(p, v) {
-
+  var self = this;
   console.log('Set ', p, v);
-  gpio.write(p, v, writeErrorHandle.bind(this));
+  gpio.write(p, v, writeErrorHandle.bind(self));
 }
 
 function writeErrorHandle(err){
