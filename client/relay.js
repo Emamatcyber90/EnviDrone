@@ -28,13 +28,13 @@ function Init (cb){
 
 function Relay(p, v) {
   console.log('Set ', p, v);
-  gpio.write(p, v, writeErrorHandle.bind(this, p, v));
+  gpio.write(p, v, writeErrorHandle.bind(null, p, v));
 }
 
 function writeErrorHandle(err, p, v){
   if (err) {
     console.log(err, p, v);
-    Relay.bind(this, p, v);
+    Relay.bind(null, p, v);
   }else{
     console.log('Written to pin');
   }
