@@ -15,13 +15,13 @@ function Init (){
 }
 
 function Relay(p, v) {
-  var self = this;
   console.log('Set ', p, v);
-  gpio.write(p, v, writeErrorHandle.bind(self));
+  gpio.write(p, v, writeErrorHandle.bind(this));
 }
 
 function writeErrorHandle(err){
 
+  console.log(this);
   if (err) {
     console.log(err, p, v);
     Relay.bind(this, p, v);
