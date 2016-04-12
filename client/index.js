@@ -1,3 +1,6 @@
+var gpioInit = require('./relay').Init;
+var gpio = require('./relay').Relay;
+
 var cozirDriver = require('./cozirDriver');
 var sensor = new cozirDriver({
   "port": "/dev/ttyAMA0",
@@ -14,6 +17,11 @@ sensor.on('data', function(feedId, objType, data){
     case "h":
       break;
     case "co2":
+      if(data["co2"] <=100){
+        Relay(7, true);
+      }else{
+        Relay(7, false);
+      }
       break;
   }
 });
