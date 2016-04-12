@@ -14,14 +14,7 @@ function Init (cb){
   });
 
   setTimeout(function(){
-       allPins.forEach(function (el, index, array) {
-
-          Relay(el.circ, 0);
-
-        if (index === array.length - 1) {
-          cb()
-
-        }
+          cb();
       });
     }, 15000);
 }
