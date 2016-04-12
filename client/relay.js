@@ -14,9 +14,8 @@ function Init (cb){
   });
 
   setTimeout(function(){
-          cb();
-      });
-    }, 15000);
+    cb();
+  }, 15000);
 }
 
 function Relay(p, v) {
