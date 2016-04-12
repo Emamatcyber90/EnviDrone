@@ -78,7 +78,7 @@ module.exports = (function() {
     var co2 = parseInt(data.substr(2));
     if (co2 !== this._co2) {
       this._co2 = co2;
-      this.emit("data", this._config.feedId, { timestamp: Date.now(), co2: co2 });
+      this.emit("data", this._config.feedId, "co2", { timestamp: Date.now(), co2: co2 });
     }
   };
 
@@ -86,7 +86,7 @@ module.exports = (function() {
     var humidity = parseInt(data.substr(2))/10;
     if (humidity !== this._humidity) {
       this._humidity = humidity;
-      this.emit("data", this._config.feedId, { timestamp: Date.now(), humidity: humidity });
+      this.emit("data", this._config.feedId, "h", { timestamp: Date.now(), humidity: humidity });
     }
   };
 
@@ -94,7 +94,7 @@ module.exports = (function() {
     var temp = (parseInt(data.substr(2)) - 1000) / 10;
     if (temp !== this._temperature) {
       this._temperature = temp;
-      this.emit("data", this._config.feedId, { timestamp: Date.now(), temperature: temp});
+      this.emit("data", this._config.feedId, "t", { timestamp: Date.now(), temperature: temp});
     }
   };
 

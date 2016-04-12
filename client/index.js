@@ -5,9 +5,17 @@ var sensor = new cozirDriver({
   "cozirPollInterval": 1
 });
 
-sensor.on('data', function(feedId, data){
-  console.log(feedId, data);
+sensor.on('data', function(feedId, objType, data){
+  console.log(feedId, objType, data);
 
+  switch(objType){
+    "t":
+      break;
+    "h":
+      break;
+    "co2":
+      break;
+  }
 });
 
 sensor.start();
