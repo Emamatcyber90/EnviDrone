@@ -28,12 +28,10 @@ function Init (cb){
 
 function Relay(p, v) {
   console.log('Set ', p, v);
-  gpio.write(p, v, writeErrorHandle.bind(this));
+  gpio.write(p, v, writeErrorHandle.bind(this, p, v));
 }
 
-function writeErrorHandle(err){
-
-  console.log(this);
+function writeErrorHandle(err, p, v){
   if (err) {
     console.log(err, p, v);
     Relay.bind(this, p, v);
