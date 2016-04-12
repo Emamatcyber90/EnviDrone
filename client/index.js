@@ -1,7 +1,8 @@
 var cozirDriver = require('./cozirDriver');
 var sensor = new cozirDriver({
   "port": "/dev/ttyAMA0",
-  "feedId": "Drone"
+  "feedId": "Drone",
+  "cozirPollInterval": 5
 });
 
 sensor.on('data', function(feedId, data){
