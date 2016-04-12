@@ -1,6 +1,3 @@
-
-
-
 var gpio = require('rpi-gpio');
 
 function Init (){
@@ -9,7 +6,7 @@ function Init (){
     11 - pump
     13 - dehumidifier
    */
-  var allPins = [7, 11, 13];
+  var allPins = [7, 13];
 
   allPins.forEach(function (el, index, array) {
 
