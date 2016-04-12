@@ -1,7 +1,7 @@
 var gpioInit = require('./relay').Init;
 var gpio = require('./relay').Relay;
 
-gpioInit();
+gpioInit(sensorHandler);
 
 var cozirDriver = require('./cozirDriver');
 var sensor = new cozirDriver({
@@ -10,27 +10,27 @@ var sensor = new cozirDriver({
   "cozirPollInterval": 1
 });
 
-sensor.on('data', function(feedId, objType, data){
-  console.log(feedId, objType, data);
+function sensorHandler(){
+  sensor.on('data', function(feedId, objType, data){
+    console.log(feedId, objType, data);
 
-  switch(objType){
-    case "t":
-      break;
-    case "h":
-      break;
-    case "co2":
-      if(data["co2"] <=100){
-        Relay(7, true);
-      }else{
-        Relay(7, false);
-      }
-      break;
-  }
-});
-
-sensor.start();
-
-
+    switch(objType){
+      case "t":
+        break;
+      case "h":
+        break;
+      case "co2":
+        if(data["co2"] <=100){
+          Relay(7, true);
+        }else{
+          Relay(7, false);
+        }
+        break;
+    }
+  });
+  
+  sensor.start();
+}
 
 // var shell = require('shelljs');
 // var uuid = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;

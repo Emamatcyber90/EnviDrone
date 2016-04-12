@@ -1,6 +1,6 @@
 var gpio = require('rpi-gpio');
 
-function Init (){
+function Init (cb){
   /**
     7 - co2
     11 - pump
@@ -12,6 +12,18 @@ function Init (){
 
     gpio.setup(el, gpio.DIR_OUT, Relay.bind(null, el, 1));
   });
+
+  setTimeout(function(){
+       allPins.forEach(function (el, index, array) {
+
+          Relay(el.circ, 0);
+
+        if (index === array.length - 1) {
+          cb()
+
+        }
+      });
+    }, 15000);
 }
 
 function Relay(p, v) {
