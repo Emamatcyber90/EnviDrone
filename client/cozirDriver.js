@@ -60,7 +60,7 @@ module.exports = (function() {
 
   var startPolling = function() {
     if (this._timer === 0) {
-      this._timer = setInterval(poll.bind(this), this._config.cozirPollInterval*60*1000);
+      this._timer = setInterval(poll.bind(this), this._config.cozirPollInterval*60*3000);
     }
   };
 
