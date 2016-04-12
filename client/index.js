@@ -9,11 +9,11 @@ sensor.on('data', function(feedId, objType, data){
   console.log(feedId, objType, data);
 
   switch(objType){
-    "t":
+    case "t":
       break;
-    "h":
+    case "h":
       break;
-    "co2":
+    case "co2":
       break;
   }
 });
