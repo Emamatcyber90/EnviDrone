@@ -32,7 +32,7 @@ function writeErrorHandle(err, p, v){
   }
 }
 
-function exitHandler(){
+function exitHandler(options, err){
 
   if (options.cleanup) {
     console.log('clean');
