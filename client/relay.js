@@ -35,6 +35,11 @@ function writeErrorHandle(err, p, v){
 function exitHandler(){
 
   gpio.destroy(function(){
+    console.log("SIGINT");
+    allPins.forEach(function (el, index, array) {
+      Relay.bind(null, el, true); //off
+    });
+
     process.exit();
   });
 }
