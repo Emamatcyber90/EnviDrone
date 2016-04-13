@@ -39,9 +39,9 @@ function exitHandler(){
   });
 }
 
-// process.on('exit', exitHandler);
-// process.on('SIGINT', exitHandler);
-// process.on('uncaughtException', exitHandler);
+process.on('exit', exitHandler);
+process.on('SIGINT', exitHandler);
+process.on('uncaughtException', exitHandler);
 
 module.exports.Init = Init;
 module.exports.Relay = Relay;
