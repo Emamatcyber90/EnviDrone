@@ -34,19 +34,26 @@ function writeErrorHandle(err, p, v){
 
 function exitHandler(){
 
-  gpio.destroy(function(){
-    console.log("SIGINT");
-    allPins.forEach(function (el, index, array) {
-      Relay.bind(null, el, true); //off
+  if (options.cleanup) {
+    console.log('clean');
+    gpio.destroy(function(){
+      console.log("SIGINT");
+      allPins.forEach(function (el, index, array) {
+        Relay.bind(null, el, true); //off
+      });
     });
+  }
 
-    process.exit();
-  });
+  if (err) console.log(err.stack);
+
+  if (options.exit) process.exit();
 }
 
-process.on('exit', exitHandler);
-process.on('SIGINT', exitHandler);
-process.on('uncaughtException', exitHandler);
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 module.exports.Init = Init;
 module.exports.Relay = Relay;
