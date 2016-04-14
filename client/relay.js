@@ -5,8 +5,9 @@ function Init (cb){
     7 - co2
     11 - pump
     13 - dehumidifier
+    15 - Fan
    */
-  var allPins = [7, 11, 13];
+  var allPins = [7, 11, 13, 15];
 
   allPins.forEach(function (el, index, array) {
 
