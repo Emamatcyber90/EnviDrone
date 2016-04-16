@@ -1,5 +1,6 @@
 var gpioInit = require('./relay').Init;
 var gpio = require('./relay').Relay;
+var moment = require('moment');
 
 gpioInit(sensorHandler);
 
@@ -20,16 +21,32 @@ function sensorHandler(){
       case "h":
         break;
       case "co2":
-        if(data["co2"] <= 800){
-          gpio(7, false);
-        }else{
-          gpio(7, true);
-        }
+        coController();
         break;
     }
   });
   
   sensor.start();
+}
+
+function coController(){
+  var hour = moment(new Date()).format('HH');
+
+  if(data["co2"] <= 800){
+    if(!hour >= 20 || !hour <=7){
+      coON();
+    }  
+  }else{
+    coOFF();
+  }
+}
+
+function coON(){
+  gpio(7, false);
+}
+
+function coOFF(){
+  gpio(7, true);
 }
 
 // var shell = require('shelljs');
