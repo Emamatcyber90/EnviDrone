@@ -21,7 +21,7 @@ function sensorHandler(){
       case "h":
         break;
       case "co2":
-        coController();
+        coController(data);
         break;
     }
   });
@@ -29,7 +29,7 @@ function sensorHandler(){
   sensor.start();
 }
 
-function coController(){
+function coController(data){
   var hour = moment(new Date()).format('HH');
 
   if(data["co2"] <= 800){
