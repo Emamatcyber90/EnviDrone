@@ -9,6 +9,8 @@ function announce(){
   }, 10000);
 }
 
+announce();
+
 var gpioInit = require('./relay').Init;
 var gpio = require('./relay').Relay;
 var moment = require('moment');
