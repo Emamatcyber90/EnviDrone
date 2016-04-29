@@ -1,3 +1,14 @@
+var shell = require('shelljs');
+var UUID = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
+
+
+function announce(){
+  setTimeout(function(){
+    console.log('ID:',UUID);
+    announce();
+  }, 10000);
+}
+
 var gpioInit = require('./relay').Init;
 var gpio = require('./relay').Relay;
 var moment = require('moment');
