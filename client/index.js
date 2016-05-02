@@ -11,59 +11,13 @@ function announce(){
 
 announce();
 
-var gpioInit = require('./relay').Init;
-var gpio = require('./relay').Relay;
-var moment = require('moment');
+/*
+Initiate Carbon
+ */
+var CarbonController = require('./CarbonController');
+CarbonController(800, 20, 7);
 
-gpioInit(sensorHandler);
 
-var cozirDriver = require('./cozirDriver');
-var sensor = new cozirDriver({
-  "port": "/dev/ttyAMA0",
-  "feedId": "Drone",
-  "cozirPollInterval": 1
-});
-
-function sensorHandler(){
-  sensor.on('data', function(feedId, objType, data){
-    console.log(feedId, objType, data);
-
-    switch(objType){
-      case "t":
-        break;
-      case "h":
-        break;
-      case "co2":
-        coController(data);
-        break;
-    }
-  });
-  
-  sensor.start();
-}
-
-function coController(data){
-  var hour = moment(new Date()).format('HH');
-
-  if(data["co2"] <= 800){
-    if(!hour >= 20 || !hour <=7){
-      coON();
-    }  
-  }else{
-    coOFF();
-  }
-}
-
-function coON(){
-  gpio(7, false);
-}
-
-function coOFF(){
-  gpio(7, true);
-}
-
-// var shell = require('shelljs');
-// var uuid = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
 
 // // Prepare GPIO ports.
 // var relayInit = require('./relay').Init;
