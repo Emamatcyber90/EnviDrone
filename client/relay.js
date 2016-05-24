@@ -3,7 +3,7 @@ var gpio = require('rpi-gpio');
 function Init (cb){
   /**
     7 - co2
-    11 - pump
+    11 - Water Pump
     13 - dehumidifier
     15 - Fan
    */

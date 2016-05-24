@@ -16,3 +16,5 @@ pids
 .lock-wscript
 .npm
 .node_repl_history
+
+config/settings.json

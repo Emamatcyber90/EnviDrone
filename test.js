@@ -1,39 +1,59 @@
-var SerialPort = require("serialport").SerialPort;
-var serialPort = new SerialPort("/dev/ttyAMA0", {
-  baudrate: 9600
-});
+// // Prepare GPIO ports.
+// var relayInit = require('./relay').Init;
+// relayInit();
 
-var Parser = require('binary-parser').Parser;
+// // ZeroConfig
+// var PORT = 6024;
+// var MULTICAST_ADDR = '239.255.255.250';
+// var dgram = require('dgram');
+// var client = dgram.createSocket('udp4');
 
-var cmdStart = new Buffer(['K 2\r\n']);
-var cmdReq = new Buffer(['Z\r\n']);
+// var io = {};
 
-serialPort.on("open", function () {
-  serialPort.on('data', function(data) {
+// client.on('listening', function () {
+//     var address = client.address();
+//     console.log('UDP Client listening on ' + address.address + ":" + address.port);
+// });
 
-    console.log(data);
+// client.on('message', function (message, rinfo) {
+//     console.log('Message from: ' + rinfo.address + ':' + rinfo.port + ' - ' + message);
+//     bindSocketIO('http://' + rinfo.address + ':7777');
+// });
 
-    getPPM();
-  });
+// client.bind(PORT, function () {
+//     console.log('add addMembership');
+//     client.addMembership(MULTICAST_ADDR);
+// });
 
-  function init(){
-    serialPort.write(cmdStart, function(err, results) {
-      if(err){
-        console.log('err ' + err);
-      }
 
-    });
-  }
+// // Socket.IO
+// function bindSocketIO(host){
+//   io = require('socket.io-client')(host);
 
-  function getPPM(){
-    serialPort.write(cmdReq, function(err, results) {
-      if(err){
-        console.log('err ' + err);
-      }
+//   io.on('connect', function(){
+//     console.log("Connected");
+//     client.dropMembership(MULTICAST_ADDR);
 
-      setTimeout(getPPM, 1000);
-    })
-  }
+//     io.emit('private message', 'Hello World');
+//     GetPPM();
+//   });
 
-  init();
-})
+//   io.on('event', function(data){
+//     console.log("Event", data);
+//   });
+
+//   io.on('disconnect', function(){
+//     console.log("Disconnect");
+//     client.addMembership(MULTICAST_ADDR);
+//   });
+// }
+
+// var co2 = require("./co2");
+
+// function GetPPM(){
+//   co2.on('data',function(conc, temp_co2){
+//     console.log("CO2 Conc: ", conc, " Temp: ", temp_co2);
+//     var readings = "CO2 Conc: " + conc + " Temp: " + temp_co2;
+//     io.emit('private message', readings);
+//   });
+// }

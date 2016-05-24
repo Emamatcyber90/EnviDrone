@@ -1,14 +1,14 @@
 /*
   carbon = 800
   timeFrom 20
-  timeTo 7  
+  timeTo 7
+  maxCarbon 1500 //Lights off time
 */
-module.exports = function(carbon, timeFrom, timeTo){
-  var gpioInit = require('./relay').Init;
+module.exports = (function(){
   var gpio = require('./relay').Relay;
+  var PIN = 7;
   var moment = require('moment');
-
-  gpioInit(sensorHandler);
+  var settings = require('../config');
 
   var cozirDriver = require('./cozirDriver');
   var sensor = new cozirDriver({
@@ -16,6 +16,9 @@ module.exports = function(carbon, timeFrom, timeTo){
     "feedId": "Drone",
     "cozirPollInterval": 1
   });
+
+  var FanController = require('./FanController');
+  var HumidityController = require('./HumidityController');
 
   function sensorHandler(){
     sensor.on('data', function(feedId, objType, data){
@@ -25,6 +28,7 @@ module.exports = function(carbon, timeFrom, timeTo){
         case "t":
           break;
         case "h":
+          HumidityController(data);
           break;
         case "co2":
           coController(data);
@@ -35,23 +39,31 @@ module.exports = function(carbon, timeFrom, timeTo){
     sensor.start();
   }
 
+
   function coController(data){
     var hour = moment(new Date()).format('HH');
 
-    if(data["co2"] <= carbon){
-      if(!hour >= timeFrom || !hour <= timeTo){
+    if(!hour >= settings.lightOn || !hour <= settings.lightOff){
+      if(data["co2"] <= settings.carbon){
         coON();
-      }  
+        FanController.off();
+      }else{
+        coOFF();
+      }
     }else{
-      coOFF();
+      if(data["co2"] >= 500){
+        coOFF();
+        FanController.on();
+      }
     }
+
   }
 
   function coON(){
-    gpio(7, false);
+    gpio(PIN, false);
   }
 
   function coOFF(){
-    gpio(7, true);
+    gpio(PIN, true);
   }
-};
+})();
