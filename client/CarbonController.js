@@ -35,8 +35,6 @@ module.exports = (function(){
           break;
       }
     });
-    
-    sensor.start();
   }
 
 
@@ -66,4 +64,6 @@ module.exports = (function(){
   function coOFF(){
     gpio(PIN, true);
   }
+
+  sensor.start();
 })();
