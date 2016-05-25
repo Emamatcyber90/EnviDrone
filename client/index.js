@@ -27,4 +27,4 @@ Initiate GPIO ports
  */
 var gpioReady = require('./relay').Init;
 
-gpioInit(Init);
+gpioReady(Init);
