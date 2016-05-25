@@ -35,6 +35,8 @@ module.exports = (function(){
           break;
       }
     });
+    
+    sensor.start();
   }
 
 
@@ -65,5 +67,5 @@ module.exports = (function(){
     gpio(PIN, true);
   }
 
-  sensor.start();
+  sensorHandler();
 })();
