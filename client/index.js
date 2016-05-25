@@ -1,6 +1,3 @@
-var shell = require('shelljs');
-var UUID = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
-
 var settings = require('../config');
 
 function announce(){

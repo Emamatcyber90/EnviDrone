@@ -3,10 +3,10 @@
 var bjson  = require('bjson'),
     settings = bjson('settings',function(observe){
       observe.on('change', function(changes){
-          console.log('Path:', changes.path);
-          console.log('Old Value:', changes.oldValue);
-          console.log('New Value:', changes.value);
-          console.log('-----');
+        console.log('Path:', changes.path);
+        console.log('Old Value:', changes.oldValue);
+        console.log('New Value:', changes.value);
+        console.log('-----');
       })
     });
 
