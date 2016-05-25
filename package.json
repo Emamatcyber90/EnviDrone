@@ -2,7 +2,7 @@
   "dependencies": {
     "binary": "^0.3.0",
     "binary-parser": "^1.1.5",
-    "bjson": "^1.0.1",
+    "bjson": "github:vartana/bjson",
     "debug": "^2.2.0",
     "moment": "^2.12.0",
     "rpi-gpio": "^0.7.0",
