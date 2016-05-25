@@ -13,7 +13,7 @@ var bjson  = require('bjson'),
 if(Object.keys(settings).length === 0){
 
   //Create default settings
-  settings.carbon = 800;
+  settings.carbon = 0;
   settings.humidity = 40;
   settings.lightOn = 20;
   settings.lightOff = 7;
