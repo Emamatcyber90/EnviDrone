@@ -21,7 +21,7 @@ module.exports = (function(){
 
   var emit = function(key, value){
     if(isConnected){
-      console.log(keu, value);
+      console.log(key, value);
       socket.emit(key, value);
     }
   }
