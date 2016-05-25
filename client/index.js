@@ -3,6 +3,11 @@ var settings = require('../config');
 function Init(){
   console.log('All systems ready, intiiating controllers.');
 
+  /**
+   * Initiate Socket IO
+   */
+  var socket = require('./socketio');
+  
   /*
   Initiate Carbon & Humidity System
    */
