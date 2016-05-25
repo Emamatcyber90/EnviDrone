@@ -1,6 +1,8 @@
 var settings = require('../config');
 
 function Init(){
+  console.log('All systems ready, intiiating controllers.');
+
   /*
   Initiate Carbon & Humidity System
    */
