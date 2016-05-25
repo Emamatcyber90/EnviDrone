@@ -1,14 +1,5 @@
 var settings = require('../config');
 
-function announce(){
-  setTimeout(function(){
-    console.log('ID:',UUID);
-    announce();
-  }, 10000);
-}
-
-announce();
-
 function Init(){
   /*
   Initiate Carbon & Humidity System
