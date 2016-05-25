@@ -8,6 +8,7 @@ module.exports = (function(){
 
   socket.on('connect', function(){
     isConnected = true;
+    settings.id = UUID;
     emit('settings', settings);
   });
 
@@ -22,7 +23,7 @@ module.exports = (function(){
   var emit = function(key, value){
     if(isConnected){
       console.log(key, value);
-      
+
       socket.emit(key, value);
     }
   }
