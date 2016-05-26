@@ -35,6 +35,7 @@ module.exports = (function(){
   var emit = function(key, value){
 
       value.id = settings.id;
+      console.log(value);
       socket.emit(key, value);
   }
 
