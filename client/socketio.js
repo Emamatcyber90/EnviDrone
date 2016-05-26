@@ -20,6 +20,7 @@ module.exports = (function(){
   });
 
   socket.on('update settings', function(data){
+    console.log('***** Data Update *****', data);
     if(data.id == settings.config.id){
       settings.config = data;
     }
