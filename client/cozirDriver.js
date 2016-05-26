@@ -69,9 +69,9 @@ module.exports = (function() {
     var self = this;
 
     // ToDo - review sequencing.
-    setTimeout(function() { self._serialPort.write("Z\r\n"); }, 3*1000);
-    setTimeout(function() { self._serialPort.write("T\r\n"); }, 6*1000);
-    setTimeout(function() { self._serialPort.write("H\r\n"); }, 20*1000);
+    setTimeout(function() { self._serialPort.write("Z\r\n"); }, 500);
+    setTimeout(function() { self._serialPort.write("T\r\n"); }, 5500);
+    setTimeout(function() { self._serialPort.write("H\r\n"); }, 10500);
   };
 
   var handleCO2 = function(data) {
