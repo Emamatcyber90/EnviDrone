@@ -37,7 +37,7 @@ module.exports = (function(){
 
   TimerOn();
 
-  settings.observe.on('change', function(change){
+  settings.observe.on('change', function(changes){
     if(changes.path == "waterCycle" || changes.path == "waterDuration"){
       clearTimers();
     }
