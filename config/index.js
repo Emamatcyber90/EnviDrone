@@ -10,6 +10,8 @@ var bjson  = require('bjson'),
       })
     });
 
+console.log(settings);
+
 if(Object.keys(settings).length === 0){
 
   //Create default settings
