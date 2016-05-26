@@ -22,8 +22,14 @@ module.exports = (function(){
   socket.on('update settings', function(data){
     console.log('***** Data Update *****', data);
     if(data.id == settings.config.id){
-      console.log('***** SAVED *****');
-      settings.config = data;
+      settings.config.carbon = data.carbon;
+      settings.config.humidity = data.humidity;
+      settings.config.lightOn = data.lightOn;
+      settings.config.lightOff = data.lightOff;
+      settings.config.waterCycle = data.waterCycle;
+      settings.config.waterDuration = data.waterDuration;
+
+      console.log('***** SAVED *****', settings.config);
     }
   });
 
