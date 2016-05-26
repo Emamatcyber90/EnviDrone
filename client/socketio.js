@@ -8,6 +8,8 @@ module.exports = (function(){
   socket.on('connect', function(){
     settings.id = UUID;
     emit('settings', settings);
+
+    sendSettings();
   });
 
   socket.on('disconnect', function(){
@@ -17,6 +19,14 @@ module.exports = (function(){
   socket.on('update settings', function(data){
     settings = data;
   });
+
+  function sendSettings(){
+    setTimeout(function(){
+      emit('settings', settings);
+    }, 10000)
+    
+  }
+
 
   var emit = function(key, value){
       console.log(key, value);
