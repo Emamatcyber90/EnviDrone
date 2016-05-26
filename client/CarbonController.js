@@ -27,10 +27,10 @@ module.exports = (function(){
 
       switch(objType){
         case "t":
-          socket.emit('temp', { temp: data["t"]});
+          socket.emit('temp', { temp: data["temperature"]});
           break;
         case "h":
-          socket.emit('humidity', { humidity: data["h"]});
+          socket.emit('humidity', { humidity: data["humidity"]});
           HumidityController(data);
           break;
         case "co2":
