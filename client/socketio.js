@@ -10,7 +10,7 @@ module.exports = (function(){
 
   socket.on('connect', function(){
     
-    emit('register', { id: settings.id });
+    emit('register', settings.config);
 
     //sendSettings();
   });
@@ -20,7 +20,9 @@ module.exports = (function(){
   });
 
   socket.on('update settings', function(data){
-    settings.config = data;
+    if(data.id == settings.config.id){
+      settings.config = data;
+    }
   });
 
   function sendSettings(){
@@ -34,7 +36,7 @@ module.exports = (function(){
 
   var emit = function(key, value){
 
-      value.id = settings.id;
+      value.id = settings.config.id;
       console.log(value);
       socket.emit(key, value);
   }
