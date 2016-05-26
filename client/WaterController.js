@@ -16,7 +16,7 @@ module.exports = (function(){
 
     setTimeout(function(){
       waterOFF();
-      procsys.TimerOn();
+      TimerOn();
     }, settings.waterDuration * 1000);
   }
 
