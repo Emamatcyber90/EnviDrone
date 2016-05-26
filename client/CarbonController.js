@@ -47,8 +47,8 @@ module.exports = (function(){
   function coController(data){
     var hour = moment(new Date()).format('HH');
 
-    if(!hour >= settings.lightOn || !hour <= settings.lightOff){
-      if(data["co2"] <= settings.carbon){
+    if(!hour >= settings.config.lightOn || !hour <= settings.config.lightOff){
+      if(data["co2"] <= settings.config.carbon){
         coON();
         FanController.off();
       }else{

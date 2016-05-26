@@ -26,18 +26,20 @@ module.exports = (function(){
     timerOff = setTimeout(function(){
       waterOff();
       TimerOn();
-    }, settings.waterDuration * 1000);
+    }, settings.config.waterDuration * 1000);
   }
 
   var TimerOn = function(){
     timerOn = setTimeout(function(){
       Start();
-    }, settings.waterCycle * 60000);
+    }, settings.config.waterCycle * 60000);
   }
 
   TimerOn();
 
-  return {
-    reset: clearTimers
-  }
+  settings.observe.on('change', function(change){
+    if(changes.path == "waterCycle" || changes.path == "waterDuration"){
+      clearTimers();
+    }
+  });
 })();

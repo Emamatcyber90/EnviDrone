@@ -1,7 +1,7 @@
 module.exports = (function(){
   var settings = require('../config');
   var shell = require('shelljs');
-  settings.id = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout.replace("\n", "") || 'DemoNode';
+  settings.config.id = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout.replace("\n", "") || 'DemoNode';
   
   var URI = "https://envidash.herokuapp.com/";
   var demoURI = "http://localhost:3000";
@@ -20,12 +20,12 @@ module.exports = (function(){
   });
 
   socket.on('update settings', function(data){
-    settings = data;
+    settings.config = data;
   });
 
   function sendSettings(){
     setTimeout(function(){
-      emit('settings', settings);
+      emit('settings', settings.config);
       sendSettings();
     }, 10000)
     

@@ -1,7 +1,10 @@
 "use strict";
+var observer;
 
 var bjson  = require('bjson'),
     settings = bjson('settings',function(observe){
+
+      observer = observe;
       observe.on('change', function(changes){
         console.log('Path:', changes.path);
         console.log('Old Value:', changes.oldValue);
@@ -10,7 +13,6 @@ var bjson  = require('bjson'),
       })
     });
 
-console.log(settings);
 
 if(Object.keys(settings).length === 0){
 
@@ -23,4 +25,5 @@ if(Object.keys(settings).length === 0){
   settings.waterDuration = 3.5;
 }
 
-module.exports = settings;
+module.exports.config = settings;
+module.exports.observe = observer
