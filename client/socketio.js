@@ -6,7 +6,7 @@ module.exports = (function(){
   var URI = "https://envidash.herokuapp.com/";
   var demoURI = "http://localhost:3000";
 
-  var socket = require('socket.io-client')(demoURI);
+  var socket = require('socket.io-client')(URI);
 
   socket.on('connect', function(){
     
