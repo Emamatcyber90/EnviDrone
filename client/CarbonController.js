@@ -9,6 +9,7 @@ module.exports = (function(){
   var PIN = 7;
   var moment = require('moment');
   var settings = require('../config');
+  var socket = require('./socketio');
 
   var cozirDriver = require('./cozirDriver');
   var sensor = new cozirDriver({
@@ -26,11 +27,14 @@ module.exports = (function(){
 
       switch(objType){
         case "t":
+          socket.emit('temp', { temp: data["t"]});
           break;
         case "h":
+          socket.emit('humidity', { humidity: data["h"]});
           HumidityController(data);
           break;
         case "co2":
+          socket.emit('carbon', { carbon: data["co2"]});
           coController(data);
           break;
       }

@@ -1,15 +1,18 @@
 module.exports = (function(){
   var settings = require('../config');
   var shell = require('shelljs');
-  var UUID = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
+  settings.id = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout || 'DemoNode';
 
-  var socket = require('socket.io-client')('https://envidash.herokuapp.com/');
+  var URI = "https://envidash.herokuapp.com/";
+  var demoURI = "http://localhost:3000";
+
+  var socket = require('socket.io-client')(demoURI);
 
   socket.on('connect', function(){
-    settings.id = UUID;
-    emit('settings', settings);
+    
+    emit('register', { id: settings.id });
 
-    sendSettings();
+    //sendSettings();
   });
 
   socket.on('disconnect', function(){
@@ -30,8 +33,8 @@ module.exports = (function(){
 
 
   var emit = function(key, value){
-      console.log(key, value);
 
+      value.id = settings.id;
       socket.emit(key, value);
   }
 
