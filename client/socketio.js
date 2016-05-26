@@ -23,6 +23,7 @@ module.exports = (function(){
   function sendSettings(){
     setTimeout(function(){
       emit('settings', settings);
+      sendSettings();
     }, 10000)
     
   }
