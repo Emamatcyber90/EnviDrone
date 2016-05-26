@@ -4,16 +4,14 @@ module.exports = (function(){
   var UUID = shell.exec('sudo blkid -s UUID -o value /dev/mmcblk0p2', {silent:true}).stdout;
 
   var socket = require('socket.io-client')('https://envidash.herokuapp.com/');
-  var isConnected = false;
 
   socket.on('connect', function(){
-    isConnected = true;
     settings.id = UUID;
     emit('settings', settings);
   });
 
   socket.on('disconnect', function(){
-    isConnected = false;
+
   });
 
   socket.on('update settings', function(data){
@@ -21,11 +19,9 @@ module.exports = (function(){
   });
 
   var emit = function(key, value){
-    if(isConnected){
       console.log(key, value);
 
       socket.emit(key, value);
-    }
   }
 
   return {
