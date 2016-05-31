@@ -13,7 +13,7 @@ module.exports = (function(){
 
   var analyze = function(data){
     
-    if(settings.config.humidity >= data['h']){
+    if(data['h'] >=settings.config.humidity){
       ON();
     }else{
       OFF();
