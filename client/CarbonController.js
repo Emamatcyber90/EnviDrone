@@ -48,12 +48,13 @@ module.exports = (function(){
     var hour = moment(new Date()).format('HH');
 
     if(!hour >= settings.config.lightOn || !hour <= settings.config.lightOff){
-      if(data["co2"] <= settings.config.carbon){
+      if(data["co2"] <= settings.config.carbon && data["co2"] != 0){
         coON();
-        FanController.off();
+        
       }else{
         coOFF();
       }
+      FanController.off();
     }else{
       if(data["co2"] >= 500){
         coOFF();
