@@ -50,7 +50,6 @@ module.exports = (function(){
     if(!hour >= settings.config.lightOn || !hour <= settings.config.lightOff){
       if(data["co2"] <= settings.config.carbon && data["co2"] != 0){
         coON();
-        
       }else{
         coOFF();
       }
