@@ -1,7 +1,7 @@
 module.exports = (function(){
   var settings = require('../config');
   var shell = require('shelljs');
-  settings.config.id = shell.exec("ifconfig eth0 | awk '/HWaddr/ {print $5}'", {silent:true}).stdout.replace("\n", "").stdout.replace(":", "") || 'DemoNode';
+  settings.config.id = shell.exec("ifconfig eth0 | awk '/HWaddr/ {print $5}'", {silent:true}).stdout.replace("\n", "").replace(":", "") || 'DemoNode';
   
   var URI = "https://envidash.herokuapp.com/";
   var demoURI = "http://localhost:3000";
