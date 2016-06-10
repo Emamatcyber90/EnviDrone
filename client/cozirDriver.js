@@ -25,7 +25,7 @@ module.exports = (function(){
 
           //Emit and Pass data to controllers
           
-          coController(out.z);
+          CarbonController(out.z);
           HumidityController(out.humidity);
 
           socket.emit('temp', { temp: out.temp});
