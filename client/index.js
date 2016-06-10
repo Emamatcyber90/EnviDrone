@@ -9,9 +9,9 @@ function Init(){
   var socket = require('./socketio');
   
   /*
-  Initiate Carbon & Humidity System
+  Initiate Driver Carbon, Humidity & Temp System
    */
-  var CarbonController = require('./CarbonController');
+  var cozirDriver = require('./cozirDriver');
 
   /*
   Initiate Watering System 

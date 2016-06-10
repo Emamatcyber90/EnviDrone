@@ -1,122 +1,44 @@
-"use strict";
-
-module.exports = (function() {
-  var console = { log: require("debug")("COZIRDriver") }
-  var util = require("util");
+module.exports = (function(){
   var serialModule = require("serialport");
+  var port = "/dev/ttyAMA0";
   var delimiter = "\r\n";
-  var eventEmitter = require('events').EventEmitter;
+  var socket = require('./socketio');
 
-  function cozir(config) {
-    eventEmitter.call(this);
+  var FanController = require('./FanController');
+  var HumidityController = require('./HumidityController');
+  var CarbonController = require('./CarbonController');
 
-    this._config = config;
-    this._serialPort = null;
-    this._timer = 0;
-    this._co2 = 0;
-    this._temperature = 0;
-    this._humidity = 0;
-  }
+  serialPort = new serialModule.SerialPort(port, { parser: serialModule.parsers.readline(delimiter), baudrate: 9600}, false);
+  
+  serialPort.open(function(err) {
+    serialPort.on("data", function (data) {
+      if (typeof data !== "undefined" && data !== null) {
+        data = data.split(" ");
 
-  util.inherits(cozir, eventEmitter);
+        if (data[1] == "H"){
+          //[ '', 'H', '00523', 'T', '01251', 'Z', '02001', 'z', '02001' ]
+          var out = {};
+          out.humidity = parseInt(data[2])/10;
+          out.temp = (parseInt(data[4]) - 1000) / 10;
+          out.z = parseInt(data[6]);
 
-  cozir.prototype.start = function() {
-    var self = this;
 
-    this._serialPort = new serialModule.SerialPort(this._config.port, { parser: serialModule.parsers.readline(delimiter), baudrate: 9600}, false);
+          //Emit and Pass data to controllers
+          
+          coController(out.z);
+          HumidityController(out.humidity);
 
-    this._serialPort.open(function(err) {
-      if (typeof err !== "undefined" && err !== null) {
-        console.log("cozir - failed to open port " + self._config.port + " - " + JSON.stringify(err));
-      } else {
-        console.log("cozir - opened port");
+          socket.emit('temp', { temp: out.temp});
+          socket.emit('humidity', { humidity: out.humidity});
+          socket.emit('carbon', { carbon: out.z});
 
-        self._serialPort.on("error", function(e) {
-          console.log("cozir - port error: " + JSON.stringify(e));
-        });
-
-        self._serialPort.on("data", function (data) {
-          if (typeof data !== "undefined" && data !== null) {
-            console.log("cozir: " + data);
-            onDataReceived.call(self, data);
-          }
-        });
-
-        // Request configuration (sometimes required to get unit to listen to operating mode request.
-        setTimeout(function() { self._serialPort.write("*\r\n"); }, 1000);
-
-        // Set 'poll' operating mode.
-        setTimeout(function() { self._serialPort.write("K 2\r\n"); }, 5000);
+          console.log(out);
+        }
       }
     });
-  };
 
-  cozir.prototype.stop = function() {
-    if (this._serialPort !== null) {
-      this._serialPort.close();
-      this._serialPort = null;
-    }
-  };
 
-  var startPolling = function() {
-    if (this._timer === 0) {
-      //this._timer = setInterval(poll.bind(this), this._config.cozirPollInterval*60*1000);
-      this._timer = setInterval(poll.bind(this), 2*1000);
-    }
-  };
-
-  var poll = function() {
-    var self = this;
-
-    // ToDo - review sequencing.
-    setTimeout(function() { self._serialPort.write("Z\r\n"); }, 500);
-    setTimeout(function() { self._serialPort.write("T\r\n"); }, 5500);
-    setTimeout(function() { self._serialPort.write("H\r\n"); }, 10500);
-  };
-
-  var handleCO2 = function(data) {
-    var co2 = parseInt(data.substr(2));
-    if (co2 !== this._co2) {
-      this._co2 = co2;
-      this.emit("data", this._config.feedId, "co2", { timestamp: Date.now(), co2: co2 });
-    }
-  };
-
-  var handleHumidity = function(data) {
-    var humidity = parseInt(data.substr(2))/10;
-    if (humidity !== this._humidity) {
-      this._humidity = humidity;
-      this.emit("data", this._config.feedId, "h", { timestamp: Date.now(), humidity: humidity });
-    }
-  };
-
-  var handleTemperature = function(data) {
-    var temp = (parseInt(data.substr(2)) - 1000) / 10;
-    if (temp !== this._temperature) {
-      this._temperature = temp;
-      this.emit("data", this._config.feedId, "t", { timestamp: Date.now(), temperature: temp});
-    }
-  };
-
-  var onDataReceived = function(data) {
-    switch (data[1]) {
-      case "Z":
-        handleCO2.call(this,data);
-        break;
-      case "T":
-        handleTemperature.call(this,data);
-        break;
-      case "H":
-        handleHumidity.call(this,data);
-        break;
-      case "K":
-        startPolling.call(this);
-        break;
-      default:
-        console.log("ignoring data: " + data);
-        break;
-    }
-  };
-
-  return cozir;
-}());
+    setTimeout(function() { serialPort.write("*\r\n"); }, 1000);
+    setTimeout(function() { serialPort.write("K 1\r\n"); }, 5000);
+  });
+})();
