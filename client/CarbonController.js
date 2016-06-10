@@ -53,6 +53,7 @@ module.exports = (function(){
       }else{
         coOFF();
       }
+      
       FanController.off();
     }else{
       if(data["co2"] >= 500 ){
