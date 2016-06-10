@@ -9,6 +9,7 @@ module.exports = (function(){
   var PIN = 7;
   var moment = require('moment');
   var settings = require('../config');
+  var FanController = require('./FanController');
 
   function coController(data){
     var hour = moment(new Date()).format('HH');

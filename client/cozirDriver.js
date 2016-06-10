@@ -4,7 +4,6 @@ module.exports = (function(){
   var delimiter = "\r\n";
   var socket = require('./socketio');
 
-  var FanController = require('./FanController');
   var HumidityController = require('./HumidityController');
   var CarbonController = require('./CarbonController');
 
