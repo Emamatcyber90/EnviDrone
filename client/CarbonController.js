@@ -37,4 +37,6 @@ module.exports = (function(){
   function coOFF(){
     gpio(PIN, true);
   }
+
+  return coController;
 })();
