@@ -2,14 +2,15 @@ module.exports = (function(){
   var settings = require('../config');
   var shell = require('shelljs');
   settings.config.id = shell.exec("ifconfig eth0 | awk '/HWaddr/ {print $5}'", {silent:true}).stdout.replace("\n", "").replace(/:/g, "") || 'DemoNode';
-  
+
+  ifconfig eth0 | awk '/inet addr:/ {print $2}'
   var URI = "https://envidash.herokuapp.com/";
   var demoURI = "http://localhost:3000";
 
   var socket = require('socket.io-client')(URI);
 
   socket.on('connect', function(){
-    
+    //settings.config.ip = shell.exec("ifconfig eth0 | awk '/HWaddr/ {print $5}'", {silent:true}).stdout.replace("\n", "").replace(/:/g, "")
     emit('register', settings.config);
 
     //sendSettings();
