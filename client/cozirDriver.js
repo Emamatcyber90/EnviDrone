@@ -66,14 +66,12 @@ var cozirFunction = function() {
                     socket.emit('carbon', {
                         carbon: out.z
                     });
-
-
                 }
             }
         });
     });
+    
+    setTimeout(prep, 1000);
 };
-
-setTimeout(prep, 1000);
 
 module.exports = cozirFunction;
