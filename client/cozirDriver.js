@@ -1,4 +1,4 @@
-var cozirFunction = (function() {
+var cozirFunction = function() {
     var serialModule = require("serialport");
     var port = "/dev/ttyS0";
     var delimiter = "\r\n";
@@ -72,6 +72,6 @@ var cozirFunction = (function() {
     });
     
     setTimeout(prep, 1000);
-})();
+};
 
 module.exports = cozirFunction;
