@@ -23,8 +23,8 @@ if (Object.keys(settings).length === 0) {
     //Create default settings
     settings.carbon = 0;
     settings.humidity = 40;
-    settings.offTime = moment(offTime)->format("HH:mm");
-    settings.lightOn = moment(lightOn)->format("HH:mm");
+    settings.offTime = moment(offTime).format("HH:mm");
+    settings.lightOn = moment(lightOn).format("HH:mm");
     settings.lightOff = 0;
     settings.fanOnStep = 800;
     settings.tmpStep = 110;
