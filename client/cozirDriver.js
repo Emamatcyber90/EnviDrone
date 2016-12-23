@@ -15,7 +15,7 @@ var cozirFunction = function() {
     }, false);
 
     function prep() {
-        //console.log('Prep');
+        console.log('Prep COZIR');
         serialPort.write("*\r\n");
         setTimeout(setCommandMode, 1000);
         setTimeout(disableAutoCalibrate, 6000);
