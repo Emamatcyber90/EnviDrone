@@ -1,31 +1,44 @@
 module.exports = (function() {
-  var gpio = require('./relay').Relay;
-  var PINONE = 16;
-  var PINTWO = 18;
-  var moment = require('moment');
-  var settings = require('../config');
+    var gpio = require('./relay').Relay;
+    var PINONE = 16;
+    var PINTWO = 18;
+    var settings = require('../config');
+    var moment = require('moment')
 
-  function lightController() {
-    var hour = moment(new Date()).format('HH');
-
-    if (!hour >= settings.config.lightOn || !hour <= settings.config.lightOff) {
-      ON();
-    } else {
-      OFF();
+    function timeFilter(time) {
+        var res = time.split(":")
+        var m = moment();
+        var minute = res[1] ? res[1] : 0
+        m.set({
+            hour: res[0],
+            minute: minute,
+            second: 0,
+            millisecond: 0
+        })
+        return m.format()
     }
 
-    setTimeout(lightController, 1000);
-  }
+    function lightController() {
+        var time = moment().format();
 
-  function ON() {
-    gpio(PINONE, false);
-    gpio(PINTWO, false);
-  }
+        if (timeFilter(settings.config.lightOn) <= time && time < timeFilter(settings.config.offTime)) {
+            ON(); //between7
+        } else {
+            OFF(); //notBetween7
+        }
 
-  function OFF() {
-    gpio(PINONE, true);
-    gpio(PINTWO, true);
-  }
+        setTimeout(lightController, 1000);
+    }
 
-  return lightController;
+    function ON() {
+        gpio(PINONE, false);
+        gpio(PINTWO, false);
+    }
+
+    function OFF() {
+        gpio(PINONE, true);
+        gpio(PINTWO, true);
+    }
+
+    lightController();
 })();

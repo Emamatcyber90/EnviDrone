@@ -1,32 +1,32 @@
-module.exports = (function () {
+module.exports = (function() {
 
-  var configInstance;
+    var configInstance;
 
-  function intialize () {
+    function intialize() {
 
-    function load() {
-      // underlying printer mechanics
-    }
+        function load() {
+            // underlying printer mechanics
+        }
 
-    function turnOn() {
-      // warm up
-      // check for paper
+        function turnOn() {
+            // warm up
+            // check for paper
+        }
+
+        return {
+            // public + private states and behaviors
+            print: print,
+            turnOn: turnOn
+        };
     }
 
     return {
-      // public + private states and behaviors
-      print: print,
-      turnOn: turnOn
+        getInstance: function() {
+            if (!configInstance) {
+                configInstance = intialize();
+            }
+            return configInstance;
+        }
     };
-  }
-
-  return {
-    getInstance: function() {
-      if(!configInstance) {
-        configInstance = intialize();
-      }
-      return configInstance;
-    }
-  };
 
 })();

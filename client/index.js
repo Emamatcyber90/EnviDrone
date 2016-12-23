@@ -1,27 +1,29 @@
 var settings = require('../config');
 
 function Init() {
-  console.log('All systems ready, intiiating controllers.');
+    console.log('All systems ready, intiiating controllers.');
 
-  /**
-   * Initiate Socket IO
-   */
-  var socket = require('./socketio');
 
-  /*
-  Initiate Driver Carbon, Humidity & Temp System
-   */
-  var cozirDriver = require('./cozirDriver');
+    /**
+     * Initiate Socket IO
+     */
+    var socket = require('./socketio');
 
-  /*
-  Initiate Watering System
-   */
-  var WaterController = require('./WaterController');
+    /*
+    Initiate Driver Carbon, Humidity & Temp System
+     */
+    var cozirDriver = require('./cozirDriver');
 
-  /*
-  Initiate Light Timer
-   */
-  var LightController = require('./LightController');
+    /*
+    Initiate Watering System
+     */
+    var WaterController = require('./WaterController');
+
+    /*
+    Initiate Light Timer
+     */
+    var LightController = require('./LightController');
+
 }
 
 /*

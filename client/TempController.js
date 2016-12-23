@@ -1,23 +1,21 @@
 module.exports = (function() {
     var gpio = require('./relay').Relay;
-    var PIN = 13;
     var settings = require('../config');
-
-    var ON = function() {
-        gpio(PIN, false);
-    }
+    var PINONE = 16;
+    var PINTWO = 18;
 
     var OFF = function() {
-        gpio(PIN, true);
+        gpio(PINONE, true);
+        gpio(PINTWO, true);
     }
 
     var analyze = function(data) {
+        var tmp = (data.temp * 9 / 5) + 32;
 
-        if (data >= settings.config.humidity) {
-            ON();
-        } else {
+        if (tmp >= settings.config.tmpStep) {
             OFF();
         }
+
     }
 
     return analyze;

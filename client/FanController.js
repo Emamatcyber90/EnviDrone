@@ -1,18 +1,18 @@
-module.exports = (function(){
-  var gpio = require('./relay').Relay;
-  var PIN = 15;
+module.exports = (function() {
+    var gpio = require('./relay').Relay;
+    var PIN = 15;
 
-  var fanON = function(){
-    gpio(PIN, false);
-  }
+    var fanON = function() {
+        gpio(PIN, false);
+    }
 
-  var fanOFF = function(){
-    gpio(PIN, true);
-  }
+    var fanOFF = function() {
+        gpio(PIN, true);
+    }
 
-  return {
-    on: fanON,
-    off: fanOFF
-  };
+    return {
+        on: fanON,
+        off: fanOFF
+    };
 
 })();
