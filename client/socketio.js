@@ -2,6 +2,8 @@ module.exports = (function() {
     var moment = require('moment')
     var settings = require('../config');
     var shell = require('shelljs');
+    var FormatTime = require('./TimeService').FormatTime;
+    var SetTime = require('./TimeService').SetTime;
     settings.config.id = shell.exec("ifconfig eth0 | awk '/HWaddr/ {print $5}'", {
         silent: true
     }).stdout.replace("\n", "").replace(/:/g, "") || 'DemoNode';
@@ -24,21 +26,16 @@ module.exports = (function() {
 
     });
 
-    function setTime(start, houre) {
-        var date = new Date()
-        date = (date.getMonth()+1) + "-" + date.getDate() + "-" + date.getFullYear() 
-        var time = new Date(date + " " + start + ':00:00');
-        time = new Date(time.getTime() + houre * 3600 * 1000);
-        return moment(time).format("HH:mm");
-    }
+    
 
     socket.on('update settings', function(data) {
         console.log('***** Data Update *****', data);
         if (data.id == settings.config.id) {
             settings.config.carbon = data.carbon;
             settings.config.humidity = data.humidity;
-            settings.config.lightOn = setTime(data.lightOn, 0);
-            settings.config.offTime = setTime(data.lightOn, parseInt(data.lightOff));
+            settings.config.lightOn = data.lightOn;
+            settings.config.offTime = SetTime(data.lightOn, parseInt(data.lightOff));
+            settings.config.onTime =  SetTime(data.lightOn, 0);
             settings.config.lightOff = data.lightOff;
             settings.config.waterCycle = data.waterCycle;
             settings.config.fanOnStep = data.fanOnStep;

@@ -2,24 +2,27 @@
 var observer;
 var moment = require('moment')
 var bjson = require('bjson'),
-    settings = bjson('settings', function(observe) {
+    var FormatTime = require('../client/TimeService').FormatTime;
+var SetTime = require('../client/TimeService').SetTime;
+settings = bjson('settings', function(observe) {
 
-        observer = observe;
-        observe.on('change', function(changes) {
-            console.log('Path:', changes.path);
-            console.log('Old Value:', changes.oldValue);
-            console.log('New Value:', changes.value);
-            console.log('-----');
-        })
-    });
+    observer = observe;
+    observe.on('change', function(changes) {
+        console.log('Path:', changes.path);
+        console.log('Old Value:', changes.oldValue);
+        console.log('New Value:', changes.value);
+        console.log('-----');
+    })
+});
 
 
 if (Object.keys(settings).length === 0) {
     //Create default settings
     settings.carbon = 0;
     settings.humidity = 40;
-    settings.offTime = "07:00";
-    settings.lightOn = "20:00";
+    settings.lightOn = "20";
+    settings.offTime = SetTime("20", 11);
+    settings.onTime = SetTime("20", 0);
     settings.lightOff = 11;
     settings.fanOnStep = 800;
     settings.tmpStep = 110;

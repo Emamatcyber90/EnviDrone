@@ -12,7 +12,7 @@ function Init() {
     /*
     Initiate Driver Carbon, Humidity & Temp System
      */
-    var cozirDriver = require('./cozirDriver')();
+    var cozirDriver = require('./cozirDriver');
 
     /*
     Initiate Watering System
