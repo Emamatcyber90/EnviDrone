@@ -1,10 +1,10 @@
 "use strict";
 var observer;
 var moment = require('moment')
-var bjson = require('bjson'),
-    var FormatTime = require('../client/TimeService').FormatTime;
+var FormatTime = require('../client/TimeService').FormatTime;
 var SetTime = require('../client/TimeService').SetTime;
-settings = bjson('settings', function(observe) {
+var bjson = require('bjson');
+var settings = bjson('settings', function(observe) {
 
     observer = observe;
     observe.on('change', function(changes) {
