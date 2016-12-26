@@ -6,7 +6,7 @@ module.exports = (function() {
     var moment = require('moment')
 
     function lightController() {
-        var time = moment().format();
+        var time = moment().format("HH:mm");
 
         if (settings.config.onTime <= time && time < settings.config.offTime) {
             ON(); //between7

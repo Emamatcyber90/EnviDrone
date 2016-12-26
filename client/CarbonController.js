@@ -12,7 +12,7 @@ module.exports = (function() {
     var FanController = require('./FanController');
 
     var coController = function(data) {
-        var time = moment().format();
+        var time = moment().format("HH:mm");
 
         if (settings.config.onTime <= time && time < settings.config.offTime) {
             lightOn(data);

@@ -18,7 +18,7 @@ function SetTime(start, houre) {
     date = (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear()
     var time = new Date(date + " " + start + ':00:00');
     time = new Date(time.getTime() + houre * 3600 * 1000);
-    return moment(time).format();
+    return moment(time).format("HH:mm");
 }
 
 module.exports.FormatTime = FormatTime;
