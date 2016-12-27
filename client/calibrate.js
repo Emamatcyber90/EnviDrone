@@ -1,4 +1,4 @@
-module.exports = (function() {
+var calibrate = function() {
     var serialModule = require("serialport");
     var port = "/dev/ttyS0";
     var delimiter = "\r\n";
@@ -35,4 +35,6 @@ module.exports = (function() {
         //setCommandMode();
         prep();
     });
-})();
+};
+
+module.exports = calibrate;

@@ -1,4 +1,4 @@
-module.exports = (function() {
+var config = function() {
 
     var configInstance;
 
@@ -29,4 +29,6 @@ module.exports = (function() {
         }
     };
 
-})();
+};
+
+module.exports = config;

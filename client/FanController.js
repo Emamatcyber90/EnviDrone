@@ -1,4 +1,4 @@
-module.exports = (function() {
+var fan = function() {
     var gpio = require('./relay').Relay;
     var PIN = 15;
 
@@ -15,4 +15,6 @@ module.exports = (function() {
         off: fanOFF
     };
 
-})();
+};
+
+module.exports = fan;

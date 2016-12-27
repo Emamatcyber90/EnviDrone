@@ -4,12 +4,12 @@
   timeTo 7
   maxCarbon 1500 //Lights off time
 */
-module.exports = (function() {
+var carbon = function() {
     var gpio = require('./relay').Relay;
     var moment = require('moment')
     var PIN = 7;
     var settings = require('../config');
-    var FanController = require('./FanController');
+    var FanController = require('./FanController')();
 
     var coController = function(data) {
         var time = moment().format("HH:mm");
@@ -37,15 +37,16 @@ module.exports = (function() {
         }
         coOFF();
     }
-}
 
-function coON() {
-    gpio(PIN, false);
-}
+    function coON() {
+        gpio(PIN, false);
+    }
 
-function coOFF() {
-    gpio(PIN, true);
-}
+    function coOFF() {
+        gpio(PIN, true);
+    }
 
-return coController;
-})();
+    return coController;
+};
+
+module.exports = carbon;

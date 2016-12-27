@@ -1,4 +1,4 @@
-module.exports = (function() {
+var temp = function() {
     var gpio = require('./relay').Relay;
     var settings = require('../config');
     var PINONE = 16;
@@ -20,4 +20,6 @@ module.exports = (function() {
 
     return analyze;
 
-})();
+};
+
+module.exports = temp;

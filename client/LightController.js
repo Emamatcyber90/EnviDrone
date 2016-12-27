@@ -1,4 +1,4 @@
-module.exports = (function() {
+var light = function() {
     var gpio = require('./relay').Relay;
     var PINONE = 16;
     var PINTWO = 18;
@@ -28,4 +28,6 @@ module.exports = (function() {
     }
 
     lightController();
-})();
+};
+
+module.exports = light;

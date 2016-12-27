@@ -1,4 +1,4 @@
-module.exports = (function() {
+var socketio = function() {
     var moment = require('moment')
     var settings = require('../config');
     var shell = require('shelljs');
@@ -76,4 +76,6 @@ module.exports = (function() {
     return {
         emit: emit
     }
-})();
+};
+
+module.exports = socketio

@@ -1,4 +1,4 @@
-module.exports = (function() {
+var humidity = function() {
     var gpio = require('./relay').Relay;
     var PIN = 13;
     var settings = require('../config');
@@ -22,4 +22,6 @@ module.exports = (function() {
 
     return analyze;
 
-})();
+};
+
+module.exports = humidity;

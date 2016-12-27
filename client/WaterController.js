@@ -1,4 +1,4 @@
-module.exports = (function() {
+var water = function() {
     var gpio = require('./relay').Relay;
     var settings = require('../config');
     var PIN = 11;
@@ -42,4 +42,6 @@ module.exports = (function() {
             clearTimers();
         }
     });
-})();
+};
+
+module.exports = water;
