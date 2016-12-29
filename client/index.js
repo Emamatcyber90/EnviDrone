@@ -23,7 +23,7 @@ function Init() {
     Initiate Light Timer
      */
     var LightController = require('./LightController')();
-
+    console.log(LightController)
 }
 
 /*

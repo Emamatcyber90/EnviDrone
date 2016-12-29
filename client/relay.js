@@ -21,7 +21,6 @@ function Init(cb) {
 }
 
 function Relay(p, v) {
-    //console.log('Set ', p, v);
     gpio.write(p, v, writeErrorHandle.bind(null, p, v));
 }
 

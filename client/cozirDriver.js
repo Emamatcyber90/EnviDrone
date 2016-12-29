@@ -9,6 +9,12 @@ var cozirFunction = function() {
     var TempController = require('./TempController')()
     var lastReading = {};
 
+    var olds = {
+        'temp': 0,
+        'humidity': 0,
+        'carbon': 0
+    }
+
     serialPort = new serialModule.SerialPort(port, {
         parser: serialModule.parsers.readline(delimiter),
         baudrate: 9600
@@ -37,6 +43,15 @@ var cozirFunction = function() {
         serialPort.write("@ 0\r\n");
     }
 
+    function calcuateSocket(keyName, area, newValue) {
+        if ((olds[keyName] - area) > newValue || (olds[keyName] + area) + newValue) {
+            olds[keyName] = newValue;
+            return true
+        } else {
+            olds[keyName] = newValue;
+        }
+    }
+
     serialPort.open(function(err) {
         serialPort.on("data", function(data) {
             //console.log('Raw Data', data);
@@ -56,21 +71,26 @@ var cozirFunction = function() {
                     CarbonController(out.z);
                     HumidityController(out.humidity);
                     TempController(out.temp);
-
-                    socket.emit('temp', {
-                        temp: out.temp
-                    });
-                    socket.emit('humidity', {
-                        humidity: out.humidity
-                    });
-                    socket.emit('carbon', {
-                        carbon: out.z
-                    });
+                    if (calcuateSocket("temp", 1, out.temp)) {
+                        socket.emit('temp', {
+                            temp: out.temp
+                        });
+                    }
+                    if (calcuateSocket("humidity", 1, out.humidity)) {
+                        socket.emit('humidity', {
+                            humidity: out.humidity
+                        });
+                    }
+                    if (calcuateSocket("carbon", 50, out.z)) {
+                        socket.emit('carbon', {
+                            carbon: out.z
+                        });
+                    }
                 }
             }
         });
     });
-    
+
     setTimeout(prep, 1000);
 };
 
