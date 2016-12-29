@@ -7,7 +7,7 @@ var light = function() {
 
     function lightController() {
         var time = moment().format("HH:mm");
-
+        console.log(settings.config.onTime <= time && time < settings.config.offTime)
         if (settings.config.onTime <= time && time < settings.config.offTime) {
             ON(); //between7
         } else {
