@@ -13,6 +13,15 @@ function FormatTime(time) {
     return m.format()
 }
 
+function CreateStartEnd(start, end) {
+    var startDate = FormatTime(start);
+    var endDate = FormatTime(end)
+    if(startDate > endDate) {
+        endDate = moment(endDate).add('days', 1).format()
+    }
+    return {"start": startDate, "end": endDate}
+}
+
 function SetTime(start, houre) {
     var date = new Date()
     date = (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear()
@@ -23,3 +32,4 @@ function SetTime(start, houre) {
 
 module.exports.FormatTime = FormatTime;
 module.exports.SetTime = SetTime;
+module.exports.CreateStartEnd = CreateStartEnd;
