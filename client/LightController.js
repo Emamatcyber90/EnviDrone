@@ -6,9 +6,9 @@ var light = function() {
     var moment = require('moment')
 
     function lightController() {
-        var time = moment().format("HH:mm");
-        console.log(settings.config.onTime <= time && time < settings.config.offTime)
-        if (settings.config.onTime <= time && time < settings.config.offTime) {
+        var time = moment().format();
+        var dates = CreateStartEnd(settings.config.onTime, settings.config.offTime);
+        if (dates["start"] <= time && time < dates["off"]) {
             ON(); //between7
         } else {
             OFF(); //notBetween7
