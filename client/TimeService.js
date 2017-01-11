@@ -13,21 +13,6 @@ function FormatTime(time) {
     return m.format()
 }
 
-function CreateStartEnd(start, end, endInterval) {
-    var startDate = FormatTime(start);
-    var endDate = FormatTime(end)
-    if (startDate > endDate) {
-        endDate = moment(endDate).add('days', 1).format()
-    }
-
-    startDate = new Date(startDate)
-    startDate = moment(startDate.setTime(startDate.getTime() - endInterval)).format()
-    return {
-        "start": startDate,
-        "end": endDate
-    }
-}
-
 function checkDroneStatus(time, houre, now) {
     var now = moment(moment().format('M-D-YY') + ' ' + now + ':00:00').hours();
     var start = moment(moment().format('M-D-YY') + ' ' + time + ':00:00').hours();
@@ -52,4 +37,3 @@ function SetTime(start, houre) {
 module.exports.FormatTime = FormatTime;
 module.exports.SetTime = SetTime;
 module.exports.CheckDroneStatus = CheckDroneStatus;
-module.exports.CreateStartEnd = CreateStartEnd;
