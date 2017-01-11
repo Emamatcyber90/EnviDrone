@@ -7,7 +7,7 @@ var light = function() {
     var CheckDroneStatus = require('./TimeService').CheckDroneStatus;
 
     function lightController() {
-        console.log("--------------------",CheckDroneStatus(settings.config.onTime, settings.config.offTime, time))
+        console.log("--------------------",CheckDroneStatus(settings.config.onTime, settings.config.offTime))
         console.log("+++++++++++++++++++++++++", settings.config.onTime, settings.config.offTime)
         if (CheckDroneStatus(settings.config.onTime, settings.config.offTime)) {
             ON(); //between7
