@@ -17,6 +17,7 @@ function CheckDroneStatus(time, houre, now) {
     var now = moment(moment().format('M-D-YY') + ' ' + now + ':00:00').hours();
     var start = moment(moment().format('M-D-YY') + ' ' + time + ':00:00').hours();
     var end = start + houre - 24;
+    console.log({"start": start, "end": end, "now": now})
     if (now < end && now && start) {
         return true
     } else if (now > start && now > end) {

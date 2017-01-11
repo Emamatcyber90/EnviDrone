@@ -8,6 +8,7 @@ var light = function() {
 
     function lightController() {
         var time = moment().format("HH:mm");
+        console.log("--------------------",CheckDroneStatus(settings.config.onTime, settings.config.offTime, time))
         if (CheckDroneStatus(settings.config.onTime, settings.config.offTime, time)) {
             ON(); //between7
         } else {
