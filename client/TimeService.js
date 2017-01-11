@@ -15,9 +15,13 @@ function FormatTime(time) {
 
 function CheckDroneStatus(time, houre) {
     var now = moment().hours()
-    var start = moment(moment().format('M-D-YY') + ' ' + time + ':00:00').hours();
+    var start = time;
     var end = start + houre - 24;
-    console.log({"start": start, "end": end, "now": now})
+    console.log({
+        "start": start,
+        "end": end,
+        "now": now
+    })
     if (now < end && now && start) {
         return true
     } else if (now > start && now > end) {
