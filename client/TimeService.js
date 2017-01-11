@@ -13,7 +13,7 @@ function FormatTime(time) {
     return m.format()
 }
 
-function checkDroneStatus(time, houre, now) {
+function CheckDroneStatus(time, houre, now) {
     var now = moment(moment().format('M-D-YY') + ' ' + now + ':00:00').hours();
     var start = moment(moment().format('M-D-YY') + ' ' + time + ':00:00').hours();
     var end = start + houre - 24;
