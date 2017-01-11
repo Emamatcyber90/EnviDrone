@@ -10,12 +10,11 @@ var carbon = function() {
     var PIN = 7;
     var settings = require('../config');
     var FanController = require('./FanController')();
-    var CreateStartEnd = require('./TimeService').CreateStartEnd;
+    var CheckDroneStatus = require('./TimeService').CheckDroneStatus;
 
     var coController = function(data) {
-        var time = moment().format();
-        var dates = CreateStartEnd(settings.config.onTime, settings.config.offTime);
-        if (dates["start"] <= time && time < dates["off"]) {
+        var time = moment().format("HH:mm");
+        if (CheckDroneStatus(settings.config.onTime, settings.config.offTime, time)) {
             lightOn(data);
         } else {
             lightOff(data);

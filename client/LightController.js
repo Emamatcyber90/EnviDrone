@@ -4,11 +4,11 @@ var light = function() {
     var PINTWO = 18;
     var settings = require('../config');
     var moment = require('moment')
+    var CheckDroneStatus = require('./TimeService').CheckDroneStatus;
 
     function lightController() {
-        var time = moment().format();
-        var dates = CreateStartEnd(settings.config.onTime, settings.config.offTime);
-        if (dates["start"] <= time && time < dates["off"]) {
+        var time = moment().format("HH:mm");
+        if (CheckDroneStatus(settings.config.onTime, settings.config.offTime, time)) {
             ON(); //between7
         } else {
             OFF(); //notBetween7
