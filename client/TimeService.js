@@ -14,6 +14,7 @@ function FormatTime(time) {
 }
 
 function CheckDroneStatus(time, houre) {
+    console.log("======================", time, houre)
     var now = moment().hours()
     var start = parseInt(time);
     var end = start + parseInt(houre) - 24;
