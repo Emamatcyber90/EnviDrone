@@ -7,27 +7,26 @@ var bjson = require('bjson');
 var settings = bjson('settings', function(observe) {
 
     observer = observe;
-    observe.on('change', function(changes) {
-        console.log('Path:', changes.path);
-        console.log('Old Value:', changes.oldValue);
-        console.log('New Value:', changes.value);
-        console.log('-----');
-    })
+    observe.on('change', function(changes) {})
 });
 
+var newSettings = {
+    "carbon": 0,
+    "humidity": 40,
+    "lightOn": "20",
+    "offTime": SetTime("20", 11),
+    "onTime": SetTime("20", 0),
+    "lightOff": 11,
+    "fanOnStep": 800,
+    "tmpStep": 110,
+    "waterCycle": 120,
+    "waterDuration": 3.5
+}
 
-if (Object.keys(settings).length === 0) {
-    //Create default settings
-    settings.carbon = 0;
-    settings.humidity = 40;
-    settings.lightOn = "20";
-    settings.offTime = SetTime("20", 11);
-    settings.onTime = SetTime("20", 0);
-    settings.lightOff = 11;
-    settings.fanOnStep = 800;
-    settings.tmpStep = 110;
-    settings.waterCycle = 120;
-    settings.waterDuration = 3.5;
+for (var i in newSettings) {
+    if (!settings[i]) {
+        settings[i] = newSettings[i];
+    }
 }
 
 module.exports.config = settings;

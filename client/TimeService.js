@@ -14,23 +14,33 @@ function FormatTime(time) {
 }
 
 function CheckDroneStatus(time, houre) {
-    console.log("======================", time, houre)
-    var now = moment().hours()
-    var start = parseInt(time);
-    var end = start + parseInt(houre) - 24;
-    console.log({
-        "start": start,
-        "end": end,
-        "now": now
-    })
-    if (now < end && now && start) {
-        return true
-    } else if (now > start && now > end) {
-        return true
-    } else {
+    var getTimeHoureMinute = function(t) {
+        return {
+            houre: moment(moment().format('M-D-YY') + ' ' + t + ':00:00').hours(),
+            minute: moment(moment().format('M-D-YY') + ' ' + t + ':00:00').minutes()
+        }
+    }
+
+    var setTimeHoureMinute = function(h, m) {
+        return moment().hours(h).minute(m).format('HH:mm')
+    }
+
+    var now = getTimeHoureMinute(moment().format('HH:mm'));
+    var start = getTimeHoureMinute(time);
+    var end = parseInt(start.houre) + parseInt(houre) - 24;
+
+    now = setTimeHoureMinute(now.houre, now.minute);
+    end = setTimeHoureMinute(end, start.minute);
+    start = setTimeHoureMinute(start.houre, start.minute);
+    if (now < end && now < start) {
         return false
+    } else if (now >= start && now > end) {
+        return false
+    } else {
+        return true
     }
 }
+
 
 function SetTime(start, houre) {
     var date = new Date()

@@ -21,7 +21,6 @@ var cozirFunction = function() {
     }, false);
 
     function prep() {
-        console.log('Prep COZIR');
         serialPort.write("*\r\n");
         setTimeout(setCommandMode, 1000);
         setTimeout(disableAutoCalibrate, 6000);
@@ -29,32 +28,29 @@ var cozirFunction = function() {
     }
 
     function setStreamMode() {
-        //console.log('Stream Mode');
         serialPort.write("K 1\r\n");
     }
 
     function setCommandMode() {
-        //console.log('set Command Mode');
         serialPort.write("K 0\r\n");
     }
 
     function disableAutoCalibrate() {
-        //console.log('disable Auto Calibrate');
         serialPort.write("@ 0\r\n");
     }
 
     function calcuateSocket(keyName, area, newValue) {
-        if ((olds[keyName] - area) > newValue || (olds[keyName] + area) + newValue) {
+        if ((olds[keyName] - area) > newValue || (olds[keyName] + area) < newValue) {
             olds[keyName] = newValue;
             return true
         } else {
             olds[keyName] = newValue;
+            return true
         }
     }
 
     serialPort.open(function(err) {
         serialPort.on("data", function(data) {
-            //console.log('Raw Data', data);
             if (typeof data !== "undefined" && data !== null) {
                 data = data.split(" ");
 
@@ -64,25 +60,21 @@ var cozirFunction = function() {
                     out.humidity = parseInt(data[2]) / 10;
                     out.temp = (parseInt(data[4]) - 1000) / 10;
                     out.z = parseInt(data[6]);
-                    console.log(out);
-
-                    //Emit and Pass data to controllers
-
                     CarbonController(out.z);
                     HumidityController(out.humidity);
                     TempController(out.temp);
                     if (calcuateSocket("temp", 1, out.temp)) {
-                        socket.emit('temp', {
+                        socket.post('/drone/temp', {
                             temp: out.temp
                         });
                     }
                     if (calcuateSocket("humidity", 1, out.humidity)) {
-                        socket.emit('humidity', {
+                        socket.post('/drone/humidity', {
                             humidity: out.humidity
                         });
                     }
                     if (calcuateSocket("carbon", 50, out.z)) {
-                        socket.emit('carbon', {
+                        socket.post('/drone/carbon', {
                             carbon: out.z
                         });
                     }
@@ -90,6 +82,15 @@ var cozirFunction = function() {
             }
         });
     });
+
+    function sendReports() {
+        setTimeout(function() {
+            socket.post("/reports/sendPinsReports", olds);
+            sendReports();
+        }, 300000)
+    };
+
+    sendReports()
 
     setTimeout(prep, 1000);
 };

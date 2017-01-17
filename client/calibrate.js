@@ -15,21 +15,17 @@ var calibrate = function() {
     }
 
     function setCommandMode() {
-        console.log('set Command Mode');
         serialPort.write("K 1\r\n");
     }
 
     function Calibrate() {
-        console.log('Calibration started');
         serialPort.write("U\r\n");
         prep();
     }
 
     serialPort.open(function(err) {
         serialPort.on("data", function(data) {
-            if (typeof data !== "undefined" && data !== null) {
-                console.log(data);
-            }
+            
         });
 
         //setCommandMode();

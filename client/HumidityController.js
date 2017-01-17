@@ -12,7 +12,6 @@ var humidity = function() {
     }
 
     var analyze = function(data) {
-
         if (data >= settings.config.humidity) {
             ON();
         } else {

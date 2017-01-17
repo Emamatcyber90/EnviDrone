@@ -26,27 +26,19 @@ function Relay(p, v) {
 
 function writeErrorHandle(err, p, v) {
     if (err) {
-        //console.log(err, p, v);
         Relay.bind(null, p, v);
-    } else {
-        console.log('Written to pin');
     }
 }
 
 function exitHandler(options, err) {
 
     if (options.cleanup) {
-        console.log('clean');
         gpio.destroy(function() {
-            //console.log("SIGINT");
-            //console.log(allPins)
             allPins.forEach(function(el, index, array) {
                 Relay.bind(null, el, true); //off
             });
         });
     }
-
-    if (err) console.log(err.stack);
 
     if (options.exit) process.exit();
 }
