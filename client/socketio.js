@@ -23,6 +23,7 @@ var socketio = function() {
         var token = 'super_admin_room';
         params["isAdmin"] = 1;
     }
+
     var setSocketConfigs = function() {
         io.sails.environment = 'development';
         io.sails.transports = ['websocket'];
@@ -30,10 +31,12 @@ var socketio = function() {
         io.sails.url = "https://enviserver.kulu.io";
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
-        socket.get("/register", params, function(data) {});
+        
     }
 
-    setSocketConfigs()
+    socket.on("connect", function(data) {
+        socket.get("/register", params, function(data) {});
+    })
 
     var post = function(url, value) {
         value.id = settings.config.id;
@@ -135,28 +138,10 @@ var socketio = function() {
     });
 
     post('/drone/register', settings.config);
-
-    socket.on("disconnect", function(data) {
-        connectAgain()
+    process.on('uncaughtException', (code) => {
+        console.log(`About to exit with code: ${code}`);
     });
 
-    var connectAgain = function() {
-        console.log(1111, conected)
-        socket = io.sails.connect()
-        setTimeout(function() {
-            socket.on("connect", function(data) {
-                return
-            });
-            connectAgain()
-        }, 2000)
-    }
-
-    process.on('exit', function(exit) {
-        post('/drone/turnOff', {
-            id: settings.config.id,
-            status: false
-        });
-    });
     return {
         post: post
     }
