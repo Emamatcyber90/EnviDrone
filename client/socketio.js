@@ -136,23 +136,18 @@ var socketio = function() {
 
     post('/drone/register', settings.config);
 
-    var conected = true;
-
     socket.on("disconnect", function(data) {
-        conected = false
         connectAgain()
     });
 
-    socket.on("connect", function(data) {
-        conected = true
-    });
-
     var connectAgain = function() {
+        console.log(1111, conected)
         socket = io.sails.connect()
         setTimeout(function() {
-            if (!conected) {
-                connectAgain()
-            }
+            socket.on("connect", function(data) {
+                return
+            });
+            connectAgain()
         }, 2000)
     }
 
