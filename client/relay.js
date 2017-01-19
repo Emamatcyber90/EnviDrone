@@ -32,6 +32,7 @@ function writeErrorHandle(err, p, v) {
 
 function exitHandler(options, err) {
 
+console.log(options, err)
     if (options.cleanup) {
         gpio.destroy(function() {
             allPins.forEach(function(el, index, array) {
