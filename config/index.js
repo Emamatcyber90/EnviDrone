@@ -19,7 +19,13 @@ var newSettings = {
     "fanOnStep": 800,
     "tmpStep": 110,
     "waterCycle": 120,
-    "waterDuration": 3.5
+    "waterDuration": 3.5,
+    "statuses": {
+        "light": false,
+        "carbon": false,
+        "water": false,
+        "fan": false
+    }
 }
 
 for (var i in newSettings) {

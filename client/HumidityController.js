@@ -13,8 +13,10 @@ var humidity = function() {
 
     var analyze = function(data) {
         if (data >= settings.config.humidity) {
+            settings.config.statuses['carbon'] = true;
             ON();
         } else {
+            settings.config.statuses['carbon'] = false;
             OFF();
         }
     }

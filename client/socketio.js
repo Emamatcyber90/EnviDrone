@@ -24,7 +24,7 @@ var socketio = function() {
         params["isAdmin"] = 1;
     }
 
-    var apiUsrl = process.env.local ? "http://192.168.0.103:1337" : "https://enviserver.kulu.io";
+    var apiUrl = process.env.local ? "http://192.168.0.103:1337" : "https://enviserver.kulu.io";
 
     var con = false
 
@@ -32,10 +32,11 @@ var socketio = function() {
         io.sails.environment = 'production';
         io.sails.transports = ['websocket'];
         io.sails.useCORSRouteToGetCookie = false;
-        io.sails.url = apiUsrl;
+        io.sails.url = apiUrl;
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
         socket.get("/register", params, function(data) {});
+        con = true
     }
 
     setSocketConfigs()
@@ -57,7 +58,7 @@ var socketio = function() {
     }
 
     sendAgain()
-    
+
     socket.on("disconnect", function(data) {
         con = false
 
@@ -67,7 +68,6 @@ var socketio = function() {
         con = true
 
     })
-
     var post = function(url, value) {
         value.id = settings.config.id;
         value.drone_id = settings.config.id;
@@ -76,6 +76,7 @@ var socketio = function() {
         value.list = settings.config.list
         value.company_id = settings.config.company_id
         value.token = settings.config.token
+        value.statuses = settings.config.statuses
         socket.request({
             method: 'post',
             url: url,
@@ -90,7 +91,7 @@ var socketio = function() {
 
     function sendSettings() {
         setTimeout(function() {
-            post("/drone/settings", settings.config);
+            post("/drone/postSettings", settings.config);
             sendSettings();
         }, 10000)
     };
@@ -98,13 +99,18 @@ var socketio = function() {
     sendSettings()
 
     socket.on("git pull", function(data) {
-        shell.cd('/home/pi/EnviDrone');
-        shell.exec("git pull", {
-            silent: true
-        });
-        shell.exec("sudo pm2 restart 0", {
-            silent: true
-        });
+        if (data.id == settings.config.id) {
+            shell.cd('/home/pi/EnviDrone');
+            shell.exec("git reset --hard", {
+                silent: true
+            });
+            shell.exec("git pull", {
+                silent: true
+            });
+            shell.exec("sudo pm2 restart 0", {
+                silent: true
+            });
+        }
     });
 
     socket.on("getSettings", function(data) {
@@ -162,15 +168,14 @@ var socketio = function() {
     });
 
     socket.on("getActiveDrones", function(data) {
-        if (data.id == settings.config.id) {
-            post('/drone/register', settings.config);
-        }
+        post('/drone/register', settings.config);
     });
 
     post('/drone/register', settings.config);
 
     return {
-        post: post
+        post: post,
+        setSocketConfigs: setSocketConfigs
     }
 };
 

@@ -2,8 +2,6 @@ var cozirFunction = function() {
     var serialModule = require("serialport");
     var port = "/dev/ttyS0";
     var delimiter = "\r\n";
-    var socket = require('./socketio')();
-
     var HumidityController = require('./HumidityController')()
     var CarbonController = require('./CarbonController')()
     var TempController = require('./TempController')()

@@ -22,16 +22,20 @@ var carbon = function() {
 
     function lightOn(data) {
         if (data <= settings.config.carbon && data != 0) {
+            settings.config.statuses['carbon'] = true;
             coON();
         } else {
+            settings.config.statuses['carbon'] = false;
             coOFF();
         }
-
+        
+        settings.config.statuses['fan'] = false;
         FanController.off();
     }
 
     function lightOff(data) {
         if (data >= settings.config.fanOnStep) {
+            settings.config.statuses['fan'] = true;
             FanController.on();
         }
         coOFF();

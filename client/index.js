@@ -4,7 +4,7 @@ function Init() {
     /**
      * Initiate Socket IO
      */
-    // var socket = require('./socketio')();
+    socket = require('./socketio')();
 
     /*
     Initiate Driver Carbon, Humidity & Temp System

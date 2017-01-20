@@ -4,12 +4,16 @@ var water = function() {
     var PIN = 11;
     var timerOff;
     var timerOn;
-
+    var oldValue = false;
+    var newValue = true;
+    
     var waterON = function() {
+        settings.config.statuses['water'] = true;
         gpio(PIN, false);
     }
 
     var waterOff = function() {
+        settings.config.statuses['water'] = false;
         gpio(PIN, true);
     }
 

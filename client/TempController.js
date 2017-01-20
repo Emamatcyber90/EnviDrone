@@ -5,6 +5,7 @@ var temp = function() {
     var PINTWO = 18;
 
     var OFF = function() {
+        settings.config.statuses['light'] = false;
         gpio(PINONE, true);
         gpio(PINTWO, true);
     }
