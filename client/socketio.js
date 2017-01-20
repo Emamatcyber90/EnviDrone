@@ -104,7 +104,7 @@ var socketio = function() {
             shell.exec("git reset --hard", {
                 silent: true
             });
-            shell.exec("git pull", {
+            shell.exec("sudo git pull", {
                 silent: true
             });
             shell.exec("sudo pm2 restart 0", {
