@@ -18,7 +18,6 @@ var temp = function() {
         }
 
     }
-
     return analyze;
 
 };

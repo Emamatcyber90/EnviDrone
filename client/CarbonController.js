@@ -13,7 +13,6 @@ var carbon = function() {
     var CheckDroneStatus = require('./TimeService').CheckDroneStatus;
 
     var coController = function(data) {
-        settings.config['dataaaaaaaaaa'] = data;
         if (CheckDroneStatus(settings.config.lightOn, settings.config.lightOff)) {
             lightOn(data);
         } else {
@@ -22,7 +21,6 @@ var carbon = function() {
     }
 
     function lightOn(data) {
-        settings.config["LighttttONNNNNNN"] = {"dataaa": data, "carbonnn": settings.config.carbon}
         if (data <= settings.config.carbon && data != 0) {
             coON();
         } else {
@@ -32,7 +30,6 @@ var carbon = function() {
     }
 
     function lightOff(data) {
-        settings.config["LighttttOfffffffffff"] = {"dataaa": data, "carbonnn": settings.config.fanOnStep}
         if (data >= settings.config.fanOnStep) {
             FanController.on();
         }
@@ -40,13 +37,11 @@ var carbon = function() {
     }
 
     function coON() {
-        settings.config["Caarbon"] = true;
         settings.config.statuses['carbon'] = true;
         gpio(PIN, false);
     }
 
     function coOFF() {
-        settings.config["Caarbon"] = false;
         settings.config.statuses['carbon'] = false;
         gpio(PIN, true);
     }

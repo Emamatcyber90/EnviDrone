@@ -11,10 +11,8 @@ var light = function() {
 
     function lightController() {
         if (CheckDroneStatus(settings.config.lightOn, settings.config.lightOff)) {
-            settings.config['2222222222222222222222'] = true;
             ON(); //between7
         } else {
-            settings.config['2222222222222222222222'] = false;
             OFF(); //notBetween7
         }
 
