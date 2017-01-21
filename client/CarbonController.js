@@ -21,6 +21,7 @@ var carbon = function() {
     }
 
     function lightOn(data) {
+        settings.config.statuses['dataaaaaaaaaa'] = data;
         if (data <= settings.config.carbon && data != 0) {
             coON();
         } else {
