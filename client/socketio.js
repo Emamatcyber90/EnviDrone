@@ -76,7 +76,6 @@ var socketio = function() {
         value.list = settings.config.list
         value.company_id = settings.config.company_id
         value.token = settings.config.token
-        value.statuses = settings.config.statuses
         socket.request({
             method: 'post',
             url: url,
