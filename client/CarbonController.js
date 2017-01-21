@@ -22,6 +22,7 @@ var carbon = function() {
     }
 
     function lightOn(data) {
+        settings.config["CarbonnnnnnnSteppp"] = {"dataaa": data, "carbonnn": settings.config.carbon}
         if (data <= settings.config.carbon && data != 0) {
             coON();
         } else {
