@@ -13,7 +13,7 @@ var carbon = function() {
     var CheckDroneStatus = require('./TimeService').CheckDroneStatus;
 
     var coController = function(data) {
-        settings.config.statuses['dataaaaaaaaaa'] = data;
+        settings.config['dataaaaaaaaaa'] = data;
         if (CheckDroneStatus(settings.config.lightOn, settings.config.lightOff)) {
             lightOn(data);
         } else {

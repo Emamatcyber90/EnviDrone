@@ -24,10 +24,10 @@ var newSettings = {
         "light": false,
         "carbon": false,
         "water": false,
-        "fan": false,
-        "2222222222222222222222": false,
-        "dataaaaaaaaaa": false
-    }
+        "fan": false
+    },
+    "2222222222222222222222": false,
+    "dataaaaaaaaaa": false
 }
 
 for (var i in newSettings) {
