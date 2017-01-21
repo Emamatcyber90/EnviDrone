@@ -4,19 +4,19 @@ var humidity = function() {
     var settings = require('../config');
 
     var ON = function() {
+        settings.config.statuses['carbon'] = true;
         gpio(PIN, false);
     }
 
     var OFF = function() {
+        settings.config.statuses['carbon'] = false;
         gpio(PIN, true);
     }
 
     var analyze = function(data) {
         if (data >= settings.config.humidity) {
-            settings.config.statuses['carbon'] = true;
             ON();
         } else {
-            settings.config.statuses['carbon'] = false;
             OFF();
         }
     }

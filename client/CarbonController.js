@@ -33,7 +33,6 @@ var carbon = function() {
         if (data >= settings.config.fanOnStep) {
             FanController.on();
         }
-
         coOFF();
     }
 

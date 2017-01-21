@@ -11,10 +11,8 @@ var light = function() {
 
     function lightController() {
         if (CheckDroneStatus(settings.config.lightOn, settings.config.lightOff)) {
-            settings.config.statuses['light'] = true;
             ON(); //between7
         } else {
-            settings.config.statuses['light'] = false;
             OFF(); //notBetween7
         }
 
@@ -23,11 +21,13 @@ var light = function() {
 
 
     function ON() {
+        settings.config.statuses['light'] = true;
         gpio(PINONE, false);
         gpio(PINTWO, false);
     }
 
     function OFF() {
+        settings.config.statuses['light'] = false;
         gpio(PINONE, true);
         gpio(PINTWO, true);
     }
