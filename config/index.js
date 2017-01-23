@@ -23,7 +23,8 @@ var newSettings = {
         "carbon": false,
         "water": false,
         "fan": false
-    }
+    },
+    "version": 0.01
 }
 
 for (var i in newSettings) {
