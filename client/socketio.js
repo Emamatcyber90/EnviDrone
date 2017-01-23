@@ -67,7 +67,7 @@ var socketio = function() {
     sendAgain()
 
     var post = function(url, value) {
-        if(url = "/reports/sendPinsReports") {
+        if(url == "/reports/sendPinsReports") {
             value.light_on = settings.config.statuses.light
         }
         value.id = settings.config.id;
