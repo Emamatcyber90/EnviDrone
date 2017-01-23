@@ -12,9 +12,7 @@ var settings = bjson('settings', function(observe) {
 var newSettings = {
     "carbon": 0,
     "humidity": 40,
-    "lightOn": "20",
-    "offTime": SetTime("20", 11),
-    "onTime": SetTime("20", 0),
+    "lightOn": "20:00",
     "lightOff": 11,
     "fanOnStep": 800,
     "tmpStep": 110,
@@ -32,6 +30,12 @@ for (var i in newSettings) {
     if (!settings[i]) {
         settings[i] = newSettings[i];
     }
+}
+
+if (settings.lightOn.toString().length == 2) {
+    settings.lightOn = settings.lightOn + ":00"
+} else if (settings.lightOn.toString().length == 1) {
+    settings.lightOn = "0" + settings.lightOn + ":00"
 }
 
 module.exports.config = settings;
