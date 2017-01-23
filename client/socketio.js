@@ -61,12 +61,13 @@ var socketio = function() {
 
     socket.on("disconnect", function(data) {
         con = false
+
     })
 
     socket.on("connect", function(data) {
         con = true
-    })
 
+    })
     var post = function(url, value) {
         value.id = settings.config.id;
         value.drone_id = settings.config.id;
@@ -89,22 +90,16 @@ var socketio = function() {
 
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
-            
             shell.cd('/home/pi/EnviDrone');
-
             shell.exec("git reset --hard", {
                 silent: true
             });
-
             shell.exec("sudo git pull", {
                 silent: true
             });
-
             shell.exec("sudo pm2 restart 0", {
                 silent: true
             });
-
-            settings.version = settings.version + 0.01;
         }
     });
 
@@ -167,7 +162,8 @@ var socketio = function() {
     });
 
     post('/drone/register', settings.config);
-
+    post("/drone/postSettings", settings.config);
+    
     return {
         post: post,
         setSocketConfigs: setSocketConfigs
