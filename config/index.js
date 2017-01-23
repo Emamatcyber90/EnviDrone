@@ -24,7 +24,7 @@ var newSettings = {
         "water": false,
         "fan": false
     },
-    "version": 0.01
+    "version": 1
 }
 
 for (var i in newSettings) {

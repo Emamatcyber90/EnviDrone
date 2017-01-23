@@ -36,7 +36,7 @@ var socketio = function() {
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
         socket.get("/register", params, function(data) {});
-        
+
         socket.on("disconnect", function(data) {
             con = false
         })
@@ -67,7 +67,9 @@ var socketio = function() {
     sendAgain()
 
     var post = function(url, value) {
-        console.log(settings)
+        if(url = "/reports/sendPinsReports") {
+            value.light_on = settings.config.statuses.light
+        }
         value.id = settings.config.id;
         value.drone_id = settings.config.id;
         value.name = settings.config.name
@@ -101,7 +103,7 @@ var socketio = function() {
                 silent: true
             });
 
-            settings.config.version = settings.config.version + 0.01;
+            settings.config.version = settings.config.version + 1;
         }
     });
 
