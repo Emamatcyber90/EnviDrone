@@ -36,7 +36,14 @@ var socketio = function() {
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
         socket.get("/register", params, function(data) {});
-        con = true
+        
+        socket.on("disconnect", function(data) {
+            con = false
+        })
+
+        socket.on("connect", function(data) {
+            con = true
+        })
     }
 
     setSocketConfigs()
@@ -59,15 +66,6 @@ var socketio = function() {
 
     sendAgain()
 
-    socket.on("disconnect", function(data) {
-        con = false
-
-    })
-
-    socket.on("connect", function(data) {
-        con = true
-
-    })
     var post = function(url, value) {
         console.log(settings)
         value.id = settings.config.id;
