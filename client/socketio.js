@@ -76,6 +76,7 @@ var socketio = function() {
         value.list = settings.config.list
         value.company_id = settings.config.company_id
         value.token = settings.config.token
+        value.version = settings.config.version
         socket.request({
             method: 'post',
             url: url,
@@ -100,6 +101,8 @@ var socketio = function() {
             shell.exec("sudo pm2 restart 0", {
                 silent: true
             });
+
+            settings.version = settings.version + 0.01;
         }
     });
 
@@ -163,7 +166,7 @@ var socketio = function() {
 
     post('/drone/register', settings.config);
     post("/drone/postSettings", settings.config);
-    
+
     return {
         post: post,
         setSocketConfigs: setSocketConfigs
