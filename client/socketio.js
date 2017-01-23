@@ -29,7 +29,7 @@ var socketio = function() {
     var con = false
 
     var setSocketConfigs = function() {
-        io.sails.environment = 'production';
+        io.sails.environment = 'development';
         io.sails.transports = ['websocket'];
         io.sails.useCORSRouteToGetCookie = false;
         io.sails.url = apiUrl;
