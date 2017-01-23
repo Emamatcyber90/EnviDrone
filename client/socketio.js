@@ -69,6 +69,7 @@ var socketio = function() {
 
     })
     var post = function(url, value) {
+        console.log(settings)
         value.id = settings.config.id;
         value.drone_id = settings.config.id;
         value.name = settings.config.name
@@ -102,7 +103,7 @@ var socketio = function() {
                 silent: true
             });
 
-            settings.version = settings.version + 0.01;
+            settings.config.version = settings.config.version + 0.01;
         }
     });
 
