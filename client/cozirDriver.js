@@ -45,7 +45,7 @@ var cozirFunction = function() {
             settings.config.olds = olds
             return true
         } else {
-            return false
+            return true
         }
     }
 
