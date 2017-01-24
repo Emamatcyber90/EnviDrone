@@ -26,6 +26,8 @@ var socketio = function() {
 
     var apiUrl = process.env.local ? "http://192.168.0.103:1337" : "https://enviserver.kulu.io";
 
+    console.log(apiUrl)
+
     var con = false
 
     var connectEmit = function() {
