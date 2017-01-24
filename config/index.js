@@ -9,5 +9,28 @@ var settings = bjson('settings', function(observe) {
     observe.on('change', function(changes) {})
 });
 
+var newSettings = {
+    "carbon": 0,
+    "humidity": 40,
+    "lightOn": "20:00",
+    "lightOff": 11,
+    "fanOnStep": 800,
+    "tmpStep": 110,
+    "waterCycle": 120,
+    "waterDuration": 3.5,
+    "statuses": {
+        "light": false,
+        "carbon": false,
+        "water": false,
+        "fan": false
+    },
+    "version": 1
+}
+for (var i in newSettings) {
+    if (!settings[i]) {
+        settings[i] = newSettings[i];
+    }
+}
+
 module.exports.config = settings;
 module.exports.observe = observer

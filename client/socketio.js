@@ -103,13 +103,12 @@ var socketio = function() {
 
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
-            settings.config.version = settings.config.version + 0.01;
+            if (settings.config.version) {
+                settings.config.version = settings.config.version + 0.01;
+            }
 
             shell.cd('/home/pi/EnviDrone');
 
-            shell.exec("git reset --hard", {
-                silent: true
-            });
             shell.exec("sudo git pull", {
                 silent: true
             });
