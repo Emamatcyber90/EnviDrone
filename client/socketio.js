@@ -29,6 +29,8 @@ var socketio = function() {
     var con = false
 
     var connectEmit = function() {
+        // checkListAndCompany()
+
         post("/drone/connect", {
             id: settings.config.id
         })
@@ -103,6 +105,7 @@ var socketio = function() {
         value.company_id = settings.config.company_id
         value.token = settings.config.token
         value.version = settings.config.version
+        value.allSettings = settings.config
         socket.request({
             method: 'post',
             url: url,
@@ -118,10 +121,15 @@ var socketio = function() {
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
             if (settings.config.version) {
-                settings.config.version += 0.01;
+                settings.config.version = parseInt(settings.config.version) + 0.01;
             }
 
-            shell.exec("sudo reboot", {
+            shell.cd('/home/pi/EnviDrone');
+
+            shell.exec("sudo git pull", {
+                silent: true
+            });
+            shell.exec("sudo pm2 restart 0", {
                 silent: true
             });
         }
