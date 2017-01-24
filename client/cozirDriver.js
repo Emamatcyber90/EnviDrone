@@ -73,7 +73,7 @@ var cozirFunction = function() {
                             humidity: out.humidity
                         });
                     }
-                    if (calcuateSocket("carbon", 50, out.z)) {
+                    if (calcuateSocket("carbon", 5, out.z)) {
                         socket.post('/drone/carbon', {
                             carbon: out.z
                         });

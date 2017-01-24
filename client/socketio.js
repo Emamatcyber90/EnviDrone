@@ -30,22 +30,25 @@ var socketio = function() {
 
     var connectEmit = function() {
         checkListAndCompany()
+        
+        setTimeout(function() {
+            post("/drone/connect", {
+                id: settings.config.id
+            })
 
-        post("/drone/connect", {
-            id: settings.config.id
-        })
+            post('/drone/temp', {
+                temp: settings.config.olds.temp
+            });
 
-        post('/drone/temp', {
-            temp: settings.config.olds.temp
-        });
+            post('/drone/humidity', {
+                humidity: settings.config.olds.humidity
+            });
 
-        post('/drone/humidity', {
-            humidity: settings.config.olds.humidity
-        });
+            post('/drone/carbon', {
+                carbon: settings.config.olds.carbon
+            });
+        }, 3000)
 
-        post('/drone/carbon', {
-            carbon: settings.config.olds.carbon
-        });
     }
 
     var setSocketConfigs = function() {
@@ -119,23 +122,19 @@ var socketio = function() {
     }
 
     socket.on("git pull", function(data) {
-        console.log('Git pull');
         if (data.id == settings.config.id) {
             settings.config.version = data.version;
-            
-            console.log('Shell CD');
+
             shell.cd('/home/pi/EnviDrone');
-            
-            console.log('Git Pull');
+
             shell.exec("sudo git pull", {
                 silent: true,
-                async:true
+                async: true
             });
-            
-            console.log('PM2 Restart');
+
             shell.exec("sudo pm2 restart 0", {
                 silent: true,
-                async:true
+                async: true
             });
         }
     });
@@ -206,7 +205,7 @@ var socketio = function() {
                 'Authorization': token
             }
         }, function(resData) {
-            if(resData) {
+            if (resData) {
                 settings.config.list = resData.list
                 settings.config.company_id = resData.company
                 settings.config.name = resData.name
