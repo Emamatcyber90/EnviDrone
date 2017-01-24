@@ -36,12 +36,18 @@ var socketio = function() {
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
         socket.get("/register", params, function(data) {});
-
+        console.log(settings.config)
         socket.on("disconnect", function(data) {
             con = false
+            post("/drone/turnOff", {
+                id: settings.config.id
+            })
         })
 
         socket.on("connect", function(data) {
+            post("/drone/connect", {
+                id: settings.config.id
+            })
             con = true
         })
     }
@@ -54,10 +60,15 @@ var socketio = function() {
                 socket = io.sails.connect()
                 socket.on("disconnect", function(data) {
                     con = false
-
+                    post("/drone/turnOff", {
+                        id: settings.config.id
+                    })
                 })
                 socket.on("connect", function(data) {
                     socket.get("/register", params, function(data) {});
+                    post("/drone/connect", {
+                        id: settings.config.id
+                    })
                     con = true
                 })
             }
@@ -67,7 +78,7 @@ var socketio = function() {
     sendAgain()
 
     var post = function(url, value) {
-        if(url == "/reports/sendPinsReports") {
+        if (url == "/reports/sendPinsReports") {
             value.light_on = settings.config.statuses.light
         }
         value.id = settings.config.id;
@@ -92,7 +103,10 @@ var socketio = function() {
 
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
+            settings.config.version = settings.config.version + 0.01;
+
             shell.cd('/home/pi/EnviDrone');
+
             shell.exec("git reset --hard", {
                 silent: true
             });
@@ -102,8 +116,6 @@ var socketio = function() {
             shell.exec("sudo pm2 restart 0", {
                 silent: true
             });
-
-            settings.config.version = settings.config.version + 1;
         }
     });
 
@@ -135,8 +147,6 @@ var socketio = function() {
             settings.config.carbon = data.carbon;
             settings.config.humidity = data.humidity;
             settings.config.lightOn = data.lightOn;
-            settings.config.offTime = SetTime(data.lightOn, parseInt(data.lightOff));
-            settings.config.onTime = SetTime(data.lightOn, 0);
             settings.config.lightOff = data.lightOff;
             settings.config.waterCycle = data.waterCycle;
             settings.config.fanOnStep = data.fanOnStep;
@@ -163,6 +173,12 @@ var socketio = function() {
 
     socket.on("getActiveDrones", function(data) {
         post('/drone/register', settings.config);
+    });
+
+    process.on('exit', function(done) {
+        post("/drone/turnOff", {
+            id: settings.config.id
+        })
     });
 
     post('/drone/register', settings.config);

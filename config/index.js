@@ -26,7 +26,6 @@ var newSettings = {
     },
     "version": 1
 }
-
 for (var i in newSettings) {
     if (!settings[i]) {
         settings[i] = newSettings[i];
