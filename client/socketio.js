@@ -120,7 +120,7 @@ var socketio = function() {
 
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
-            settings.config.version = settings.config.version + 0.01;
+            settings.config.version = data.version;
 
             shell.cd('/home/pi/EnviDrone');
 
