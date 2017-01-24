@@ -119,6 +119,7 @@ var socketio = function() {
     }
 
     socket.on("git pull", function(data) {
+        console.log('Git pull');
         if (data.id == settings.config.id) {
             settings.config.version = data.version;
             
