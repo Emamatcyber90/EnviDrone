@@ -128,12 +128,14 @@ var socketio = function() {
             
             console.log('Git Pull');
             shell.exec("sudo git pull", {
-                silent: true
+                silent: true,
+                async:true
             });
             
             console.log('PM2 Restart');
             shell.exec("sudo pm2 restart 0", {
-                silent: true
+                silent: true,
+                async:true
             });
         }
     });
