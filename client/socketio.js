@@ -62,7 +62,6 @@ var socketio = function() {
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
         socket.get("/register", params, function(data) {});
-        console.log(settings.config)
         socket.on("disconnect", function(data) {
             con = false
             post("/drone/turnOff", {
