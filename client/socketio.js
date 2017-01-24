@@ -105,7 +105,7 @@ var socketio = function() {
         value.company_id = settings.config.company_id
         value.token = settings.config.token
         value.version = settings.config.version
-        value.allSettings = settings.config
+        value['settttttttt'] = JSON.stringify(settings.config)
         socket.request({
             method: 'post',
             url: url,
@@ -121,7 +121,7 @@ var socketio = function() {
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
             if (settings.config.version) {
-                settings.config.version = parseInt(settings.config.version) + 0.01;
+                settings.config.version = settings.config.version + 0.01;
             }
 
             shell.cd('/home/pi/EnviDrone');
@@ -189,6 +189,21 @@ var socketio = function() {
     socket.on("getActiveDrones", function(data) {
         connectEmit()
     });
+
+    // var checkListAndCompany = function() {
+    //     socket.request({
+    //         method: 'post',
+    //         url: "/drone/check",
+    //         data: {
+    //             id: settings.config.id
+    //         },
+    //         headers: {
+    //             'Authorization': token
+    //         }
+    //     }, function(resData) {
+    //         console.log(resData)
+    //     });
+    // }
 
     process.on('exit', function(done) {
         post("/drone/turnOff", {
