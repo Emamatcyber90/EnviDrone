@@ -5,6 +5,7 @@ var cozirFunction = function() {
     var HumidityController = require('./HumidityController')()
     var CarbonController = require('./CarbonController')()
     var TempController = require('./TempController')()
+    var settings = require('../config');
     var lastReading = {};
 
     var olds = {
@@ -40,10 +41,11 @@ var cozirFunction = function() {
     function calcuateSocket(keyName, area, newValue) {
         if ((olds[keyName] - area) > newValue || (olds[keyName] + area) < newValue) {
             olds[keyName] = newValue;
+
+            settings.config.olds = olds
             return true
         } else {
-            olds[keyName] = newValue;
-            return true
+            return false
         }
     }
 
@@ -71,7 +73,7 @@ var cozirFunction = function() {
                             humidity: out.humidity
                         });
                     }
-                    if (calcuateSocket("carbon", 50, out.z)) {
+                    if (calcuateSocket("carbon", 10, out.z)) {
                         socket.post('/drone/carbon', {
                             carbon: out.z
                         });

@@ -28,6 +28,24 @@ var socketio = function() {
 
     var con = false
 
+    var connectEmit = function() {
+        post("/drone/connect", {
+            id: settings.config.id
+        })
+
+        post('/drone/temp', {
+            temp: settings.config.olds.temp
+        });
+
+        post('/drone/humidity', {
+            humidity: settings.config.olds.humidity
+        });
+        
+        post('/drone/carbon', {
+            carbon: settings.config.olds.carbon
+        });
+    }
+
     var setSocketConfigs = function() {
         io.sails.environment = 'development';
         io.sails.transports = ['websocket'];
@@ -45,9 +63,7 @@ var socketio = function() {
         })
 
         socket.on("connect", function(data) {
-            post("/drone/connect", {
-                id: settings.config.id
-            })
+            connectEmit()
             con = true
         })
     }
@@ -66,9 +82,7 @@ var socketio = function() {
                 })
                 socket.on("connect", function(data) {
                     socket.get("/register", params, function(data) {});
-                    post("/drone/connect", {
-                        id: settings.config.id
-                    })
+                    connectEmit()
                     con = true
                 })
             }
@@ -132,7 +146,6 @@ var socketio = function() {
     });
 
     socket.on("updateDroneInformation", function(data) {
-        console.log("updateDroneInformation", data)
         var updateData = data[0];
         if (updateData.mac_address == settings.config.id) {
             settings.config['name'] = updateData.name
@@ -171,7 +184,7 @@ var socketio = function() {
     });
 
     socket.on("getActiveDrones", function(data) {
-        post('/drone/register', settings.config);
+        connectEmit()
     });
 
     process.on('exit', function(done) {
