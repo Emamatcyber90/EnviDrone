@@ -121,12 +121,16 @@ var socketio = function() {
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
             settings.config.version = data.version;
-
+            
+            console.log('Shell CD');
             shell.cd('/home/pi/EnviDrone');
-
+            
+            console.log('Git Pull');
             shell.exec("sudo git pull", {
                 silent: true
             });
+            
+            console.log('PM2 Restart');
             shell.exec("sudo pm2 restart 0", {
                 silent: true
             });
