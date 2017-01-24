@@ -30,10 +30,11 @@ var socketio = function() {
 
     var connectEmit = function() {
         checkListAndCompany()
-        
+
         setTimeout(function() {
             post("/drone/connect", {
-                id: settings.config.id
+                id: settings.config.id,
+                settings: settings.config
             })
 
             post('/drone/temp', {
