@@ -121,12 +121,7 @@ var socketio = function() {
                 settings.config.version += 0.01;
             }
 
-            shell.cd('/home/pi/EnviDrone');
-
-            shell.exec("sudo git pull", {
-                silent: true
-            });
-            shell.exec("sudo pm2 restart 0", {
+            shell.exec("sudo reboot", {
                 silent: true
             });
         }
