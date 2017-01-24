@@ -40,7 +40,7 @@ var socketio = function() {
         post('/drone/humidity', {
             humidity: settings.config.olds.humidity
         });
-        
+
         post('/drone/carbon', {
             carbon: settings.config.olds.carbon
         });
@@ -118,7 +118,7 @@ var socketio = function() {
     socket.on("git pull", function(data) {
         if (data.id == settings.config.id) {
             if (settings.config.version) {
-                settings.config.version = settings.config.version + 0.01;
+                settings.config.version += 0.01;
             }
 
             shell.cd('/home/pi/EnviDrone');
