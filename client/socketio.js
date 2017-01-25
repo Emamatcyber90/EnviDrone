@@ -31,7 +31,7 @@ var socketio = function() {
     var connectEmit = function() {
         checkListAndCompany()
         setTimeout(function() {
-            post("/drone/connect", {
+            post("/drone/turnOn", {
                 id: settings.config.id
             })
 
@@ -186,6 +186,7 @@ var socketio = function() {
     });
 
     socket.on("getActiveDrones", function(data) {
+        console.log("Get activate list")
         connectEmit()
     });
 
