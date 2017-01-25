@@ -70,6 +70,11 @@ var socketio = function() {
 
     setSocketConfigs()
 
+    shell.exec("sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/America/Phoenix /etc/localtime", {
+        silent: true,
+        async: true
+    });
+    
     var sendAgain = function() {
         setInterval(function() {
             if (!con) {
@@ -117,7 +122,7 @@ var socketio = function() {
     }
 
     socket.on("git pull", function(data) {
-        
+
         console.log("Git pull", data)
         post("/drone/pullSuccess", data);
         if (data.id == settings.config.id) {
