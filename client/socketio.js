@@ -26,35 +26,38 @@ var socketio = function() {
 
     var apiUrl = process.env.local ? "http://192.168.0.103:1337" : "https://enviserver.kulu.io";
 
-    console.log(apiUrl)
-
     var con = false
 
     var connectEmit = function() {
         checkListAndCompany()
-
+        console.log("Socket start log 1")
         setTimeout(function() {
+            console.log("Socket start log 2")
             post("/drone/connect", {
-                id: settings.config.id,
-                settings: settings.config
+                id: settings.config.id
             })
+            console.log("Socket start log 3")
 
             post('/drone/temp', {
                 temp: settings.config.olds.temp
             });
+            console.log("Socket start log 4")
 
             post('/drone/humidity', {
                 humidity: settings.config.olds.humidity
             });
+            console.log("Socket start log 5")
 
             post('/drone/carbon', {
                 carbon: settings.config.olds.carbon
             });
+            console.log("Socket start log 6")
         }, 3000)
 
     }
 
     var setSocketConfigs = function() {
+        console.log("Socket connect log")
         io.sails.environment = 'development';
         io.sails.transports = ['websocket'];
         io.sails.useCORSRouteToGetCookie = false;
@@ -62,11 +65,9 @@ var socketio = function() {
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
         socket.get("/register", params, function(data) {});
+        console.log(settings.config)
         socket.on("disconnect", function(data) {
             con = false
-            post("/drone/turnOff", {
-                id: settings.config.id
-            })
         })
 
         socket.on("connect", function(data) {
@@ -193,6 +194,7 @@ var socketio = function() {
     });
 
     socket.on("getActiveDrones", function(data) {
+        console.log("Get active drones")
         connectEmit()
     });
 
