@@ -30,34 +30,27 @@ var socketio = function() {
 
     var connectEmit = function() {
         checkListAndCompany()
-        console.log("Socket start log 1")
         setTimeout(function() {
-            console.log("Socket start log 2")
             post("/drone/connect", {
                 id: settings.config.id
             })
-            console.log("Socket start log 3")
 
             post('/drone/temp', {
                 temp: settings.config.olds.temp
             });
-            console.log("Socket start log 4")
 
             post('/drone/humidity', {
                 humidity: settings.config.olds.humidity
             });
-            console.log("Socket start log 5")
 
             post('/drone/carbon', {
                 carbon: settings.config.olds.carbon
             });
-            console.log("Socket start log 6")
         }, 3000)
 
     }
 
     var setSocketConfigs = function() {
-        console.log("Socket connect log")
         io.sails.environment = 'development';
         io.sails.transports = ['websocket'];
         io.sails.useCORSRouteToGetCookie = false;
@@ -70,7 +63,6 @@ var socketio = function() {
         })
 
         socket.on("connect", function(data) {
-            console.log("Concted++++++++++++++++++++++++++++")
             connectEmit()
             con = true
         })
@@ -81,7 +73,6 @@ var socketio = function() {
     var sendAgain = function() {
         setInterval(function() {
             if (!con) {
-                console.log("Concted Again++++++++++++++++++++++++++++")
                 socket = io.sails.connect()
                 socket.on("disconnect", function(data) {
                     con = false
@@ -150,7 +141,6 @@ var socketio = function() {
     });
 
     socket.on("assignInCompany", function(data) {
-        console.log("Assign company", data)
         if (data.drone_id == settings.config.id) {
             settings.config['token'] = data.token;
             settings.config['company_id'] = data.company_id;
@@ -196,7 +186,6 @@ var socketio = function() {
     });
 
     socket.on("getActiveDrones", function(data) {
-        console.log("Get active drones")
         connectEmit()
     });
 
