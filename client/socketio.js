@@ -65,12 +65,12 @@ var socketio = function() {
         io.sails.query = 'token=' + token;
         socket = io.sails.connect();
         socket.get("/register", params, function(data) {});
-        console.log(settings.config)
         socket.on("disconnect", function(data) {
             con = false
         })
 
         socket.on("connect", function(data) {
+            console.log("Concted++++++++++++++++++++++++++++")
             connectEmit()
             con = true
         })
@@ -81,6 +81,7 @@ var socketio = function() {
     var sendAgain = function() {
         setInterval(function() {
             if (!con) {
+                console.log("Concted Again++++++++++++++++++++++++++++")
                 socket = io.sails.connect()
                 socket.on("disconnect", function(data) {
                     con = false
