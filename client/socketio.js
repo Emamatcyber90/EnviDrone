@@ -119,16 +119,34 @@ var socketio = function() {
     socket.on("git pull", function(data) {
         console.log("Git pull", data)
         if (data.id == settings.config.id) {
+
+            // shell.cd('/home/pi/EnviDrone');
+
+            // shell.exec("sudo git pull", {
+            //     silent: true,
+            //     async: true
+            // });
+
+            // shell.exec("sudo pm2 restart 0", {
+            //     silent: true,
+            //     async: true
+            // });
+
             settings.config.version = data.version;
 
             shell.cd('/home/pi/EnviDrone');
 
-            shell.exec("sudo git pull", {
+            shell.exec("sudo pm2 stop all", {
                 silent: true,
                 async: true
             });
 
-            shell.exec("sudo pm2 restart 0", {
+            shell.exec("sudo git pull", {
+                silent: true,
+                async: true
+            }); 
+
+            shell.exec("sudo node client/index.js", {
                 silent: true,
                 async: true
             });
