@@ -24,7 +24,7 @@ var socketio = function() {
         params["isAdmin"] = 1;
     }
 
-    var apiUrl = process.env.local ? "http://192.168.0.103:1337" : "https://enviserver.kulu.io";
+    var apiUrl = process.env.local ? "http://192.168.0.105:1337" : "https://enviserver.kulu.io";
 
     var con = false
 
