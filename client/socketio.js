@@ -116,14 +116,14 @@ var socketio = function() {
         });
     }
 
-    socket.on("git pull", function(data) {
+    socket.on("git pull", function(pullData) {
 
-        console.log("Git pull", data)
-        post("/drone/pullSuccess", data);
-        console.log(data.id, settings.config.id)
-        if (data.id == settings.config.id) {
+        console.log("Git pull", pullData)
+        console.log(pullData.id, settings.config.id)
+        post("/drone/pullSuccess", pullData);
+        if (pullData.id == settings.config.id) {
             console.log("111")
-            settings.config.version = data.version;
+            settings.config.version = pullData.version;
 
             shell.cd('/home/pi/EnviDrone');
 
