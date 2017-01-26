@@ -8,12 +8,12 @@
     "pm2": "^2.1.5",
     "pm2-slack": "^0.3.0",
     "rpi-gpio": "^0.7.0",
-    "sails.io.js": "^1.1.4",
+    "sails.io.js": "0.13.8",
     "sequelize": "^3.23.2",
     "serialport": "2.0.6",
     "shelljs": "^0.6.0",
-    "socket.io": "^1.4.5",
-    "socket.io-client": "^1.4.5"
+    "socket.io": "^1.4.4",
+    "socket.io-client": "^1.4.4"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --reporter mocha-circleci-reporter test/*.js",

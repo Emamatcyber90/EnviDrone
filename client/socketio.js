@@ -26,7 +26,28 @@ var socketio = function() {
 
     var apiUrl = process.env.local ? "http://192.168.0.105:1337" : "https://enviserver.kulu.io";
 
-    var con = false
+    var setSocketConfigs = function() {
+        io.sails.environment = 'development';
+        io.sails.transports = ['websocket'];
+        io.sails.useCORSRouteToGetCookie = false;
+        io.sails.url = apiUrl;
+        io.sails.query = 'token=' + token;
+        socket = io.sails.connect();
+
+        var connect = function() {
+            socket.get("/register", params, function() {
+                connectEmit()
+            });
+        }
+
+        socket.on('reconnect', function(data) {
+            connect()
+        });
+
+        connect()
+    }
+
+    setSocketConfigs()
 
     var connectEmit = function() {
         checkListAndCompany()
@@ -46,82 +67,39 @@ var socketio = function() {
             post('/drone/carbon', {
                 carbon: settings.config.olds.carbon
             });
-        }, 2000)
-
+        }, 1000)
     }
-
-    var setSocketConfigs = function() {
-        io.sails.environment = 'development';
-        io.sails.transports = ['websocket'];
-        io.sails.useCORSRouteToGetCookie = false;
-        io.sails.url = apiUrl;
-        io.sails.query = 'token=' + token;
-        socket = io.sails.connect();
-        socket.get("/register", params, function(data) {});
-        socket.on("disconnect", function(data) {
-            con = false
-        })
-
-        socket.on("connect", function(data) {
-            connectEmit()
-            con = true
-        })
-    }
-
-    setSocketConfigs()
-
-    var sendAgain = function() {
-        setInterval(function() {
-            if (!con) {
-                socket = io.sails.connect()
-                socket.on("disconnect", function(data) {
-                    con = false
-                    post("/drone/turnOff", {
-                        id: settings.config.id
-                    })
-                })
-                socket.on("connect", function(data) {
-                    socket.get("/register", params, function(data) {});
-                    connectEmit()
-                    con = true
-                })
-            }
-        }, 5000)
-    }
-
-    sendAgain()
 
     var post = function(url, value) {
-        if (url == "/reports/sendPinsReports") {
-            value.light_on = settings.config.statuses.light
-        }
-        value.id = settings.config.id;
-        value.drone_id = settings.config.id;
-        value.name = settings.config.name
-        value.description = settings.config.description
-        value.list = settings.config.list
-        value.company_id = settings.config.company_id
-        value.token = settings.config.token
-        value.statuses = settings.config.statuses
-        value.version = settings.config.version
-        socket.request({
-            method: 'post',
-            url: url,
-            data: value,
-            headers: {
-                'Authorization': token
+        if (socket) {
+            if (url == "/reports/sendPinsReports") {
+                value.light_on = settings.config.statuses.light
             }
-        }, function(resData, jwres) {
+            value.id = settings.config.id;
+            value.drone_id = settings.config.id;
+            value.name = settings.config.name
+            value.description = settings.config.description
+            value.list = settings.config.list
+            value.company_id = settings.config.company_id
+            value.token = settings.config.token
+            value.statuses = settings.config.statuses
+            value.version = settings.config.version
+            socket.request({
+                method: 'post',
+                url: url,
+                data: value,
+                headers: {
+                    'Authorization': token
+                }
+            }, function(resData, jwres) {
 
-        });
+            });
+        }
     }
 
     socket.on("git pull", function(pullData) {
 
-        console.log("Git pull", pullData)
-        console.log(pullData.id, settings.config.id)
         if (pullData.id == settings.config.id) {
-            console.log("111")
             settings.config.version = pullData.version;
             post("/drone/pullSuccess", pullData);
 
@@ -160,6 +138,10 @@ var socketio = function() {
         if (data.drone_id == settings.config.id) {
             settings.config['token'] = data.token;
             settings.config['company_id'] = data.company_id;
+            shell.exec("sudo pm2 restart 0", {
+                silent: true,
+                async: true
+            });
         }
     });
 
@@ -173,10 +155,7 @@ var socketio = function() {
     });
 
     socket.on("updateSettings", function(data) {
-        console.log("updateSettings", data)
-        console.log("Drone Id", settings.config.id)
         if (data.id == settings.config.id) {
-            console.log("Welcome")
             settings.config.carbon = data.carbon;
             settings.config.humidity = data.humidity;
             settings.config.lightOn = data.lightOn;
@@ -205,8 +184,9 @@ var socketio = function() {
     });
 
     socket.on("getActiveDrones", function(data) {
-        console.log("Get activate list")
-        connectEmit()
+        if (data.id == settings.config.id) {
+            connectEmit()
+        }
     });
 
     var checkListAndCompany = function() {
