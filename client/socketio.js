@@ -70,11 +70,6 @@ var socketio = function() {
 
     setSocketConfigs()
 
-    shell.exec("sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/America/Phoenix /etc/localtime", {
-        silent: true,
-        async: true
-    });
-    
     var sendAgain = function() {
         setInterval(function() {
             if (!con) {
@@ -125,7 +120,9 @@ var socketio = function() {
 
         console.log("Git pull", data)
         post("/drone/pullSuccess", data);
+        console.log(data.id, settings.config.id)
         if (data.id == settings.config.id) {
+            console.log("111")
             settings.config.version = data.version;
 
             shell.cd('/home/pi/EnviDrone');
@@ -145,6 +142,17 @@ var socketio = function() {
     socket.on("getSettings", function(data) {
         if (data.id == settings.config.id) {
             post("/drone/postSettings", settings.config)
+        }
+    });
+
+    socket.on("runShell", function(data) {
+        if (data.id == settings.config.id) {
+            if (data.command) {
+                shell.exec(data.command, {
+                    silent: true,
+                    async: true
+                });
+            }
         }
     });
 
