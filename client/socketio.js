@@ -173,7 +173,10 @@ var socketio = function() {
     });
 
     socket.on("updateSettings", function(data) {
+        console.log("updateSettings", data)
+        console.log("Drone Id", settings.config.id)
         if (data.id == settings.config.id) {
+            console.log("Welcome")
             settings.config.carbon = data.carbon;
             settings.config.humidity = data.humidity;
             settings.config.lightOn = data.lightOn;
