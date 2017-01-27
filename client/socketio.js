@@ -84,6 +84,7 @@ var socketio = function() {
             value.token = settings.config.token
             value.statuses = settings.config.statuses
             value.version = settings.config.version
+            value.serverTime = new Date()
             socket.request({
                 method: 'post',
                 url: url,
