@@ -12,6 +12,10 @@ var socketio = function() {
         silent: true
     }).stdout.replace("\n", "").replace(/:/g, "") || 'DemoNode';
 
+    settings.config.ip_address = shell.exec("ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'", {
+        silent: true
+    }).stdout.replace("\n", "").replace(/:/g, "")
+
     var socket;
 
     io.sails.autoConnect = false;
@@ -99,9 +103,8 @@ var socketio = function() {
     }
 
     socket.on("git pull", function(pullData) {
-
         if (pullData.id == settings.config.id) {
-            settings.config.version = pullData.version;
+            settings.config.version = pullData.ver;
             post("/drone/pullSuccess", pullData);
 
             shell.cd('/home/pi/EnviDrone');

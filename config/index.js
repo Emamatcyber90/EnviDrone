@@ -28,6 +28,7 @@ var newSettings = {
 }
 for (var i in newSettings) {
     if (!settings[i]) {
+        console.log(111111111)
         settings[i] = newSettings[i];
     }
 }
