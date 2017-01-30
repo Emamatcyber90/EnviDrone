@@ -77,7 +77,6 @@ var socketio = function() {
     var post = function(url, value) {
         if (socket) {
             if (url == "/reports/sendPinsReports") {
-                console.log(settings.config.statuses)
                 value.light_on = settings.config.statuses.light
             }
             value.id = settings.config.id;
@@ -110,7 +109,7 @@ var socketio = function() {
 
             shell.cd('/home/pi/EnviDrone');
 
-            shell.exec("sudo git pull", {
+            shell.exec("git pull", {
                 silent: true,
                 async: true
             });
