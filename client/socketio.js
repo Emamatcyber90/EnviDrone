@@ -77,6 +77,7 @@ var socketio = function() {
     var post = function(url, value) {
         if (socket) {
             if (url == "/reports/sendPinsReports") {
+                console.log(settings.config.statuses)
                 value.light_on = settings.config.statuses.light
             }
             value.id = settings.config.id;
@@ -104,7 +105,7 @@ var socketio = function() {
 
     socket.on("git pull", function(pullData) {
         if (pullData.id == settings.config.id) {
-            settings.config.version = pullData.ver;
+            settings.config.version = pullData.version;
             post("/drone/pullSuccess", pullData);
 
             shell.cd('/home/pi/EnviDrone');
