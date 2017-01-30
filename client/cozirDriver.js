@@ -85,10 +85,9 @@ var cozirFunction = function() {
 
     function sendReports() {
         setTimeout(function() {
-            console.log(111)
             socket.post("/reports/sendPinsReports", olds);
             sendReports();
-        }, 10000)
+        }, 300000)
     };
 
     sendReports()
