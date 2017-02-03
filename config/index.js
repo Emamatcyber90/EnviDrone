@@ -29,11 +29,11 @@ var newSettings = {
 if (Object.keys(settings).length === 0) {
     settings = newSettings
 }
-// for (var i in newSettings) {
-//     if (!settings[i]) {
-//         settings[i] = newSettings[i];
-//     }
-// }
+for (var i in newSettings) {
+    if (!settings[i]) {
+         settings[i] = newSettings[i];
+     }
+ }
 
 module.exports.config = settings;
 module.exports.observe = observer
