@@ -26,11 +26,12 @@ var newSettings = {
     },
     "version": 1
 }
-console.log(settings);
 
 if (Object.keys(settings).length === 0) {
     settings = newSettings
 }
+
+console.log(settings);
 
 module.exports.config = settings;
 module.exports.observe = observer
