@@ -30,6 +30,25 @@ var socketio = function() {
 
     var apiUrl = process.env.local ? "http://192.168.0.105:1337" : "https://enviserver.kulu.io";
 
+    var timer;
+
+    var restart = function() {
+        shell.exec("sudo pm2 restart 0", {
+            silent: true,
+            async: true
+        });
+    }
+
+    function startTimer() {
+        timer = setTimeout(function() {
+            restart()
+        }, 60000);
+    }
+
+    function stopTimer() {
+        clearTimeout(timer);
+    }
+
     var setSocketConfigs = function() {
         io.sails.environment = 'development';
         io.sails.transports = ['websocket'];
@@ -45,7 +64,11 @@ var socketio = function() {
         }
 
         socket.on('reconnect', function(data) {
-            connect()
+            stopTimer()
+        });
+
+        socket.on('disconnect', function(data) {
+            startTimer()
         });
 
         connect()
@@ -117,10 +140,7 @@ var socketio = function() {
                     async: true
                 });
 
-                shell.exec("sudo pm2 restart 0", {
-                    silent: true,
-                    async: true
-                });
+                restart()
             }, 3000)
         }
     });
@@ -152,10 +172,7 @@ var socketio = function() {
             settings.config['token'] = data.token;
             settings.config['company_id'] = data.company_id;
             setTimeout(function() {
-                shell.exec("sudo pm2 restart 0", {
-                    silent: true,
-                    async: true
-                });
+                restart()
             }, 2000)
         }
     });
