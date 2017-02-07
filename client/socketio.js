@@ -215,6 +215,10 @@ var socketio = function() {
         }
     });
 
+    socket.on("reconnectAll", function(data) {
+        restart()
+    })
+
     socket.on("getActiveDrones", function(data) {
         if (data.id == settings.config.id) {
             connectEmit()
