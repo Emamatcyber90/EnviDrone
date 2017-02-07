@@ -53,6 +53,7 @@ var cozirFunction = function() {
     serialPort.open(function(err) {
         serialPort.on("data", function(data) {
             if (typeof data !== "undefined" && data !== null) {
+                console.log('Data:', data);
                 data = data.split(" ");
 
                 if (data[1] == "H") {
