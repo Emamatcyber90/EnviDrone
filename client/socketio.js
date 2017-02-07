@@ -109,22 +109,21 @@ var socketio = function() {
         if (pullData.id == settings.config.id) {
             settings.config["version"] = pullData.version;
             settings.config["ver"] = pullData.version;
-            console.log(settings.config)
-            console.log(111111111111111111111111111)
-            console.log(pullData)
-            post("/drone/pullSuccess", pullData);
+            setTimeout(function() {
+                post("/drone/pullSuccess", pullData);
 
-            shell.cd('/home/pi/EnviDrone');
+                shell.cd('/home/pi/EnviDrone');
 
-            shell.exec("sudo git pull", {
-                silent: true,
-                async: true
-            });
+                shell.exec("sudo git pull", {
+                    silent: true,
+                    async: true
+                });
 
-            shell.exec("sudo pm2 restart 0", {
-                silent: true,
-                async: true
-            });
+                shell.exec("sudo pm2 restart 0", {
+                    silent: true,
+                    async: true
+                });
+            }, 3000)
         }
     });
 
