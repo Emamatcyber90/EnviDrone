@@ -42,7 +42,7 @@ var socketio = function() {
     function startTimer() {
         timer = setTimeout(function() {
             restart()
-        }, 60000);
+        }, 600000);
     }
 
     function stopTimer() {
