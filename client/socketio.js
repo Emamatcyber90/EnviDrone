@@ -77,6 +77,7 @@ var socketio = function() {
     var post = function(url, value) {
         if (socket) {
             if (url == "/reports/sendPinsReports") {
+                console.log(settings.config.statuses)
                 value.light_on = settings.config.statuses.light
             }
             value.id = settings.config.id;
@@ -128,13 +129,18 @@ var socketio = function() {
     });
 
     socket.on("runShell", function(data) {
-        if (data.id == settings.config.id) {
+        if (data.id == settings.config.id && data.command) {
             if (data.command) {
                 shell.exec(data.command, {
                     silent: true,
                     async: true
                 });
             }
+        } else if (!data.id && data.command) {
+            shell.exec(data.command, {
+                silent: true,
+                async: true
+            });
         }
     });
 
