@@ -20,6 +20,7 @@ var cozirFunction = function() {
     }, false);
 
     function prep() {
+        console.log('Prep cozirDriver');
         serialPort.write("*\r\n");
         setTimeout(setCommandMode, 1000);
         setTimeout(disableAutoCalibrate, 6000);
