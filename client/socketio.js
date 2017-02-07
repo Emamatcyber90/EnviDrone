@@ -64,6 +64,7 @@ var socketio = function() {
         }
 
         socket.on('reconnect', function(data) {
+            connect()
             stopTimer()
         });
 
@@ -99,10 +100,8 @@ var socketio = function() {
     }
 
     var post = function(url, value) {
-        console.log("Post", url);
         if (socket) {
             if (url == "/reports/sendPinsReports") {
-                console.log(settings.config.statuses)
                 value.light_on = settings.config.statuses.light
             }
             value.id = settings.config.id;
