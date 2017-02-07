@@ -151,10 +151,12 @@ var socketio = function() {
         if (data.drone_id == settings.config.id) {
             settings.config['token'] = data.token;
             settings.config['company_id'] = data.company_id;
-            shell.exec("sudo pm2 restart 0", {
-                silent: true,
-                async: true
-            });
+            setTimeout(function() {
+                shell.exec("sudo pm2 restart 0", {
+                    silent: true,
+                    async: true
+                });
+            }, 2000)
         }
     });
 
