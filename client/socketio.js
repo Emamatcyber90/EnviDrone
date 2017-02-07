@@ -99,6 +99,7 @@ var socketio = function() {
     }
 
     var post = function(url, value) {
+        console.log("Post", url);
         if (socket) {
             if (url == "/reports/sendPinsReports") {
                 console.log(settings.config.statuses)
