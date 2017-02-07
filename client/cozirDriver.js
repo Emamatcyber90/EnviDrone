@@ -57,9 +57,11 @@ var cozirFunction = function() {
                 if (data[1] == "H") {
                     //[ '', 'H', '00523', 'T', '01251', 'Z', '02001', 'z', '02001' ]
                     var out = {};
+
                     out.humidity = parseInt(data[2]) / 10;
                     out.temp = (parseInt(data[4]) - 1000) / 10;
                     out.z = parseInt(data[6]);
+                    console.log(out)
                     CarbonController(out.z);
                     HumidityController(out.humidity);
                     TempController(out.temp);
