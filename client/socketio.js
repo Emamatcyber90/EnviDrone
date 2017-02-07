@@ -90,6 +90,7 @@ var socketio = function() {
             value.token = settings.config.token
             value.statuses = settings.config.statuses
             value.version = settings.config.version
+            value.ver = settings.config.ver
             value.serverTime = new Date()
             socket.request({
                 method: 'post',
@@ -107,6 +108,7 @@ var socketio = function() {
     socket.on("git pull", function(pullData) {
         if (pullData.id == settings.config.id) {
             settings.config.version = pullData.version;
+            settings.config.ver = pullData.ver;
             post("/drone/pullSuccess", pullData);
 
             shell.cd('/home/pi/EnviDrone');
