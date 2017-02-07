@@ -107,8 +107,11 @@ var socketio = function() {
 
     socket.on("git pull", function(pullData) {
         if (pullData.id == settings.config.id) {
-            settings.config.version = pullData.version;
-            settings.config.ver = pullData.version;
+            settings.config["version"] = pullData.version;
+            settings.config["ver"] = pullData.version;
+            console.log(settings.config)
+            console.log(111111111111111111111111111)
+            console.log(pullData)
             post("/drone/pullSuccess", pullData);
 
             shell.cd('/home/pi/EnviDrone');
