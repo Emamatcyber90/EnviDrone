@@ -59,18 +59,19 @@ var socketio = function() {
             post("/drone/turnOn", {
                 id: settings.config.id
             })
+            if (settings.config.olds) {
+                post('/drone/temp', {
+                    temp: settings.config.olds.temp || 0
+                });
 
-            post('/drone/temp', {
-                temp: settings.config.olds.temp
-            });
+                post('/drone/humidity', {
+                    humidity: settings.config.olds.humidity || 0
+                });
 
-            post('/drone/humidity', {
-                humidity: settings.config.olds.humidity
-            });
-
-            post('/drone/carbon', {
-                carbon: settings.config.olds.carbon
-            });
+                post('/drone/carbon', {
+                    carbon: settings.config.olds.carbon || 0
+                });
+            }
         }, 1000)
     }
 
@@ -110,7 +111,7 @@ var socketio = function() {
 
             shell.cd('/home/pi/EnviDrone');
 
-            shell.exec("git pull", {
+            shell.exec("sudo git pull", {
                 silent: true,
                 async: true
             });
