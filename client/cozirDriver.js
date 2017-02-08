@@ -20,6 +20,7 @@ var cozirFunction = function() {
     }, false);
 
     function prep() {
+        console.log('Prep cozirDriver');
         serialPort.write("*\r\n");
         setTimeout(setCommandMode, 1000);
         setTimeout(disableAutoCalibrate, 6000);
@@ -52,6 +53,7 @@ var cozirFunction = function() {
     serialPort.open(function(err) {
         serialPort.on("data", function(data) {
             if (typeof data !== "undefined" && data !== null) {
+                console.log('Data:', data);
                 data = data.split(" ");
 
                 if (data[1] == "H") {
@@ -61,6 +63,7 @@ var cozirFunction = function() {
                     out.humidity = parseInt(data[2]) / 10;
                     out.temp = (parseInt(data[4]) - 1000) / 10;
                     out.z = parseInt(data[6]);
+                    console.log(out);
                     CarbonController(out.z);
                     HumidityController(out.humidity);
                     TempController(out.temp);
