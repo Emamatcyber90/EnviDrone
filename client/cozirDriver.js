@@ -45,7 +45,7 @@ var cozirFunction = function() {
             settings.config.olds = olds
             return true
         } else {
-            return true
+            return false
         }
     }
 
@@ -74,7 +74,7 @@ var cozirFunction = function() {
                             humidity: out.humidity
                         });
                     }
-                    if (calcuateSocket("carbon", 5, out.z)) {
+                    if (calcuateSocket("carbon", 10, out.z)) {
                         socket.post('/drone/carbon', {
                             carbon: out.z
                         });
