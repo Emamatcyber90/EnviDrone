@@ -23,6 +23,9 @@ function CheckDroneStatus(time, houre) {
     var setTimeHoureMinute = function(h, m) {
         return moment().hours(h).minute(m).format('HH:mm')
     }
+    var pluseHoures = function(t1, t2) {
+        return (getTimeHoureMinute(start).houre + getTimeHoureMinute(end).houre)
+    }
 
     var now = getTimeHoureMinute(moment().format('HH:mm'));
     var start = getTimeHoureMinute(time);
@@ -32,9 +35,11 @@ function CheckDroneStatus(time, houre) {
     end = setTimeHoureMinute(end, start.minute);
     start = setTimeHoureMinute(start.houre, start.minute);
 
-    if (now < end && now > start) {
-        return true
+    if (now < end && now < start) {
+        return (pluseHoures(start, end) > 24) ? true : false
     } else if (now >= start && now > end) {
+        return false
+    } else if (now >= start && now < end) {
         return true
     } else {
         return false
