@@ -1,18 +1,17 @@
-var calibrate = function(serialPort) {
+var calibrate = function() {
+    var serialModule = require("serialport");
     var port = "/dev/ttyS0";
     var delimiter = "\r\n";
-    var timer;
+
+    serialPort = new serialModule.SerialPort(port, {
+        parser: serialModule.parsers.readline(delimiter),
+        baudrate: 9600
+    }, false);
 
     function prep() {
-        if!(timer){
-            serialPort.write("*\r\n");
-        }
-        
-        timer = setTimeout(Calibrate, 3000);
-    }
-    
-    function stop(){
-        clearTimeout(timer);
+        serialPort.write("*\r\n");
+        //setTimeout(setCommandMode, 1000);
+        setTimeout(Calibrate, 3000);
     }
 
     function setCommandMode() {
@@ -23,6 +22,15 @@ var calibrate = function(serialPort) {
         serialPort.write("U\r\n");
         prep();
     }
+
+    serialPort.open(function(err) {
+        serialPort.on("data", function(data) {
+            
+        });
+
+        //setCommandMode();
+        prep();
+    });
 };
 
 module.exports = calibrate;

@@ -26,6 +26,18 @@ var cozirFunction = function() {
         setTimeout(setStreamMode, 12000);
     }
 
+    function startTimer() {
+        timer = setTimeout(function() {
+            socket.post('/drone/carbon', {
+                carbon: out.z
+            });
+        }, 10000);
+    }
+
+    function stopTimer() {
+        clearTimeout(timer);
+    }
+
     function setStreamMode() {
         serialPort.write("K 1\r\n");
     }
@@ -65,21 +77,21 @@ var cozirFunction = function() {
                     HumidityController(out.humidity);
                     TempController(out.temp);
 
-                    out.temp = out.temp ? out.temp : 0; 
+                    out.temp = out.temp ? out.temp : 0;
                     if (calcuateSocket("temp", 1, out.temp)) {
                         socket.post('/drone/temp', {
                             temp: out.temp
                         });
                     }
 
-                    out.humidity = out.humidity ? out.humidity : 0; 
+                    out.humidity = out.humidity ? out.humidity : 0;
                     if (calcuateSocket("humidity", 1, out.humidity)) {
                         socket.post('/drone/humidity', {
                             humidity: out.humidity
                         });
                     }
-                    
-                    out.z = out.z ? out.z : 0; 
+
+                    out.z = out.z ? out.z : 0;
                     if (calcuateSocket("carbon", 25, out.z)) {
                         socket.post('/drone/carbon', {
                             carbon: out.z

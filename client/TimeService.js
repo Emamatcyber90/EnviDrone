@@ -32,6 +32,7 @@ function CheckDroneStatus(time, houre) {
     now = setTimeHoureMinute(now.houre, now.minute);
     end = setTimeHoureMinute(end, start.minute);
     start = setTimeHoureMinute(start.houre, start.minute);
+
     if (now < end && now < start) {
         return false
     } else if (now >= start && now > end) {

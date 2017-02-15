@@ -28,7 +28,7 @@ var socketio = function() {
         params["isAdmin"] = 1;
     }
 
-    var apiUrl = process.env.local ? "http://192.168.0.105:1337" : "https://enviserver.kulu.io";
+    var apiUrl = process.env.local ? "http://192.168.1.5:1337" : "https://enviserver.kulu.io";
 
     var timer;
 
@@ -111,9 +111,8 @@ var socketio = function() {
             value.list = settings.config.list
             value.company_id = settings.config.company_id
             value.token = settings.config.token
-            value.statuses = settings.config.statuses
             value.version = settings.config.version
-            value.serverTime = new Date()
+            value.serverTime = moment(new Date()).format("M-D-YY HH:mm:ss")
             socket.request({
                 method: 'post',
                 url: url,
@@ -220,9 +219,7 @@ var socketio = function() {
     })
 
     socket.on("getActiveDrones", function(data) {
-        if (data.id == settings.config.id) {
-            connectEmit()
-        }
+        connectEmit()
     });
 
     var checkListAndCompany = function() {

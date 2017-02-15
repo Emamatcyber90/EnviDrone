@@ -6,7 +6,12 @@ var SetTime = require('../client/TimeService').SetTime;
 var bjson = require('bjson');
 var settings = bjson('settings', function(observe) {
     observer = observe;
-    observe.on('change', function(changes) {})
+    observe.on('change', function(changes) {
+        var pathArray = changes.path.split('.');
+        if(pathArray[0] == "statuses") {
+            socket.post("/drone/postSettings", settings)
+        }
+    })
 });
 
 var newSettings = {
