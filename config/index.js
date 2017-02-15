@@ -9,7 +9,7 @@ var settings = bjson('settings', function(observe) {
     observe.on('change', function(changes) {
         var pathArray = changes.path.split('.');
         if(pathArray[0] == "statuses") {
-            socket.post("/drone/postSettings", settings)
+            socket.post("/drone/changeStatuses", {statuses: changes.object})
         }
     })
 });

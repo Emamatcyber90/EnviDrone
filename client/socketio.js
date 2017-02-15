@@ -219,7 +219,9 @@ var socketio = function() {
     })
 
     socket.on("getActiveDrones", function(data) {
-        connectEmit()
+        if (data.id == settings.config.id) {
+            connectEmit()
+        }
     });
 
     var checkListAndCompany = function() {
