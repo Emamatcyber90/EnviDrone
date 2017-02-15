@@ -147,6 +147,7 @@ var socketio = function() {
     socket.on("getSettings", function(data) {
         if (data.id == settings.config.id) {
             post("/drone/postSettings", settings.config)
+            post("/drone/changeStatuses", {statuses: settings.config.statuses})
         }
     });
 

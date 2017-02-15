@@ -20,7 +20,6 @@ function CheckDroneStatus(time, houre) {
             minute: moment(moment().format('M-D-YY') + ' ' + t + ':00:00').minutes()
         }
     }
-
     var setTimeHoureMinute = function(h, m) {
         return moment().hours(h).minute(m).format('HH:mm')
     }
@@ -33,12 +32,12 @@ function CheckDroneStatus(time, houre) {
     end = setTimeHoureMinute(end, start.minute);
     start = setTimeHoureMinute(start.houre, start.minute);
 
-    if (now < end && now < start) {
-        return false
-    } else if (now >= start && now > end) {
-        return false
-    } else {
+    if (now < end && now > start) {
         return true
+    } else if (now >= start && now > end) {
+        return true
+    } else {
+        return false
     }
 }
 
