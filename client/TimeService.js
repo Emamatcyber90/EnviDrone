@@ -16,36 +16,35 @@ function FormatTime(time) {
 function CheckDroneStatus(time, houre) {
     var getTimeHoureMinute = function(t) {
         return {
-            houre: moment(moment().format('M-D-YY') + ' ' + t + ':00:00').hours(),
-            minute: moment(moment().format('M-D-YY') + ' ' + t + ':00:00').minutes()
+            houre: moment(moment(new Date()).format('M-D-YY') + ' ' + t + ':00:00').hours(),
+            minute: moment(moment(new Date()).format('M-D-YY') + ' ' + t + ':00:00').minutes()
         }
     }
     var setTimeHoureMinute = function(h, m) {
-        return moment().hours(h).minute(m).format('HH:mm')
+        return moment(new Date()).hours(h).minute(m).format('HH:mm')
     }
     var pluseHoures = function(t1, t2) {
         return (getTimeHoureMinute(start).houre + getTimeHoureMinute(end).houre)
     }
 
-    var now = getTimeHoureMinute(moment().format('HH:mm'));
+    var now = getTimeHoureMinute(moment(new Date()).format('HH:mm'));
     var start = getTimeHoureMinute(time);
     var end = parseInt(start.houre) + parseInt(houre) - 24;
 
     now = setTimeHoureMinute(now.houre, now.minute);
-    end = setTimeHoureMinute(end, start.minute);
+    end = setTimeHoureMinute(end, start.minute).replace('00:', '24:');
     start = setTimeHoureMinute(start.houre, start.minute);
 
     if (now < end && now < start) {
-        return (pluseHoures(start, end) > 24) ? true : false
+       return (pluseHoures(start, end) > 24) ? true : false
     } else if (now >= start && now > end) {
-        return false
-    } else if (now >= start && now < end) {
-        return true
+       return (pluseHoures(now, '00:00') < 12) ? false : true
+    } else if(now >= start && now < end){
+       return true
     } else {
         return false
     }
 }
-
 
 function SetTime(start, houre) {
     var date = new Date()
