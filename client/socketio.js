@@ -1,11 +1,15 @@
-var moment = require('moment')
+var moment = require('moment');
 var settings = require('../config');
 var shell = require('shelljs');
 
 var io = require('sails.io.js')(require('socket.io-client'));
 
 var socketio = function() {
-
+    shell.exec("sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/America/Phoenix /etc/localtime", {
+        silent: true,
+        async: true
+    });
+    
     settings.config.id = shell.exec("ifconfig eth0 | awk '/HWaddr/ {print $5}'", {
         silent: true
     }).stdout.replace("\n", "").replace(/:/g, "") || 'DemoNode';
@@ -145,7 +149,9 @@ var socketio = function() {
     socket.on("getSettings", function(data) {
         if (data.id == settings.config.id) {
             post("/drone/postSettings", settings.config)
-            post("/drone/changeStatuses", {statuses: settings.config.statuses})
+            post("/drone/changeStatuses", {
+                statuses: settings.config.statuses
+            })
         }
     });
 

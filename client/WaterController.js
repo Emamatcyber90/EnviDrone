@@ -6,6 +6,7 @@ var water = function() {
     var timerOn;
     var oldValue = false;
     var newValue = true;
+    var moment = require('moment');
     
     var waterON = function() {
         settings.config.statuses['water'] = true;
