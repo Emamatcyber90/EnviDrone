@@ -3,17 +3,17 @@ var light = function() {
     var PINONE = 16;
     var PINTWO = 18;
     var settings = require('../config');
-    var moment = require('moment')
-    var CheckDroneStatus = require('./TimeService').CheckDroneStatus;
+    var moment = require('moment');
+    var CheckDates = require('./TimeService').CheckDates;
 
     var oldValue = false;
     var newValue
 
     function lightController() {
-        if (CheckDroneStatus(settings.config.lightOn, settings.config.lightOff)) {
-            ON(); //between7
+        if ( CheckDates(settings.config.lightOn, settings.config.lightOff) ) {
+            ON();
         } else {
-            OFF(); //notBetween7
+            OFF();
         }
 
         setTimeout(lightController, 1000);

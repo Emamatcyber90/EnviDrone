@@ -13,6 +13,7 @@ var water = function() {
     }
 
     var waterOff = function() {
+        settings.config.waterTime = moment(new Date()).format("M-D-YY HH:mm:ss");
         settings.config.statuses['water'] = false;
         gpio(PIN, true);
     }

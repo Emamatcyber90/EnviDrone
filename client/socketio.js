@@ -1,8 +1,6 @@
 var moment = require('moment')
 var settings = require('../config');
 var shell = require('shelljs');
-var FormatTime = require('./TimeService').FormatTime;
-var SetTime = require('./TimeService').SetTime;
 
 var io = require('sails.io.js')(require('socket.io-client'));
 

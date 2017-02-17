@@ -1,59 +1,22 @@
 var moment = require('moment')
 
-function FormatTime(time) {
-    var res = time.split(":")
-    var m = moment();
-    var minute = res[1] ? res[1] : 0
-    m.set({
-        hour: res[0],
-        minute: minute,
-        second: 0,
-        millisecond: 0
-    })
-    return m.format()
+function CheckDates(time, houre) {
+    var dayTime = (60*24*1000) * 60;
+
+    var currentDate = new Date();
+
+
+    var timeFromDay = (new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())).setHours(0).setMinutes(0).setSeconds(0).getTime();
+
+    var allTime = time.split(":");
+
+    var startTime = (new Date()).setHours(allTime[0]).setMinutes(allTime[1]).getTime() - timeFromDay;
+
+    var endTime = startTime + (houre * 60 * 60 * 1000);
+
+    var currentTime = currentDate.getTime() - timeFromDay;
+
+    return (endTime - dayTime > 0 && endTime - dayTime > currentTime) || (startTime < currentTime && endTime > currentTime)
 }
 
-function CheckDroneStatus(time, houre) {
-    var getTimeHoureMinute = function(t) {
-        return {
-            houre: moment(moment(new Date()).format('M-D-YY') + ' ' + t + ':00:00').hours(),
-            minute: moment(moment(new Date()).format('M-D-YY') + ' ' + t + ':00:00').minutes()
-        }
-    }
-    var setTimeHoureMinute = function(h, m) {
-        return moment(new Date()).hours(h).minute(m).format('HH:mm')
-    }
-    var pluseHoures = function(t1, t2) {
-        return (getTimeHoureMinute(start).houre + getTimeHoureMinute(end).houre)
-    }
-
-    var now = getTimeHoureMinute(moment(new Date()).format('HH:mm'));
-    var start = getTimeHoureMinute(time);
-    var end = parseInt(start.houre) + parseInt(houre) - 24;
-
-    now = setTimeHoureMinute(now.houre, now.minute);
-    end = setTimeHoureMinute(end, start.minute).replace('00:', '24:');
-    start = setTimeHoureMinute(start.houre, start.minute);
-
-    if (now < end && now < start) {
-       return (pluseHoures(start, end) > 24) ? true : false
-    } else if (now >= start && now > end) {
-       return (pluseHoures(now, '00:00') < 12) ? false : true
-    } else if(now >= start && now < end){
-       return true
-    } else {
-        return false
-    }
-}
-
-function SetTime(start, houre) {
-    var date = new Date()
-    date = (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear()
-    var time = new Date(date + " " + start + ':00:00');
-    time = new Date(time.getTime() + houre * 3600 * 1000);
-    return moment(time).format("HH:mm");
-}
-
-module.exports.FormatTime = FormatTime;
-module.exports.SetTime = SetTime;
-module.exports.CheckDroneStatus = CheckDroneStatus;
+module.exports.CheckDates = CheckDates;
