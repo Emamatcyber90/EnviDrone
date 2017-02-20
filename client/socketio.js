@@ -206,7 +206,6 @@ var socketio = function() {
     });
 
     socket.on("updateManual", function(data) {
-        console.log(data)
         if (data.id == settings.config.id) {
             settings.config.manual.status = data.carbon;
             settings.config.manual.carbon = data.carbon;
@@ -214,7 +213,7 @@ var socketio = function() {
             settings.config.manual.lightOn = data.lightOn;
             settings.config.manual.lightOff = data.lightOff;
 
-            post("/drone/save", settings.config)
+            post("/drone/save", settings.config.manual)
         }
     });
 
