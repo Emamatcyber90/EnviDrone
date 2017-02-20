@@ -6,8 +6,16 @@ var settings = bjson('settings', function(observe) {
     observer = observe;
     observe.on('change', function(changes) {
         var pathArray = changes.path.split('.');
-        if(pathArray[0] == "statuses") {
-            socket.post("/drone/changeStatuses", {statuses: changes.object})
+        if (pathArray[0] == "statuses") {
+            socket.post("/drone/changeStatuses", {
+                statuses: changes.object
+            })
+        }
+
+        if (pathArray[0] == "waterTime") {
+            socket.post("/drone/updateWaterTime", {
+                waterTime: changes.object.waterTime
+            })
         }
     })
 });
@@ -27,7 +35,13 @@ var newSettings = {
         "water": false,
         "fan": false
     },
-    "version": 1
+    "version": 1,
+    "manual": {
+        "status": false,
+        "carbonOnStep": 2000,
+        "tmpOnStep": 2000,
+        "humidityOnStep": 2000
+    }
 }
 
 for (var i in newSettings) {

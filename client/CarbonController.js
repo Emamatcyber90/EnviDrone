@@ -13,10 +13,14 @@ var carbon = function() {
     var CheckDates = require('./TimeService').CheckDates;
 
     var coController = function(data) {
-        if ( CheckDates(settings.config.lightOn, settings.config.lightOff) ) {
-            lightOn(data);
+        if (settings.config.manual.status && data >= settings.config.manual.carbonOnStep) {
+            FanController.on();
         } else {
-            lightOff(data);
+            if (CheckDates(settings.config.lightOn, settings.config.lightOff)) {
+                lightOn(data);
+            } else {
+                lightOff(data);
+            }
         }
     }
 
