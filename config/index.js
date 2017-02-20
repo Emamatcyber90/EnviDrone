@@ -13,9 +13,9 @@ var settings = bjson('settings', function(observe) {
         }
 
         if (pathArray[0] == "waterTime") {
-            socket.post("/drone/updateWaterTime", {
-                waterTime: changes.object.waterTime
-            })
+            // socket.post("/drone/updateWaterTime", {
+            //     waterTime: changes.object.waterTime
+            // })
         }
     })
 });
