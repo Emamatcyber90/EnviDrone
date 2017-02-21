@@ -3,6 +3,7 @@ var temp = function() {
     var settings = require('../config');
     var PINONE = 16;
     var PINTWO = 18;
+    var FanController = require('./FanController')();
 
     var OFF = function() {
         settings.config.statuses['light'] = false;

@@ -208,9 +208,9 @@ var socketio = function() {
     socket.on("updateManual", function(data) {
         if (data.id == settings.config.id) {
             settings.config.manual.status = data.status;
-            settings.config.manual.carbonOnStep = data.carbonOnStep;
-            settings.config.manual.humidityOnStep = data.humidityOnStep;
-            settings.config.manual.tmpOnStep = data.tmpOnStep;
+            settings.config.manual.carbonOnStep = data.carbonOnStep || 10000;
+            settings.config.manual.humidityOnStep = data.humidityOnStep || 10000;
+            settings.config.manual.tmpOnStep = data.tmpOnStep || 10000;
 
             post("/drone/save", settings.config.manual)
         }
