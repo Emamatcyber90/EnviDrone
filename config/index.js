@@ -13,9 +13,9 @@ var settings = bjson('settings', function(observe) {
         }
 
         if (pathArray[0] == "waterTime") {
-            // socket.post("/drone/updateWaterTime", {
-            //     waterTime: changes.object.waterTime
-            // })
+            socket.post("/drone/updateWaterTime", {
+                waterTime: changes.object.waterTime
+            })
         }
     })
 });
@@ -26,7 +26,7 @@ var newSettings = {
     "lightOn": "20:00",
     "lightOff": 11,
     "fanOnStep": 800,
-    "tmpStep": 110,
+    "tmpStep": 100,
     "waterCycle": 120,
     "waterDuration": 3.5,
     "statuses": {
