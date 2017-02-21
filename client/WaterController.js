@@ -7,7 +7,7 @@ var water = function() {
     var oldValue = false;
     var newValue = true;
     var moment = require('moment');
-    
+
     var waterON = function() {
         settings.config.waterTime = moment(new Date()).format("M-D-YY HH:mm:ss");
         settings.config.statuses['water'] = true;
@@ -21,7 +21,6 @@ var water = function() {
 
     var clearTimers = function() {
         if (timerOff) clearTimeout(timerOff);
-        if (timerOn) clearTimeout(timerOn);
 
         TimerOn();
     }
@@ -31,20 +30,24 @@ var water = function() {
 
         timerOff = setTimeout(function() {
             waterOff();
-            TimerOn();
         }, settings.config.waterDuration * 1000);
     }
 
     var TimerOn = function() {
-        timerOn = setTimeout(function() {
-            Start();
-        }, settings.config.waterCycle * 60000);
+        timerOn = setInterval(function() {
+            var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+            if (newDate >= settings.config.nextWaterTime) {
+                settings.config.nextWaterTime = moment(new Date(newDate)).add(settings.config.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss")
+                Start();
+            }
+        }, 1000);
     }
 
     TimerOn();
 
     settings.observe.on('change', function(changes) {
         if (changes.path == "waterCycle" || changes.path == "waterDuration") {
+            settings.config.nextWaterTime = moment(new Date(settings.config.waterTime)).add(settings.config.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss");
             clearTimers();
         }
     });
