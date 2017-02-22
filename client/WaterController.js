@@ -9,12 +9,12 @@ var water = function() {
     var moment = require('moment');
 
     var waterON = function() {
-        settings.config.waterTime = moment(new Date()).format("M-D-YY HH:mm:ss");
         settings.config.statuses['water'] = true;
         gpio(PIN, false);
     }
 
     var waterOff = function() {
+        settings.config.waterTime = moment(new Date()).format("M-D-YY HH:mm:ss");
         settings.config.statuses['water'] = false;
         gpio(PIN, true);
     }
