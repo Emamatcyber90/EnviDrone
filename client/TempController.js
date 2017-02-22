@@ -17,7 +17,7 @@ var temp = function() {
         if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
             FanController.on();
         }
-        
+        console.log(tmp)
         if (tmp >= settings.config.tmpStep) {
             OFF();
         }
