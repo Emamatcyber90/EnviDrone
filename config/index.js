@@ -13,6 +13,7 @@ var settings = bjson('settings', function(observe) {
         }
 
         if (pathArray[0] == "waterTime") {
+            console.log("/drone/updateWaterTime", changes.object.waterTime)
             socket.post("/drone/updateWaterTime", {
                 waterTime: changes.object.waterTime
             })

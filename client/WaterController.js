@@ -10,6 +10,7 @@ var water = function() {
 
     var waterON = function() {
         settings.config.waterTime = moment(new Date()).format("M-D-YY HH:mm:ss");
+        console.log("Water time");
         settings.config.statuses['water'] = true;
         gpio(PIN, false);
     }
