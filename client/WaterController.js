@@ -9,7 +9,6 @@ var water = function() {
     var moment = require('moment');
 
     var waterON = function() {
-        settings.config.waterTime = moment(new Date()).format("M-D-YY HH:mm:ss");
         console.log("Water time");
         settings.config.statuses['water'] = true;
         gpio(PIN, false);
@@ -38,6 +37,7 @@ var water = function() {
         timerOn = setInterval(function() {
             var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
             if (newDate >= settings.config.nextWaterTime) {
+                settings.config.waterTime = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
                 settings.config.nextWaterTime = moment(new Date(newDate)).add(settings.config.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss")
                 Start();
             }
