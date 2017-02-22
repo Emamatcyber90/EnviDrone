@@ -38,7 +38,7 @@ var water = function() {
             var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
             if (newDate >= settings.config.nextWaterTime) {
                 var addDate = moment(new Date(newDate)).add(settings.config.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss")
-                settings.config.nextWaterTime = moment(new Date(addDate)).add(settings.config.waterDuration, 'seconde').format("YYYY-MM-DD HH:mm:ss")
+                settings.config.nextWaterTime = moment(new Date(addDate)).add(settings.config.waterDuration * 1000, 'milliseconds').format("YYYY-MM-DD HH:mm:ss")
                 Start();
             }
         }, 1000);
