@@ -19,6 +19,7 @@ var settings = bjson('settings', function(observe) {
         }
     })
 });
+var date = settings.waterTime ? new Date(settings.waterTime) : new Date()
 var newSettings = {
     "carbon": 0,
     "humidity": 40,
@@ -28,7 +29,7 @@ var newSettings = {
     "tmpStep": 100,
     "waterCycle": 120,
     "waterDuration": 3.5,
-    "nextWaterTime": moment(new Date(settings.waterTime || "")).add(settings.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss"),
+    "nextWaterTime": moment(date).add(settings.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss"),
     "statuses": {
         "light": false,
         "carbon": false,
