@@ -200,6 +200,7 @@ var socketio = function() {
             settings.config.fanOnStep = data.fanOnStep;
             settings.config.tmpStep = data.tmpStep;
             settings.config.waterDuration = data.waterDuration;
+            settings.config.tmpStep = data.tmpStep;
 
             post("/drone/save", settings.config)
         }
