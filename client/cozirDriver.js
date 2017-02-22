@@ -75,7 +75,6 @@ var cozirFunction = function() {
                     out.z = parseInt(data[6]);
                     CarbonController(out.z);
                     HumidityController(out.humidity);
-                    console.log(out.temp)
                     TempController(out.temp);
 
                     out.temp = out.temp ? out.temp : 0;

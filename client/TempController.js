@@ -12,13 +12,11 @@ var temp = function() {
     }
 
     var analyze = function(data) {
-        console.log(data)
-        var tmp = (data.temp * 9 / 5) + 32;
+        var tmp = (data * 9 / 5) + 32;
 
         if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
             FanController.on();
         }
-        console.log(tmp)
         if (tmp >= settings.config.tmpStep) {
             OFF();
         }
