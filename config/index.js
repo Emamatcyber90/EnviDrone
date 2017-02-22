@@ -28,7 +28,7 @@ var newSettings = {
     "tmpStep": 100,
     "waterCycle": 120,
     "waterDuration": 3.5,
-    "nextWaterTime": moment(new Date(settings.waterTime)).add(settings.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss"),
+    "nextWaterTime": moment(new Date(settings.waterTime || "")).add(settings.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss"),
     "statuses": {
         "light": false,
         "carbon": false,
