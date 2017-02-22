@@ -12,6 +12,7 @@ var temp = function() {
     }
 
     var analyze = function(data) {
+        console.log(data)
         var tmp = (data.temp * 9 / 5) + 32;
 
         if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
