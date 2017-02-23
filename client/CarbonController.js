@@ -16,7 +16,7 @@ var carbon = function() {
         if (settings.config.manual.status && data >= settings.config.manual.carbonOnStep) {
             FanController.on();
         } else {
-            if (CheckDates(settings.config.lightOn, settings.config.lightOff)) {
+            if (CheckDates(settings.config.lightOn, settings.config.lightOff) && !settings.config.tmpStepStatus ) {
                 lightOn(data);
             } else {
                 lightOff(data);
