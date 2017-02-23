@@ -5,6 +5,7 @@ var bjson = require('bjson');
 var settings = bjson('settings', function(observe) {
     observer = observe;
     observe.on('change', function(changes) {
+        console.log(changes)
         var pathArray = changes.path.split('.');
         if (pathArray[0] == "statuses") {
             socket.post("/drone/changeStatuses", {
