@@ -9,6 +9,11 @@ var socketio = function() {
         silent: true
     }).stdout.replace("\n", "").replace(/:/g, "") || 'DemoNode';
 
+    shell.exec("sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/America/Phoenix /etc/localtime", {
+        silent: true,
+        async: true
+    });
+    
     settings.config.ip_address = shell.exec("ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'", {
         silent: true
     }).stdout.replace("\n", "").replace(/:/g, "")

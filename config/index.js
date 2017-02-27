@@ -2,7 +2,6 @@
 var observer;
 var moment = require('moment')
 var bjson = require('bjson');
-var shell = require('shelljs');
 
 var settings = bjson('settings', function(observe) {
     observer = observe;
@@ -46,13 +45,6 @@ var newSettings = {
         "tmpOnStep": 2000,
         "humidityOnStep": 2000
     }
-}
-
-if (settings.length == 0) {
-    shell.exec("sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/America/Phoenix /etc/localtime", {
-        silent: true,
-        async: true
-    });
 }
 
 for (var i in newSettings) {
