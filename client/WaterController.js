@@ -49,7 +49,8 @@ var water = function() {
     settings.observe.on('change', function(changes) {
         if (changes.path == "waterCycle" || changes.path == "waterDuration") {
             var date = settings.config.waterTime ? new Date(settings.config.waterTime) : new Date()
-            settings.config.nextWaterTime = moment(date).add(settings.config.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss");
+            var circle = settings.config.waterCycle ? settings.config.waterCycle : 10000000;
+            settings.config.nextWaterTime = moment(date).add(circle, 'minute').format("YYYY-MM-DD HH:mm:ss");
             clearTimers();
         }
     });

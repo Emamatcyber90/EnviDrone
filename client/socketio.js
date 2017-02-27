@@ -57,10 +57,6 @@ var socketio = function() {
         var connect = function() {
             socket.get("/register", params, function() {
                 connectEmit()
-                shell.exec("sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/America/Phoenix /etc/localtime", {
-                    silent: true,
-                    async: true
-                });
             });
         }
 
