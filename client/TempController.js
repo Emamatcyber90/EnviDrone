@@ -15,13 +15,14 @@ var temp = function() {
         var tmp = (data * 9 / 5) + 32;
 
         if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
+            settings.config.tmpStepStatus = true;
             FanController.on();
-        }
-        if (tmp >= settings.config.tmpStep) {
-            settings.config.tmpStepStatus = true
-            OFF();
         }else {
-            settings.config.tmpStepStatus = false
+            settings.config.tmpStepStatus = false;
+        }
+
+        if (tmp >= settings.config.tmpStep) {
+            OFF();
         }
 
     }

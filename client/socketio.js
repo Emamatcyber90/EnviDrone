@@ -52,7 +52,6 @@ var socketio = function() {
     }
 
     var setSocketConfigs = function() {
-        io.sails.environment = 'development';
         io.sails.transports = ['websocket'];
         io.sails.useCORSRouteToGetCookie = false;
         io.sails.url = apiUrl;
@@ -192,15 +191,15 @@ var socketio = function() {
 
     socket.on("updateSettings", function(data) {
         if (data.id == settings.config.id) {
-            settings.config.carbon = data.carbon;
-            settings.config.humidity = data.humidity;
-            settings.config.lightOn = data.lightOn;
-            settings.config.lightOff = data.lightOff;
-            settings.config.waterCycle = data.waterCycle;
-            settings.config.fanOnStep = data.fanOnStep;
-            settings.config.tmpStep = data.tmpStep;
-            settings.config.waterDuration = data.waterDuration;
-            settings.config.tmpStep = data.tmpStep;
+            settings.config.carbon = data.carbon || 0;
+            settings.config.humidity = data.humidity || 0;
+            settings.config.lightOn = data.lightOn || 0;
+            settings.config.lightOff = data.lightOff || 0;
+            settings.config.waterCycle = data.waterCycle || 0;
+            settings.config.fanOnStep = data.fanOnStep || 0;
+            settings.config.tmpStep = data.tmpStep || 0;
+            settings.config.waterDuration = data.waterDuration || 0;
+            settings.config.tmpStep = data.tmpStep || 0;
 
             post("/drone/save", settings.config)
         }
