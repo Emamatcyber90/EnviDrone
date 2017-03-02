@@ -13,7 +13,6 @@ var cozirFunction = function() {
         'humidity': 0,
         'carbon': 0
     }
-
     serialPort = new serialModule.SerialPort(port, {
         parser: serialModule.parsers.readline(delimiter),
         baudrate: 9600
@@ -26,12 +25,27 @@ var cozirFunction = function() {
         setTimeout(setStreamMode, 12000);
     }
 
+    var timer
+
     function startTimer() {
         timer = setTimeout(function() {
-            socket.post('/drone/carbon', {
-                carbon: out.z
+            socket.post('/drone/temp', {
+                temp: 0
             });
-        }, 10000);
+            socket.post('/drone/humidity', {
+                humidity: 0
+            });
+            socket.post('/drone/carbon', {
+                carbon: 0
+            });
+            
+            olds = {
+                'temp': 0,
+                'humidity': 0,
+                'carbon': 0
+            }
+            settings.config.olds = olds
+        }, 30000);
     }
 
     function stopTimer() {
@@ -51,11 +65,13 @@ var cozirFunction = function() {
     }
 
     function calcuateSocket(keyName, area, newValue) {
+        stopTimer();
         if ((olds[keyName] - area) > newValue || (olds[keyName] + area) < newValue) {
             olds[keyName] = newValue;
 
             settings.config.olds = olds
             return true
+            startTimer();
         } else {
             return false
         }
