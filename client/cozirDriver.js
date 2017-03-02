@@ -30,7 +30,7 @@ var cozirFunction = function() {
     function startTimer() {
         timer = setTimeout(function() {
             socket.post('/drone/temp', {
-                temp: "0"
+                temp: 0
             });
             socket.post('/drone/humidity', {
                 humidity: 0
@@ -66,11 +66,11 @@ var cozirFunction = function() {
 
     function calcuateSocket(keyName, area, newValue) {
         stopTimer();
+        startTimer();
         if ((olds[keyName] - area) > newValue || (olds[keyName] + area) < newValue) {
             olds[keyName] = newValue;
 
             settings.config.olds = olds
-            startTimer();
             return true
         } else {
             return false
