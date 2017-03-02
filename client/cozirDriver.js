@@ -76,7 +76,7 @@ var cozirFunction = function() {
                     CarbonController(out.z);
                     HumidityController(out.humidity);
                     TempController(out.temp);
-
+                    console.log(out)
                     out.temp = out.temp ? out.temp : 0;
                     if (calcuateSocket("temp", 1, out.temp)) {
                         socket.post('/drone/temp', {
