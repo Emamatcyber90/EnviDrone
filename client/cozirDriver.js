@@ -69,16 +69,18 @@ var cozirFunction = function() {
 
     function calcuateSocket(keyName, area, newValue) {
         stopTimer();
-        startTimer();
         if ((olds[keyName] - area) > newValue || (olds[keyName] + area) < newValue) {
             olds[keyName] = newValue;
 
             settings.config.olds = olds
+            startTimer();
             return true
         } else {
             return false
         }
     }
+
+    startTimer();
 
     serialPort.open(function(err) {
         serialPort.on("data", function(data) {
