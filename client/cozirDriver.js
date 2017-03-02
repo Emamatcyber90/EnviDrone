@@ -28,11 +28,9 @@ var cozirFunction = function() {
     var timer
 
     function startTimer() {
-        console.log("Start")
         timer = setTimeout(function() {
-            console.log("Finished")
             socket.post('/drone/temp', {
-                temp: 0
+                temp: "0"
             });
             socket.post('/drone/humidity', {
                 humidity: 0
@@ -51,7 +49,6 @@ var cozirFunction = function() {
     }
 
     function stopTimer() {
-        console.log("Stop")
         clearTimeout(timer);
     }
 
