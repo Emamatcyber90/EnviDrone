@@ -28,7 +28,9 @@ var cozirFunction = function() {
     var timer
 
     function startTimer() {
+        console.log("Start")
         timer = setTimeout(function() {
+            console.log("Finished")
             socket.post('/drone/temp', {
                 temp: 0
             });
@@ -38,7 +40,7 @@ var cozirFunction = function() {
             socket.post('/drone/carbon', {
                 carbon: 0
             });
-            
+
             olds = {
                 'temp': 0,
                 'humidity': 0,
@@ -49,6 +51,7 @@ var cozirFunction = function() {
     }
 
     function stopTimer() {
+        console.log("Stop")
         clearTimeout(timer);
     }
 
@@ -66,12 +69,12 @@ var cozirFunction = function() {
 
     function calcuateSocket(keyName, area, newValue) {
         stopTimer();
+        startTimer();
         if ((olds[keyName] - area) > newValue || (olds[keyName] + area) < newValue) {
             olds[keyName] = newValue;
 
             settings.config.olds = olds
             return true
-            startTimer();
         } else {
             return false
         }
@@ -92,7 +95,6 @@ var cozirFunction = function() {
                     CarbonController(out.z);
                     HumidityController(out.humidity);
                     TempController(out.temp);
-                    console.log(out)
                     out.temp = out.temp ? out.temp : 0;
                     if (calcuateSocket("temp", 1, out.temp)) {
                         socket.post('/drone/temp', {
