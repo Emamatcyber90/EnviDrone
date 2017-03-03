@@ -20,11 +20,12 @@ var temp = function() {
         
         if (tmp >= settings.config.tmpStep) {
             settings.config.tmpStepStatus = true
+            console.log(ettings.config)
             OFF();
         }else {
             settings.config.tmpStepStatus = false
+            console.log(ettings.config)
         }
-
     }
     return analyze;
 
