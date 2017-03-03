@@ -20,11 +20,9 @@ var temp = function() {
         
         if (tmp >= settings.config.tmpStep) {
             settings.config.tmpStepStatus = true
-            console.log(settings.config)
             OFF();
         }else {
             settings.config.tmpStepStatus = false
-            console.log(settings.config)
         }
     }
     return analyze;
