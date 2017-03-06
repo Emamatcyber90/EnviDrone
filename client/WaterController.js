@@ -50,6 +50,17 @@ var water = function() {
         if (changes.path == "waterCycle" || changes.path == "waterDuration") {
             var date = settings.config.waterTime ? new Date(settings.config.waterTime) : new Date()
             var circle = settings.config.waterCycle ? settings.config.waterCycle : 10000000;
+            var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+            socket.post("/reports/sendWaterReport",{
+                start: newDate,
+                old_start: settings.config.startWaterCycle,
+                drone_id: settings.config.id,
+                company_id: settings.config.company_id,
+                minute: settings.config.waterCycle,
+                second: settings.config.waterDuration
+            })
+            settings.config.startWaterCycle = newDate;
+
             settings.config.nextWaterTime = moment(date).add(circle, 'minute').format("YYYY-MM-DD HH:mm:ss");
             clearTimers();
         }
