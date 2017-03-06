@@ -17,11 +17,6 @@ var settings = bjson('settings', function(observe) {
             socket.post("/drone/updateWaterTime", {
                 waterTime: changes.object.waterTime
             })
-
-            socket.post("/reports/sendWaterReport", {
-                end: moment(new Date(changes.object.waterTime)).format("YYYY-MM-DD HH:mm:ss"),
-                start: moment(new Date(changes.object.waterTime)).subtract(changes.object.waterDuration, 'second').format("YYYY-MM-DD HH:mm:ss")
-            })
         }
     })
 });
