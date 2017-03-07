@@ -20,6 +20,8 @@ var temp = function() {
         
         if (tmp >= settings.config.tmpStep) {
             settings.config.tmpStepStatus = true
+            settings.config.statuses.light = true;
+            settings.config.statuses.light = false;
             OFF();
         }else {
             settings.config.tmpStepStatus = false

@@ -2,10 +2,13 @@ var settings = require('../config');
 
 function Init() {
     /**
+     * Initiate Rpio
+     */
+    // var rpio = require('rpio');
+    /**
      * Initiate Socket IO
      */
     socket = require('./socketio')();
-
     /*
     Initiate Driver Carbon, Humidity & Temp System
      */
