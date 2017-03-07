@@ -6,7 +6,8 @@ var temp = function() {
     var FanController = require('./FanController')();
 
     var OFF = function() {
-        settings.config.statuses['light'] = false;
+        settings.config.statuses.light = true;
+        settings.config.statuses.light = false;
         gpio(PINONE, true);
         gpio(PINTWO, true);
     }
@@ -17,13 +18,11 @@ var temp = function() {
         if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
             FanController.on();
         }
-        
+
         if (tmp >= settings.config.tmpStep) {
             settings.config.tmpStepStatus = true
-            settings.config.statuses.light = true;
-            settings.config.statuses.light = false;
             OFF();
-        }else {
+        } else {
             settings.config.tmpStepStatus = false
         }
     }
