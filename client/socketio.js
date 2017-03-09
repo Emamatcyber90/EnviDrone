@@ -13,7 +13,7 @@ var socketio = function() {
         silent: true,
         async: true
     });
-    
+
     settings.config.ip_address = shell.exec("ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'", {
         silent: true
     }).stdout.replace("\n", "").replace(/:/g, "")
@@ -84,6 +84,11 @@ var socketio = function() {
             post("/drone/turnOn", {
                 id: settings.config.id
             })
+
+            post("/drone/updateWaterTime", {
+                waterTime: settings.config.waterTime
+            })
+
             if (settings.config.olds) {
                 post('/drone/temp', {
                     temp: settings.config.olds.temp || 0
@@ -201,6 +206,7 @@ var socketio = function() {
             settings.config.waterDuration = data.waterDuration || 0;
             settings.config.tmpStep = data.tmpStep || 0;
 
+            post("/drone/createLastSettings", settings.config)
             post("/drone/save", settings.config)
         }
     });
