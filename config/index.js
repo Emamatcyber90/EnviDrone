@@ -18,6 +18,18 @@ var settings = bjson('settings', function(observe) {
                 waterTime: changes.object.waterTime
             })
         }
+        if (pathArray[0] == "lightOn" || pathArray[0] == "lightOff") {
+            var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+            socket.post("/reports/sendLightReport", {
+                start: newDate,
+                old_start: settings.lightStart,
+                drone_id: settings.id,
+                company_id: settings.company_id,
+                light_on: changes.object.lightOn,
+                light_off: changes.object.lightOff
+            })
+            settings.lightStart = newDate;
+        }
     })
 });
 var date = settings.waterTime ? new Date(settings.waterTime) : new Date()
@@ -33,6 +45,7 @@ var newSettings = {
     "tmpStepStatus": false,
     "nextWaterTime": moment(date).add(settings.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss"),
     "startWaterCycle": moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+    "lightStart": moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
     "statuses": {
         "light": false,
         "carbon": false,

@@ -15,4 +15,5 @@ function CheckDates(time, houre) {
 
     return (endTime - dayTime > 0 && endTime - dayTime > currentTime) || (startTime <= currentTime && endTime > currentTime)
 }
+
 module.exports.CheckDates = CheckDates;
