@@ -8,6 +8,12 @@ var settings = bjson('settings', function(observe) {
     observe.on('change', function(changes) {
         var pathArray = changes.path.split('.');
         if (pathArray[0] == "statuses") {
+            if (changes.name == 'light') {
+                socket.post("/reports/sendLightOnOf", {
+                    date: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+                    status: changes.value
+                })
+            }
             socket.post("/drone/changeStatuses", {
                 statuses: changes.object
             })
