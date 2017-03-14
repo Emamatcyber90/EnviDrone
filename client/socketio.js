@@ -30,7 +30,7 @@ var socketio = function() {
         params["isAdmin"] = 1;
     }
 
-    var apiUrl = process.env.local ? "http://192.168.1.5:1337" : "https://enviserver.kulu.io";
+    var apiUrl = process.env.local ? "http://192.168.1.8:1337" : "https://enviserver.kulu.io";
 
     var timer;
 
@@ -195,7 +195,9 @@ var socketio = function() {
     });
 
     socket.on("updateSettings", function(data) {
+        cansole.log(data)
         if (data.id == settings.config.id) {
+            cansole.log("111111111111",data)
             settings.config.carbon = data.carbon || 0;
             settings.config.humidity = data.humidity || 0;
             settings.config.lightOn = data.lightOn || 0;
