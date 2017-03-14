@@ -45,6 +45,9 @@ var cozirFunction = function() {
                 'carbon': 0
             }
             settings.config.olds = olds
+            CarbonController(0);
+            HumidityController(0);
+            TempController(0);
         }, 30000);
     }
 
