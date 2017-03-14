@@ -17,6 +17,8 @@ var carbon = function() {
             console.log("Fan turn on CARBON ", data)
             FanController.on();
         } else {
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ", CheckDates(settings.config.lightOn, settings.config.lightOff))
+            console.log("-------------------------------------------------------------- ", settings.config.tmpStepStatus)
             if (CheckDates(settings.config.lightOn, settings.config.lightOff) && !settings.config.tmpStepStatus ) {
                 lightOn(data);
             } else {
@@ -26,13 +28,13 @@ var carbon = function() {
     }
 
     function lightOn(data) {
+        FanController.off();
         if (data <= settings.config.carbon && data != 0) {
             coON();
         } else {
             coOFF();
         }
         console.log("Fan turn of ", data)
-        FanController.off();
     }
 
     function lightOff(data) {
