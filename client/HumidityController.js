@@ -14,7 +14,6 @@ var humidity = function() {
 
     var analyze = function(data) {
         if (settings.config.manual.status && data >= settings.config.manual.humidityOnStep) {
-            console.log("Fan turn on HUMIDITY ", data)
             FanController.on();
         }
         
