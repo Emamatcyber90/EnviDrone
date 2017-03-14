@@ -10,6 +10,8 @@ var light = function() {
     var newValue
 
     function lightController() {
+        console.log(CheckDates(settings.config.lightOn, settings.config.lightOff),"ON")
+        console.log(settings.config.tmpStepStatus, "Offfff")
         if ( CheckDates(settings.config.lightOn, settings.config.lightOff) && !settings.config.tmpStepStatus ) {
             ON();
         } else {
