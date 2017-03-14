@@ -214,6 +214,7 @@ var socketio = function() {
     });
 
     socket.on("updateManual", function(data) {
+        console.log(data)
         if (data.id == settings.config.id) {
             settings.config.manual.status = data.status;
             settings.config.manual.carbonOnStep = data.carbonOnStep || 10000;

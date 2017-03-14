@@ -6,19 +6,6 @@ var temp = function() {
     var FanController = require('./FanController')();
 
     var OFF = function() {
-        socket.post("/drone/changeStatuses", {
-            statuses: {
-                light: true
-            }
-        })
-        setTimeout(function() {
-            socket.post("/drone/changeStatuses", {
-                statuses: {
-                    light: false
-                }
-            })
-        }, 1000)
-
         gpio(PINONE, true);
         gpio(PINTWO, true);
     }
@@ -32,7 +19,6 @@ var temp = function() {
 
         if (tmp >= settings.config.tmpStep) {
             settings.config.tmpStepStatus = true
-            console.log(socket)
             OFF();
         } else {
             settings.config.tmpStepStatus = false
