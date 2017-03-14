@@ -14,6 +14,7 @@ var temp = function() {
         var tmp = (data * 9 / 5) + 32;
 
         if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
+            console.log("Fan turn on TEMP ", data)
             FanController.on();
         }
         console.log("Temps New", tmp)
