@@ -18,9 +18,12 @@ var temp = function() {
         }
         if (tmp >= settings.config.tmpStep) {
             settings.config.tmpStepStatus = true
+            settings.config.switchStatus = true;
             OFF();
         } else {
             settings.config.tmpStepStatus = false
+            settings.config.switchStatus = false;
+
         }
     }
     return analyze;

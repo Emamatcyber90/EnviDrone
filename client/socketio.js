@@ -101,6 +101,10 @@ var socketio = function() {
                 post('/drone/carbon', {
                     carbon: settings.config.olds.carbon || 0
                 });
+
+                post('/drone/switchStatus', {
+                    lighted: settings.config.switchStatus
+                });
             }
         }, 1000)
     }
