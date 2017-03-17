@@ -11,6 +11,7 @@ var settings = bjson('settings', function(observe) {
             if (changes.name == 'light') {
                 socket.post("/reports/sendLightOnOf", {
                     date: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+                    settings: JSON.stringify(settings),
                     status: changes.value
                 })
             }

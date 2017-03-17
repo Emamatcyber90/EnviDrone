@@ -26,6 +26,7 @@ var cozirFunction = function() {
     }
 
     var timer
+    time = Number(new Date());
 
     function startTimer() {
         timer = setTimeout(function() {
