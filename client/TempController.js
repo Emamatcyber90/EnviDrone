@@ -13,12 +13,18 @@ var temp = function() {
     var analyze = function(data) {
         var tmp = (data * 9 / 5) + 32;
         var newDate = Number(new Date()) - 5000;
-        console.log(socket)
-        if (time <= newDate) {
+        if (socket && (time <= newDate)) {
+            
             if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
                 FanController.on();
             }
+
             if (tmp >= settings.config.tmpStep) {
+                socket.post("/reports/tempMax", {
+                    tmp: tmp,
+                    time: new Date(time),
+                    newDate: new Date(newDate)
+                })
                 settings.config.tmpStepStatus = true
                 settings.config.switchStatus = true;
                 OFF();
@@ -26,6 +32,7 @@ var temp = function() {
                 settings.config.tmpStepStatus = false
                 settings.config.switchStatus = false;
             }
+
             time = Number(new Date())
         }
     }
