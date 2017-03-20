@@ -15,14 +15,16 @@ var settings = bjson('settings', function(observe) {
                     status: changes.value
                 })
             }
-            socket.post("/drone/changeStatuses", {
-                statuses: changes.object
+            socket.post("/drone/emit", {
+                statuses: changes.object,
+                socketNmae: 'changeStatuses'
             })
         }
 
         if (pathArray[0] == "waterTime") {
-            socket.post("/drone/updateWaterTime", {
-                waterTime: changes.object.waterTime
+            socket.post("/drone/emit", {
+                waterTime: changes.object.waterTime,
+                socketNmae: 'updateWaterTime'
             })
         }
         

@@ -30,14 +30,17 @@ var cozirFunction = function() {
 
     function startTimer() {
         timer = setTimeout(function() {
-            socket.post('/drone/temp', {
-                temp: 0
+            socket.post('/drone/emit', {
+                temp: 0,
+                socketName: "temp"
             });
-            socket.post('/drone/humidity', {
-                humidity: 0
+            socket.post('/drone/emit', {
+                humidity: 0,
+                socketName: "humidity"
             });
-            socket.post('/drone/carbon', {
-                carbon: 0
+            socket.post('/drone/emit', {
+                carbon: 0,
+                socketName: "carbon"
             });
 
             olds = {
@@ -92,6 +95,8 @@ var cozirFunction = function() {
                     //[ '', 'H', '00523', 'T', '01251', 'Z', '02001', 'z', '02001' ]
                     var out = {};
 
+
+
                     out.humidity = parseInt(data[2]) / 10;
                     out.temp = (parseInt(data[4]) - 1000) / 10;
                     out.z = parseInt(data[6]);
@@ -100,22 +105,25 @@ var cozirFunction = function() {
                     TempController(out.temp);
                     out.temp = out.temp ? out.temp : 0;
                     if (calcuateSocket("temp", 1, out.temp)) {
-                        socket.post('/drone/temp', {
-                            temp: out.temp
+                        socket.post('/drone/emit', {
+                            temp: out.temp,
+                            socketName: "temp"
                         });
                     }
 
                     out.humidity = out.humidity ? out.humidity : 0;
                     if (calcuateSocket("humidity", 1, out.humidity)) {
-                        socket.post('/drone/humidity', {
-                            humidity: out.humidity
+                        socket.post('/drone/emit', {
+                            humidity: out.humidity,
+                            socketName: "humidity"
                         });
                     }
 
                     out.z = out.z ? out.z : 0;
                     if (calcuateSocket("carbon", 25, out.z)) {
-                        socket.post('/drone/carbon', {
-                            carbon: out.z
+                        socket.post('/drone/emit', {
+                            carbon: out.z,
+                            socketName: "carbon"
                         });
                     }
                 }

@@ -81,29 +81,35 @@ var socketio = function() {
     var connectEmit = function() {
         checkListAndCompany()
         setTimeout(function() {
-            post("/drone/turnOn", {
-                id: settings.config.id
+            post("/drone/emit", {
+                id: settings.config.id,
+                socketName: "turnOn"
             })
 
-            post("/drone/updateWaterTime", {
-                waterTime: settings.config.waterTime
+            post("/drone/emit", {
+                waterTime: settings.config.waterTime,
+                socketName: "updateWaterTime"
             })
 
             if (settings.config.olds) {
-                post('/drone/temp', {
-                    temp: settings.config.olds.temp || 0
+                post('/drone/emit', {
+                    temp: settings.config.olds.temp || 0,
+                    socketName: "temp"
                 });
 
-                post('/drone/humidity', {
-                    humidity: settings.config.olds.humidity || 0
+                post('/drone/emit', {
+                    humidity: settings.config.olds.humidity || 0,
+                    socketName: "humidity"
                 });
 
-                post('/drone/carbon', {
-                    carbon: settings.config.olds.carbon || 0
+                post('/drone/emit', {
+                    carbon: settings.config.olds.carbon || 0,
+                    socketName: "carbon"
                 });
 
-                post('/drone/switchStatus', {
-                    lighted: settings.config.switchStatus
+                post('/drone/emit', {
+                    lighted: settings.config.switchStatus,
+                    socketName: "switchStatus"
                 });
             }
         }, 1000)
@@ -140,7 +146,10 @@ var socketio = function() {
         if (pullData.id == settings.config.id) {
             settings.config["version"] = pullData.version;
             setTimeout(function() {
-                post("/drone/pullSuccess", pullData);
+                post("/drone/emit", {
+                    socketName: pullSuccess,
+                    message: "Success"
+                });
 
                 shell.cd('/home/pi/EnviDrone');
 
@@ -156,9 +165,12 @@ var socketio = function() {
 
     socket.on("getSettings", function(data) {
         if (data.id == settings.config.id) {
-            post("/drone/postSettings", settings.config)
-            post("/drone/changeStatuses", {
-                statuses: settings.config.statuses
+            var config = settings.config;
+            config.socketName = "postSettings";
+            post("/drone/emit", config)
+            post("/drone/emit", {
+                statuses: settings.config.statuses,
+                socketName: "changeStatuses"
             })
         }
     });
@@ -209,9 +221,12 @@ var socketio = function() {
             settings.config.tmpStep = data.tmpStep || 0;
             settings.config.waterDuration = data.waterDuration || 0;
             settings.config.tmpStep = data.tmpStep || 0;
-
-            post("/drone/createLastSettings", settings.config)
-            post("/drone/save", settings.config)
+            
+            var config = settings.config;
+            config.socketName = "createLastSettings";
+            post("/drone/emit", settings.config)
+            config.socketName = "save";
+            post("/drone/emit", settings.config)
         }
     });
 
@@ -221,8 +236,9 @@ var socketio = function() {
             settings.config.manual.carbonOnStep = data.carbonOnStep || 10000;
             settings.config.manual.humidityOnStep = data.humidityOnStep || 10000;
             settings.config.manual.tmpOnStep = data.tmpOnStep || 10000;
-
-            post("/drone/save", settings.config.manual)
+            var manual = settings.config.manual
+            manual.socketName = "save"
+            post("/drone/emit", manual)
         }
     });
 
@@ -271,13 +287,17 @@ var socketio = function() {
     }
 
     process.on('exit', function(done) {
-        post("/drone/turnOff", {
-            id: settings.config.id
+        post("/drone/emit", {
+            id: settings.config.id,
+            socketName: "turnOff"
         })
     });
 
-    post('/drone/register', settings.config);
-    post("/drone/postSettings", settings.config);
+    var config = settings.config;
+    company_id.socketName = "register"
+    post('/drone/emit', config);
+    company_id.socketName = "postSettings"
+    post("/drone/emit", config);
 
     return {
         post: post,
