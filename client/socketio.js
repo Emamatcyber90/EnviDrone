@@ -294,9 +294,9 @@ var socketio = function() {
     });
 
     var config = settings.config;
-    company_id.socketName = "register"
+    config.socketName = "register"
     post('/drone/emit', config);
-    company_id.socketName = "postSettings"
+    config.socketName = "postSettings"
     post("/drone/emit", config);
 
     return {
