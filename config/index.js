@@ -25,6 +25,7 @@ var settings = bjson('settings', function(observe) {
                 waterTime: changes.object.waterTime
             })
         }
+        
         if (pathArray[0] == "lightOn" || pathArray[0] == "lightOff") {
             var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
             socket.post("/reports/sendLightReport", {
@@ -36,6 +37,20 @@ var settings = bjson('settings', function(observe) {
                 light_off: changes.object.lightOff
             })
             settings.lightStart = newDate;
+        }
+
+        if (pathArray[0] == "carbon") {
+
+            var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+            socket.post("/reports/sendCarbonReport", {
+                start: newDate,
+                old_start: settings.carbonStart,
+                drone_id: settings.id,
+                company_id: settings.company_id,
+                level: changes.object.carbon
+            })
+
+            settings.carbonStart = newDate;
         }
     })
 });
@@ -53,6 +68,7 @@ var newSettings = {
     "nextWaterTime": moment(date).add(settings.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss"),
     "startWaterCycle": moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
     "lightStart": moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+    "carbonStart": moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
     "statuses": {
         "light": false,
         "carbon": false,

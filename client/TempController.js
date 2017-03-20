@@ -20,11 +20,6 @@ var temp = function() {
             }
 
             if (tmp >= settings.config.tmpStep && (time <= newDate)) {
-                socket.post("/reports/tempMax", {
-                    tmp: tmp,
-                    time: new Date(time),
-                    newDate: new Date(newDate)
-                })
                 settings.config.tmpStepStatus = true
                 settings.config.switchStatus = true;
                 OFF();
@@ -36,7 +31,6 @@ var temp = function() {
         }
     }
     return analyze;
-
 };
 
 module.exports = temp;
