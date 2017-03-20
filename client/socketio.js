@@ -296,7 +296,7 @@ var socketio = function() {
     var config = settings.config;
     config.socketName = "register"
     post('/drone/emit', config);
-    config.socketName = "postSettings"
+    config.socketName = "receive settings"
     post("/drone/emit", config);
 
     return {
