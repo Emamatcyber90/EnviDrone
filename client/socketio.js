@@ -184,7 +184,7 @@ var socketio = function() {
     socket.on("getSettings", function(data) {
         if (data.id == settings.config.id) {
             var config = settings.config;
-            config.socketName = "postSettings";
+            config.socketName = "receive settings";
             post("/drone/emit", config)
             post("/drone/emit", {
                 statuses: settings.config.statuses,
