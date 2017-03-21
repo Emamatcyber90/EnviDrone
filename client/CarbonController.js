@@ -35,7 +35,6 @@ var carbon = function() {
 
     function lightOff(data) {
         if (data >= settings.config.fanOnStep) {
-            socket.sendNotification("In " + settings.config.name || settings.config.id + " carbon level is " + data);
             FanController.on();
         } else {
             FanController.off()

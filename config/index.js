@@ -15,6 +15,9 @@ var settings = bjson('settings', function(observe) {
                     status: changes.value
                 })
             }
+            if (changes.name == 'fan') {
+                socket.sendNotification("In " + settings.config.name || settings.config.id + " carbon level is " + data);
+            }
             socket.post("/drone/emit", {
                 statuses: changes.object,
                 socketNmae: 'changeStatuses'
@@ -27,7 +30,7 @@ var settings = bjson('settings', function(observe) {
                 socketNmae: 'updateWaterTime'
             })
         }
-        
+
         if (pathArray[0] == "lightOn" || pathArray[0] == "lightOff") {
             var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
             socket.post("/reports/sendLightReport", {
