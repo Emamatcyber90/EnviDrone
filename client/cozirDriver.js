@@ -43,6 +43,8 @@ var cozirFunction = function() {
                 socketName: "carbon"
             });
 
+            socket.sendNotification("In " + settings.config.name || settings.config.id + " sensors not working ");
+
             olds = {
                 'temp': 0,
                 'humidity': 0,

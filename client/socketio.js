@@ -142,6 +142,24 @@ var socketio = function() {
         }
     }
 
+    var sendNotification = function(message) {
+        if (socket) {
+            socket.request({
+                method: 'post',
+                url: "/users/sendNotifications",
+                data: {
+                    company_id: settings.config.company_id,
+                    body: message
+                },
+                headers: {
+                    'Authorization': token
+                }
+            }, function(resData, jwres) {
+
+            });
+        }
+    }
+
     socket.on("git pull", function(pullData) {
         if (pullData.id == settings.config.id) {
             settings.config["version"] = pullData.version;
@@ -221,7 +239,7 @@ var socketio = function() {
             settings.config.tmpStep = data.tmpStep || 0;
             settings.config.waterDuration = data.waterDuration || 0;
             settings.config.tmpStep = data.tmpStep || 0;
-            
+
             var config = settings.config;
             config.socketName = "createLastSettings";
             post("/drone/emit", settings.config)
@@ -287,6 +305,7 @@ var socketio = function() {
     }
 
     process.on('exit', function(done) {
+        sendNotification(settings.config.name || settings.config.id + " drone turn Off ");
         post("/drone/emit", {
             id: settings.config.id,
             socketName: "turnOff"
@@ -301,7 +320,7 @@ var socketio = function() {
 
     return {
         post: post,
-        setSocketConfigs: setSocketConfigs
+        sendNotification: sendNotification
     }
 };
 

@@ -13,22 +13,21 @@ var temp = function() {
     var analyze = function(data) {
         var tmp = (data * 9 / 5) + 32;
         var newDate = Number(new Date()) - 5000;
-        if (socket) {
-
-            if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
-                FanController.on();
-            }
-
-            if (tmp >= settings.config.tmpStep && (time <= newDate)) {
-                settings.config.tmpStepStatus = true
-                settings.config.switchStatus = true;
-                OFF();
-            } else {
-                time = Number(new Date())
-                settings.config.tmpStepStatus = false
-                settings.config.switchStatus = false;
-            }
+        if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
+            FanController.on();
         }
+
+        if (tmp >= settings.config.tmpStep && (time <= newDate)) {
+            socket.sendNotification("In " + settings.config.name || settings.config.id + " temperature level is " + tmp);
+            settings.config.tmpStepStatus = true
+            settings.config.switchStatus = true;
+            OFF();
+        } else {
+            time = Number(new Date())
+            settings.config.tmpStepStatus = false
+            settings.config.switchStatus = false;
+        }
+
     }
     return analyze;
 };
