@@ -8,6 +8,7 @@ var settings = bjson('settings', function(observe) {
     observe.on('change', function(changes) {
         var pathArray = changes.path.split('.');
         if (pathArray[0] == "statuses") {
+
             if (changes.name == 'light') {
                 socket.post("/reports/sendLightOnOf", {
                     date: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
@@ -15,9 +16,11 @@ var settings = bjson('settings', function(observe) {
                     status: changes.value
                 })
             }
-            if (changes.name == 'fan') {
+
+            if (changes.name == 'fan' && changes.value == true) {
                 socket.sendNotification("In " + settings.config.name || settings.config.id + " carbon level is " + data);
             }
+
             socket.post("/drone/emit", {
                 statuses: changes.object,
                 socketNmae: 'changeStatuses'
@@ -29,6 +32,14 @@ var settings = bjson('settings', function(observe) {
                 waterTime: changes.object.waterTime,
                 socketNmae: 'updateWaterTime'
             })
+        }
+
+        if (pathArray[0] == "tmpStepStatus" && changes.name == true) {
+            socket.sendNotification("In " + settings.config.name || settings.config.id + " temperature level is " + tmp);
+        }
+        
+        if (pathArray[0] == "tmpStepStatus" && changes.name == true) {
+            socket.sendNotification("In " + settings.config.name || settings.config.id + " temperature level is " + tmp);
         }
 
         if (pathArray[0] == "lightOn" || pathArray[0] == "lightOff") {

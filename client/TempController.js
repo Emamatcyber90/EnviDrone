@@ -18,7 +18,6 @@ var temp = function() {
         }
 
         if (tmp >= settings.config.tmpStep && (time <= newDate)) {
-            socket.sendNotification("In " + settings.config.name || settings.config.id + " temperature level is " + tmp);
             settings.config.tmpStepStatus = true
             settings.config.switchStatus = true;
             OFF();
