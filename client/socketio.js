@@ -165,7 +165,7 @@ var socketio = function() {
             settings.config["version"] = pullData.version;
             setTimeout(function() {
                 post("/drone/emit", {
-                    socketName: pullSuccess,
+                    socketName: 'pullSuccess',
                     message: "Success"
                 });
 
