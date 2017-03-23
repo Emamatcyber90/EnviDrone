@@ -70,6 +70,7 @@ var settings = bjson('settings', function(observe) {
         }
     })
 });
+console.log("Test for pull testing")
 var date = settings.waterTime ? new Date(settings.waterTime) : new Date()
 var newSettings = {
     "carbon": 0,
