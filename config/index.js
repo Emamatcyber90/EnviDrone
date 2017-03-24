@@ -17,8 +17,9 @@ var settings = bjson('settings', function(observe) {
                 })
             }
 
+            console.log(changes)
+            
             if (changes.name == 'fan' && changes.value == true) {
-
                 socket.sendNotification("In " + name + " carbon level is " + data);
             }
 
@@ -35,7 +36,7 @@ var settings = bjson('settings', function(observe) {
             })
         }
 
-        if (pathArray[0] == "tmpStepStatus" && changes.name == true) {
+        if (pathArray[0] == "tmpStepStatus" && changes.value == true) {
             post('/drone/emit', {
                 lighted: settings.tmpStepStatus,
                 socketName: "switchStatus"
