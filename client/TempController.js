@@ -17,14 +17,11 @@ var temp = function() {
             FanController.on();
         }
 
-        console.log(tmp >= settings.config.tmpStep && (time <= newDate))
-        console.log(tmp, "Temp")
-        console.log(settings.config.tmpStep, "step")
-        console.log(time, "time")
-        console.log(newDate, "newDate")
-        if (tmp >= settings.config.tmpStep && (time <= newDate)) {
-            settings.config.tmpStepStatus = true
-            OFF();
+        if (tmp >= settings.config.tmpStep) {
+            if (time <= newDate) {
+                settings.config.tmpStepStatus = true
+                OFF();
+            }
         } else {
             time = Number(new Date())
             settings.config.tmpStepStatus = false
