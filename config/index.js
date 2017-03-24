@@ -17,8 +17,6 @@ var settings = bjson('settings', function(observe) {
                 })
             }
 
-            console.log(changes)
-
             if (changes.name == 'fan' && changes.value == true) {
                 socket.sendNotification("In " + name + " carbon level is hier");
             }

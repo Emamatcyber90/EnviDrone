@@ -311,7 +311,9 @@ var socketio = function() {
     }
 
     process.on('exit', function(done) {
-        sendNotification(settings.config.name || settings.config.id + " drone turn Off ");
+        var name = settings.config.name || settings.config.id;
+        sendNotification(name + " drone turn Off ");
+        console.log(settings.config.id)
         post("/drone/emit", {
             id: settings.config.id,
             socketName: "turnOff"
