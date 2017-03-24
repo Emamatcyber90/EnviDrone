@@ -108,7 +108,7 @@ var socketio = function() {
                 });
 
                 post('/drone/emit', {
-                    lighted: settings.config.switchStatus,
+                    lighted: settings.config.tmpStepStatus,
                     socketName: "switchStatus"
                 });
             }
@@ -317,7 +317,12 @@ var socketio = function() {
     post('/drone/emit', config);
     config.socketName = "receive settings"
     post("/drone/emit", config);
-
+    socket.on("autoPull", function(data) {
+        shell.exec("cd EnviDrone && sudo git pull origin master && sudo reboot", {
+            silent: true,
+            async: true
+        });
+    })
     return {
         post: post,
         sendNotification: sendNotification

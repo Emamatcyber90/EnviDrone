@@ -1,9 +1,3 @@
-/*
-  carbon = 800
-  timeFrom 20
-  timeTo 7
-  maxCarbon 1500 //Lights off time
-*/
 var carbon = function() {
     var gpio = require('./relay').Relay;
     var moment = require('moment')
