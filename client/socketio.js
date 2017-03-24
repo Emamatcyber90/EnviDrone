@@ -35,12 +35,12 @@ var socketio = function() {
     var timer;
 
     var restart = function() {
-        
+
         post("/drone/emit", {
             id: settings.config.id,
             socketName: "turnOff"
         })
-
+        console.log(settings.config.id, "Turn offf");
         shell.exec("sudo pm2 restart 0", {
             silent: true,
             async: true
