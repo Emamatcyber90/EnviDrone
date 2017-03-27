@@ -18,7 +18,7 @@ var settings = bjson('settings', function(observe) {
             }
 
             if (changes.name == 'fan' && changes.value == true) {
-                // socket.sendNotification("In " + name + " drone carbon level is hier");
+                socket.sendNotification("In " + name + " drone carbon level is hier");
             }
 
             socket.post("/drone/emit", {
@@ -39,7 +39,7 @@ var settings = bjson('settings', function(observe) {
                 lighted: settings.tmpStepStatus,
                 socketName: "switchStatus"
             });
-            // socket.sendNotification("In " + name + " drone temperature level is hier");
+            socket.sendNotification("In " + name + " drone temperature level is hier");
         }
 
         if (pathArray[0] == "lightOn" || pathArray[0] == "lightOff") {

@@ -167,6 +167,9 @@ var socketio = function() {
     }
 
     socket.on("git pull", function(pullData) {
+        console.log(pullData)
+        console.log("++++++++++++++++++++++++______________++++++++++++++++++++++++++++")
+        console.log(settings.config)
         if (pullData.id == settings.config.id) {
             settings.config["version"] = pullData.version;
             setTimeout(function() {
@@ -312,7 +315,7 @@ var socketio = function() {
 
     process.on('exit', function(done) {
         var name = settings.config.name || settings.config.id;
-        // sendNotification(name + " drone turn Off ");
+        sendNotification(name + " drone turn Off ");
         post("/drone/emit", {
             id: settings.config.id,
             socketName: "turnOff"

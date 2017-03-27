@@ -43,7 +43,7 @@ var cozirFunction = function() {
                 socketName: "carbon"
             });
             var name = settings.config.name || settings.config.id
-            // socket.sendNotification("In " + name + " sensors not working ");
+            socket.sendNotification("In " + name + " sensors not working ");
 
             olds = {
                 'temp': 0,
