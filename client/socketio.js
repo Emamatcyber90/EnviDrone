@@ -167,10 +167,8 @@ var socketio = function() {
     }
 
     socket.on("git pull", function(pullData) {
-        console.log(pullData)
-        console.log("++++++++++++++++++++++++______________++++++++++++++++++++++++++++")
-        console.log(settings.config)
         if (pullData.id == settings.config.id) {
+            console.log("Pull working")
             settings.config["version"] = pullData.version;
             setTimeout(function() {
                 post("/drone/emit", {
@@ -178,9 +176,7 @@ var socketio = function() {
                     message: "Success"
                 });
 
-                shell.cd('/home/pi/EnviDrone');
-
-                shell.exec("sudo git pull", {
+                shell.exec("cd /home/pi/EnviDrone sudo git pull", {
                     silent: true,
                     async: true
                 });
