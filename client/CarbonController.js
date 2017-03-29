@@ -7,13 +7,13 @@ var carbon = function() {
     var CheckDates = require('./TimeService').CheckDates;
 
     var coController = function(data) {
-        if (settings.config.manual.status && data >= settings.config.manual.carbonOnStep) {
+        if (settings.config.manual.status && data.z >= settings.config.manual.carbonOnStep) {
             FanController.on();
         } else {
             if (CheckDates(settings.config.lightOn, settings.config.lightOff) && !settings.config.tmpStepStatus) {
-                lightOn(data);
+                lightOn(data.z);
             } else {
-                lightOff(data);
+                lightOff(data.z, data.humidity);
             }
         }
     }
@@ -27,8 +27,8 @@ var carbon = function() {
         }
     }
 
-    function lightOff(data) {
-        if (data >= settings.config.fanOnStep) {
+    function lightOff(carbon, humidity) {
+        if (carbon >= settings.config.fanOnStep || humidity >= settings.config.fanOnStepHumiditly) {
             FanController.on();
         } else {
             FanController.off()

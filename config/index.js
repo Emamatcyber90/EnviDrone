@@ -77,6 +77,7 @@ var newSettings = {
     "lightOn": "20:00",
     "lightOff": 11,
     "fanOnStep": 800,
+    "fanOnStepHumiditly": 100,
     "tmpStep": 100,
     "waterCycle": 120,
     "waterDuration": 3.5,

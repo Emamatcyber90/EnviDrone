@@ -165,6 +165,13 @@ var socketio = function() {
             });
         }
     }
+    var createLastSetting = function() {
+        var config = settings.config;
+        config.socketName = "createLastSettings";
+        post("/drone/emit", settings.config)
+        config.socketName = "save";
+        post("/drone/emit", settings.config)
+    }
 
     socket.on("git pull", function(pullData) {
         if (pullData.id == settings.config.id) {
@@ -243,13 +250,11 @@ var socketio = function() {
             settings.config.fanOnStep = data.fanOnStep || 0;
             settings.config.tmpStep = data.tmpStep || 0;
             settings.config.waterDuration = data.waterDuration || 0;
+            settings.config.fanOnStepHumiditly = data.fanOnStepHumiditly || 0;
             settings.config.tmpStep = data.tmpStep || 0;
+            settings.config.automated = false;
 
-            var config = settings.config;
-            config.socketName = "createLastSettings";
-            post("/drone/emit", settings.config)
-            config.socketName = "save";
-            post("/drone/emit", settings.config)
+            createLastSetting()
         }
     });
 
@@ -312,9 +317,15 @@ var socketio = function() {
     process.on('exit', function(done) {
         var name = settings.config.name || settings.config.id;
         sendNotification(name + " drone turn Off ");
+
         post("/drone/emit", {
             id: settings.config.id,
             socketName: "turnOff"
+        })
+
+        post("/drone/error", {
+            drone_id: settings.config.id,
+            message: done
         })
     });
 
@@ -329,6 +340,17 @@ var socketio = function() {
             async: true
         });
     })
+
+    socket.on("automated", function(data) {
+        if (data.id == settings.config.id) {
+            settings.config.carbon = data.carbon || 0;
+            settings.config.lightOn = data.lightOn || 0;
+            settings.config.lightOff = data.lightOff || 0;
+            settings.config.automated = true;
+            createLastSetting()
+        }
+    })
+
     return {
         post: post,
         sendNotification: sendNotification

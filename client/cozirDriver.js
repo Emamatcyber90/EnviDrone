@@ -51,7 +51,10 @@ var cozirFunction = function() {
                 'carbon': 0
             }
             settings.config.olds = olds
-            CarbonController(0);
+            CarbonController({
+                z: 0,
+                humidity: 0
+            });
             HumidityController(0);
             TempController(0);
         }, 30000);
@@ -102,7 +105,7 @@ var cozirFunction = function() {
                     out.humidity = parseInt(data[2]) / 10;
                     out.temp = (parseInt(data[4]) - 1000) / 10;
                     out.z = parseInt(data[6]);
-                    CarbonController(out.z);
+                    CarbonController(out);
                     HumidityController(out.humidity);
                     TempController(out.temp);
                     out.temp = out.temp ? out.temp : 0;
