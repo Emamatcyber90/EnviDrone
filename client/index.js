@@ -4,7 +4,7 @@ function Init() {
     /**
      * Initiate Rpio
      */
-    // var rpio = require('rpio');
+    // var rpio = require('pigpio');
     /**
      * Initiate Socket IO
      */

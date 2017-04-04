@@ -30,7 +30,7 @@ var socketio = function() {
         params["isAdmin"] = 1;
     }
 
-    var apiUrl = process.env.local ? "http://192.168.1.8:1337" : "https://enviserver.kulu.io";
+    var apiUrl = process.env.local ? "http://192.168.1.4:1337" : "https://enviserver.kulu.io";
 
     var timer;
 
@@ -40,7 +40,6 @@ var socketio = function() {
             id: settings.config.id,
             socketName: "turnOff"
         })
-        console.log(settings.config.id, "Turn offf");
         shell.exec("sudo pm2 restart 0", {
             silent: true,
             async: true
@@ -152,9 +151,9 @@ var socketio = function() {
         if (socket) {
             socket.request({
                 method: 'post',
-                url: "/users/sendNotifications",
+                url: "/drone/sendNotifications",
                 data: {
-                    company_id: settings.config.company_id,
+                    drone_id: settings.config.id,
                     body: message
                 },
                 headers: {
@@ -252,6 +251,7 @@ var socketio = function() {
             settings.config.waterDuration = data.waterDuration || 0;
             settings.config.fanOnStepHumiditly = data.fanOnStepHumiditly || 0;
             settings.config.tmpStep = data.tmpStep || 0;
+            settings.config.notifications  = data.notifications;
             settings.config.automated = false;
 
             createLastSetting()
@@ -316,7 +316,7 @@ var socketio = function() {
 
     process.on('exit', function(done) {
         var name = settings.config.name || settings.config.id;
-        sendNotification(name + " drone turn Off ");
+        // sendNotification(name + " drone turn Off ");
 
         post("/drone/emit", {
             id: settings.config.id,

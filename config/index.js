@@ -2,13 +2,14 @@
 var observer;
 var moment = require('moment')
 var bjson = require('bjson');
+var sendNotification = require('../client/NotificationService').send;
 
 var settings = bjson('settings', function(observe) {
     observer = observe;
     observe.on('change', function(changes) {
         var pathArray = changes.path.split('.');
         if (pathArray[0] == "statuses") {
-            var name = settings.name || settings.id;
+            
             if (changes.name == 'light') {
                 socket.post("/reports/sendLightOnOf", {
                     date: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
@@ -18,7 +19,7 @@ var settings = bjson('settings', function(observe) {
             }
 
             if (changes.name == 'fan' && changes.value == true) {
-                socket.sendNotification("In " + name + " drone carbon level is hier");
+                // socket.sendNotification("In " + name + " drone carbon level is hier");
             }
 
             socket.post("/drone/emit", {
@@ -33,13 +34,12 @@ var settings = bjson('settings', function(observe) {
                 socketName: 'updateWaterTime'
             })
         }
-
+        
         if (pathArray[0] == "tmpStepStatus" && changes.value == true) {
             post('/drone/emit', {
                 lighted: settings.tmpStepStatus,
                 socketName: "switchStatus"
             });
-            socket.sendNotification("In " + name + " drone temperature level is hier");
         }
 
         if (pathArray[0] == "lightOn" || pathArray[0] == "lightOff") {
@@ -98,6 +98,28 @@ var newSettings = {
         "carbonOnStep": 2000,
         "tmpOnStep": 2000,
         "humidityOnStep": 2000
+    },
+    "notifications": {
+        'status': true,
+        'carbon': {
+            'min': 100,
+            'max': 800
+        },
+        'temp': {
+            'min': 5,
+            'max': 100
+        },
+        'humidity': {
+            'max': 200,
+            'min': 10
+        },
+        'drone': {
+            'on': true,
+            'off': true
+        },
+        'sensors': {
+            'on': true
+        }
     }
 }
 
