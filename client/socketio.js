@@ -148,21 +148,22 @@ var socketio = function() {
     }
 
     var sendNotification = function(message) {
-        if (socket) {
-            socket.request({
-                method: 'post',
-                url: "/drone/sendNotifications",
-                data: {
-                    drone_id: settings.config.id,
-                    body: message
-                },
-                headers: {
-                    'Authorization': token
-                }
-            }, function(resData, jwres) {
+        // if (socket) {
+        //     socket.request({
+        //         method: 'post',
+        //         url: "/drone/sendNotifications",
+        //         data: {
+        //             drone_id: settings.config.id,
+        //             body: message
+        //         },
+        //         headers: {
+        //             'Authorization': token
+        //         }
+        //     }, function(resData, jwres) {
 
-            });
-        }
+        //     });
+        // }
+        return true;
     }
     var createLastSetting = function() {
         var config = settings.config;
