@@ -142,9 +142,7 @@ var socketio = function() {
                     'Authorization': token
                 }
             }, function(resData, jwres) {
-                console.log(resData)
-                console.log("***************************-----------------------------===================")
-                console.log(url)
+                
             });
         }
     }
@@ -185,7 +183,7 @@ var socketio = function() {
                     message: "Success"
                 });
 
-                shell.exec("cd /home/pi/EnviDrone sudo git pull", {
+                shell.exec("cd /home/pi/EnviDrone && sudo git pull", {
                     silent: true,
                     async: true
                 });
