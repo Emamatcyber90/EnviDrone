@@ -142,7 +142,9 @@ var socketio = function() {
                     'Authorization': token
                 }
             }, function(resData, jwres) {
-
+                console.log(resData)
+                console.log("***************************-----------------------------===================")
+                console.log(url)
             });
         }
     }
