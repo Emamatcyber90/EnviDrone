@@ -5,8 +5,10 @@ var carbon = function() {
     var settings = require('../config');
     var FanController = require('./FanController')();
     var CheckDates = require('./TimeService').CheckDates;
+    var checkNotification = require('../client/NotificationService').checkNotification;
 
     var coController = function(data) {
+        checkNotification("carbon", data.z)
         if (settings.config.manual.status && data.z >= settings.config.manual.carbonOnStep) {
             FanController.on();
         } else {
@@ -33,6 +35,7 @@ var carbon = function() {
         } else {
             FanController.off()
         }
+
         coOFF();
     }
 

@@ -4,7 +4,8 @@ var temp = function() {
     var PINONE = 16;
     var PINTWO = 18;
     var FanController = require('./FanController')();
-
+    var checkNotification = require('../client/NotificationService').checkNotification;
+    
     var OFF = function() {
         gpio(PINONE, true);
         gpio(PINTWO, true);
@@ -12,6 +13,7 @@ var temp = function() {
 
     var analyze = function(data) {
         var tmp = (data * 9 / 5) + 32;
+        checkNotification("temp", tmp)
         var newDate = Number(new Date()) - 5000;
         if (settings.config.manual.status && data >= settings.config.manual.tmpOnStep) {
             FanController.on();

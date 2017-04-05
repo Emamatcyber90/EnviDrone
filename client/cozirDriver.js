@@ -13,7 +13,7 @@ var cozirFunction = function() {
         'humidity': 0,
         'carbon': 0
     }
-    
+
     serialPort = new serialModule.SerialPort(port, {
         parser: serialModule.parsers.readline(delimiter),
         baudrate: 9600
@@ -43,8 +43,11 @@ var cozirFunction = function() {
                 carbon: 0,
                 socketName: "carbon"
             });
-            var name = settings.config.name || settings.config.id
-            // socket.sendNotification("In " + name + " sensors not working ");
+
+            if (settings.config.notifications.sensors.on) {
+                var name = settings.config.name || settings.config.id
+                socket.sendNotification("In " + name + " sensors not working ");
+            }
 
             olds = {
                 'temp': 0,
@@ -100,8 +103,6 @@ var cozirFunction = function() {
                 if (data[1] == "H") {
                     //[ '', 'H', '00523', 'T', '01251', 'Z', '02001', 'z', '02001' ]
                     var out = {};
-
-
 
                     out.humidity = parseInt(data[2]) / 10;
                     out.temp = (parseInt(data[4]) - 1000) / 10;

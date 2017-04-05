@@ -30,9 +30,36 @@ var socketio = function() {
         params["isAdmin"] = 1;
     }
 
-    var apiUrl = process.env.local ? "http://192.168.1.4:1337" : "https://enviserver.kulu.io";
+    var apiUrl = process.env.local ? "http://192.168.1.8:1337" : "https://enviserver.kulu.io";
 
     var timer;
+
+    var post = function(url, value) {
+        if (socket) {
+            if (url == "/reports/sendPinsReports") {
+                value.light_on = settings.config.statuses.light
+            }
+            value.id = settings.config.id;
+            value.drone_id = settings.config.id;
+            value.name = settings.config.name
+            value.description = settings.config.description
+            value.list = settings.config.list
+            value.company_id = settings.config.company_id
+            value.token = settings.config.token
+            value.version = settings.config.version
+            value.serverTime = moment(new Date()).format("M-D-YY HH:mm:ss")
+            socket.request({
+                method: 'post',
+                url: url,
+                data: value,
+                headers: {
+                    'Authorization': token
+                }
+            }, function(resData, jwres) {
+
+            });
+        }
+    }
 
     var restart = function() {
 
@@ -120,54 +147,22 @@ var socketio = function() {
         }, 1000)
     }
 
-    var post = function(url, value) {
+    var sendNotification = function(message) {
         if (socket) {
-            if (url == "/reports/sendPinsReports") {
-                value.light_on = settings.config.statuses.light
-            }
-            value.id = settings.config.id;
-            value.drone_id = settings.config.id;
-            value.name = settings.config.name
-            value.description = settings.config.description
-            value.list = settings.config.list
-            value.company_id = settings.config.company_id
-            value.token = settings.config.token
-            value.version = settings.config.version
-            value.serverTime = moment(new Date()).format("M-D-YY HH:mm:ss")
             socket.request({
                 method: 'post',
-                url: url,
-                data: value,
+                url: "/drone/sendNotifications",
+                data: {
+                    drone_id: settings.config.id,
+                    body: message
+                },
                 headers: {
                     'Authorization': token
                 }
             }, function(resData, jwres) {
-                console.log(resData)
-                console.log("***************************-----------------------------===================")
-                console.log(url)
-                console.log("-------------------------------------------------------")
-                console.log(url)
+
             });
         }
-    }
-
-    var sendNotification = function(message) {
-        // if (socket) {
-        //     socket.request({
-        //         method: 'post',
-        //         url: "/drone/sendNotifications",
-        //         data: {
-        //             drone_id: settings.config.id,
-        //             body: message
-        //         },
-        //         headers: {
-        //             'Authorization': token
-        //         }
-        //     }, function(resData, jwres) {
-
-        //     });
-        // }
-        return true;
     }
     var createLastSetting = function() {
         var config = settings.config;
@@ -252,11 +247,10 @@ var socketio = function() {
             settings.config.lightOff = data.lightOff || 0;
             settings.config.waterCycle = data.waterCycle || 0;
             settings.config.fanOnStep = data.fanOnStep || 0;
-            settings.config.tmpStep = data.tmpStep || 0;
             settings.config.waterDuration = data.waterDuration || 0;
             settings.config.fanOnStepHumiditly = data.fanOnStepHumiditly || 0;
             settings.config.tmpStep = data.tmpStep || 0;
-            settings.config.notifications  = data.notifications;
+            settings.config.notifications = data.notifications;
             settings.config.automated = false;
 
             createLastSetting()
