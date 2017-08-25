@@ -35,11 +35,13 @@ var water = function() {
 
     var TimerOn = function() {
         timerOn = setInterval(function() {
-            var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-            if (newDate >= settings.config.nextWaterTime) {
-                var addDate = moment(new Date(newDate)).add(settings.config.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss")
-                settings.config.nextWaterTime = moment(new Date(addDate)).add(settings.config.waterDuration * 1000, 'milliseconds').format("YYYY-MM-DD HH:mm:ss")
-                Start();
+            if (settings.config.statuses.light == false) {
+                var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+                if (newDate >= settings.config.nextWaterTime) {
+                    var addDate = moment(new Date(newDate)).add(settings.config.waterCycle, 'minute').format("YYYY-MM-DD HH:mm:ss")
+                    settings.config.nextWaterTime = moment(new Date(addDate)).add(settings.config.waterDuration * 1000, 'milliseconds').format("YYYY-MM-DD HH:mm:ss")
+                    Start();
+                }
             }
         }, 1000);
     }
@@ -51,7 +53,7 @@ var water = function() {
             var date = settings.config.waterTime ? new Date(settings.config.waterTime) : new Date()
             var circle = settings.config.waterCycle ? settings.config.waterCycle : 10000000;
             var newDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-            socket.post("/reports/sendWaterReport",{
+            socket.post("/reports/sendWaterReport", {
                 start: newDate,
                 old_start: settings.config.startWaterCycle,
                 drone_id: settings.config.id,
