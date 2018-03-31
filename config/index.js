@@ -93,6 +93,7 @@ var newSettings = {
         "fan": false
     },
     "version": 1,
+    "id" Math.random().toString(36).slice(2),
     "manual": {
         "status": false,
         "carbonOnStep": 2000,
