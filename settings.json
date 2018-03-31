@@ -1,0 +1,51 @@
+{
+    "carbon": 0,
+    "humidity": 40,
+    "lightOn": "20:00",
+    "lightOff": 11,
+    "fanOnStep": 800,
+    "fanOnStepHumiditly": 100,
+    "tmpStep": 100,
+    "waterCycle": 120,
+    "waterDuration": 3.5,
+    "tmpStepStatus": false,
+    "statuses": {
+        "light": false,
+        "carbon": false,
+        "water": false,
+        "fan": false
+    },
+    "version": 1,
+    "manual": {
+        "status": false,
+        "carbonOnStep": 2000,
+        "tmpOnStep": 2000,
+        "humidityOnStep": 2000
+    },
+    "notifications": {
+        'status': true,
+        'carbon': {
+            'min': 100,
+            'max': 800,
+            'message': ""
+        },
+        'temp': {
+            'min': 5,
+            'max': 100,
+            'message': ""
+        },
+        'humidity': {
+            'max': 200,
+            'min': 10,
+            'message': ""
+        },
+        'drone': {
+            'on': true,
+            'off': true,
+            'message': ""
+        },
+        'sensors': {
+            'on': true
+        }
+    }
+}
