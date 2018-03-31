@@ -5,6 +5,11 @@ var shell = require('shelljs');
 var io = require('sails.io.js')(require('socket.io-client'));
 
 var socketio = function() {
+    
+    if (typeof settings.config.id === 'undefined') {
+        settings.config.id = Math.random().toString(36).slice(2);
+    }
+    
     shell.exec("sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/America/Phoenix /etc/localtime", {
         silent: true,
         async: true
