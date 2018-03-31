@@ -96,6 +96,10 @@ var cozirFunction = function() {
     startTimer();
 
     serialPort.open(function(err) {
+        if(err){
+            console.log('Error',err);
+        }
+        
         serialPort.on("data", function(data) {
             console.log('Data',data);
             if (typeof data !== "undefined" && data !== null) {
