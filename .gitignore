@@ -9,7 +9,7 @@ logs
 *.log
 npm-debug.log*
 
-**/**/settings.json
+settings.json
 
 pids
 *.pid
