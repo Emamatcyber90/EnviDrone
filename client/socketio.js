@@ -10,7 +10,7 @@ var socketio = function() {
         async: true
     });
 
-    settings.config.ip_address = shell.exec("ifconfig eth0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'", {
+    settings.config.ip_address = shell.exec("ifconfig eth0 2>/dev/null|awk '/inet / {print $2}'|sed 's/addr://'", {
         silent: true
     }).stdout.replace("\n", "").replace(/:/g, "")
 
