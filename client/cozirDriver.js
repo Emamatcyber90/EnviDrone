@@ -97,6 +97,7 @@ var cozirFunction = function() {
 
     serialPort.open(function(err) {
         serialPort.on("data", function(data) {
+            console.log('Data',data);
             if (typeof data !== "undefined" && data !== null) {
                 data = data.split(" ");
 
